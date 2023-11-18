@@ -6,7 +6,7 @@ public class Turret : MonoBehaviour
 {
     public float Range;
     public Transform Target;
-    bool Detected = false;
+    bool _detected = false;
     Vector2 Direction;
     //public GameObject Gun;
     public GameObject bullet;
@@ -14,49 +14,39 @@ public class Turret : MonoBehaviour
     float nextTimeToFire = 0;
     public Transform Shootpoint;
     public float Force;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    // Update is called once per frame
+    public LayerMask layer;
+
+
     void Update()
     {
         Vector2 targetPos = Target.position;
-        Direction = targetPos - (Vector2)Shootpoint.position;
-        RaycastHit2D rayInfo = Physics2D.Raycast(Shootpoint.position,Direction,Range,64);
+        Direction = (targetPos - (Vector2)Shootpoint.position).normalized;
+        RaycastHit2D rayInfo = Physics2D.Raycast(Shootpoint.position, Direction, Range, layer);
+
+        /* DEBUG START */
+        Debug.DrawRay(Shootpoint.position, Direction * Range, Color.red);
+        /* DEBUG END */
         if (rayInfo)
         {
-            if(rayInfo.collider.gameObject.tag == "Player")
-            {
-                if (Detected == false)
-                {
-                    
-                    Detected = true;
-                    Debug.Log(Detected);
-                }
-            }
-            else
-            {
-                if (Detected == true)
-                {
-                    Detected = false;
-                    Debug.Log(Detected);
-                }
-            }
+            print(rayInfo.collider.gameObject.name);
         }
-        if (Detected)
+        if (rayInfo && rayInfo.collider.gameObject.name == "Player")
         {
-            //Gun.transform.up = Direction;
-            if(Time.time > nextTimeToFire)
-            {
-                nextTimeToFire = Time.time + 1 / FireRate;
-                shoot();
-            }
+
+            _detected = true;
+        }
+        else
+        {
+            _detected = false;
+        }
+
+        if (_detected && Time.time > nextTimeToFire)
+        {
+            nextTimeToFire = Time.time + 1 / FireRate;
+            Shoot();
         }
     }
-    void shoot()
+    void Shoot()
     {
         GameObject BulletIns = Instantiate(bullet, Shootpoint.position, Quaternion.identity);
         BulletIns.GetComponent<Rigidbody2D>().AddForce(Direction * Force);
