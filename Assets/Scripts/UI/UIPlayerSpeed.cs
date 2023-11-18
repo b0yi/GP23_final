@@ -20,7 +20,7 @@ public class UIPlayerSpeed : MonoBehaviour
         _playerRB = player.GetComponent<Rigidbody2D>();
         _playerPC = player.GetComponent<PlayerController>();
         _min = 0;
-        _max = _playerPC.maxDriveSpeed;
+        // _max = _playerPC.maxDriveSpeed;
     }
 
     // Update is called once per frame
