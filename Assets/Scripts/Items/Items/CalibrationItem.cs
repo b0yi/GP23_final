@@ -18,7 +18,7 @@ public class CalibrationItem : Item
     [SerializeField][Tooltip("The rotation of the needle.")]
     float needleRotation;
     [SerializeField][Tooltip("The rotation speed of the needle.")]
-    float needleSpeed;
+    float needleSpeed = 0.25f;
 
     public PlanetOfCalibration planet;
 
@@ -27,10 +27,6 @@ public class CalibrationItem : Item
     {
         stopArea = itemCanvas.transform.Find("Area");
         needle = itemCanvas.transform.Find("Needle");
-
-        needleSpeed = 0.15f;
-        
-        // calibrationFailedCanvas.SetActive(false);
 
         ItemReset();
     }

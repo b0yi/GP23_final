@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 85394221}
   - component: {fileID: 85394223}
   - component: {fileID: 85394222}
+  - component: {fileID: 85394224}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -434,6 +435,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &85394224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85394218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eba89cb7bda77a43ac024eb9210edf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetGravity: {fileID: 493320613}
 --- !u!1 &133334624
 GameObject:
   m_ObjectHideFlags: 0
@@ -3677,7 +3691,7 @@ MonoBehaviour:
   itemCanvasHandler: {fileID: 171695631}
   areaRotation: 270
   needleRotation: 359
-  needleSpeed: 0.225
+  needleSpeed: 0.25
   planet: {fileID: 831654001}
 --- !u!212 &1678581275
 SpriteRenderer:
