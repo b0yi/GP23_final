@@ -130,6 +130,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                transform.localScale = (_horizontal > 0) ? new Vector3(1f, 1, 1) : new Vector3(-1f, 1, 1);
                 Vector2 horizontalVelocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
                 if (horizontalVelocity.magnitude < maxWalkSpeed)
                 {

@@ -41,5 +41,9 @@ public class PlayerAnimation : MonoBehaviour
             }
         }
 
+        if (_playerController.stage == "OnPlanet")
+        {
+            _animator.SetBool("isGrounded", _playerController.isGrounded);
+        }
     }
 }

@@ -5981,8 +5981,8 @@ MonoBehaviour:
   changeOrthographicSpeed: 3.5
   targetOrthographicSize: 0
   dashboard: {fileID: 1873108618}
-  maxWalkSpeed: 20
-  WalkAcceleration: 20
+  maxWalkSpeed: 10
+  WalkAcceleration: 10
   isGrounded: 0
   height: 0
   gravity: 0
