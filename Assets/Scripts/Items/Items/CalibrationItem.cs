@@ -20,7 +20,7 @@ public class CalibrationItem : Item
     [SerializeField][Tooltip("The rotation speed of the needle.")]
     float needleSpeed;
 
-    public GameObject planet;
+    public PlanetOfCalibration planet;
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +46,9 @@ public class CalibrationItem : Item
                     // Whether the needle is in the right place
                     // Yes, player succeeded
                     Debug.Log("Succeeded to calibration");
-                    OpenItemGetCanvas(itemName);
+                    if (planet.DecreaseCanvasNum()) {
+                        OpenItemGetCanvas(itemName);
+                    }
                     ItemReset();
                     Destroy(gameObject);
                 }

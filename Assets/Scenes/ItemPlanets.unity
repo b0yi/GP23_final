@@ -172,7 +172,7 @@ MonoBehaviour:
   itemName: Item-1
   canGetItemRange: {fileID: 2105421944}
   itemCanvas: {fileID: 1164444927}
-  itemCanvasHandler: {fileID: 171695630}
+  itemCanvasHandler: {fileID: 171695631}
   maxCount: 30
   currentCount: 0
   protector: {fileID: 0}
@@ -2023,12 +2023,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 831653996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 135c1135c144ff046af16df3b89266bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 878b3ce074851e543937506aa40a817a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterFlowForce: 2
-  drag: 1.5
   itemCanvas: {fileID: 666403986}
+  itemLeft: 3
 --- !u!1 &862283505
 GameObject:
   m_ObjectHideFlags: 0
@@ -2111,7 +2110,7 @@ MonoBehaviour:
   itemName: Item-3
   canGetItemRange: {fileID: 0}
   itemCanvas: {fileID: 150225264}
-  itemCanvasHandler: {fileID: 171695630}
+  itemCanvasHandler: {fileID: 171695631}
 --- !u!50 &1015284597
 Rigidbody2D:
   serializedVersion: 4
@@ -3222,11 +3221,11 @@ MonoBehaviour:
   itemName: Item-2
   canGetItemRange: {fileID: 1181260086}
   itemCanvas: {fileID: 666403986}
-  itemCanvasHandler: {fileID: 171695630}
+  itemCanvasHandler: {fileID: 171695631}
   areaRotation: 270
   needleRotation: 359
-  needleSpeed: 0.225
-  planet: {fileID: 0}
+  needleSpeed: 0.25
+  planet: {fileID: 831654001}
 --- !u!212 &1512098843
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3328,11 +3327,11 @@ MonoBehaviour:
   itemName: Item-2
   canGetItemRange: {fileID: 1498239535}
   itemCanvas: {fileID: 666403986}
-  itemCanvasHandler: {fileID: 171695630}
+  itemCanvasHandler: {fileID: 171695631}
   areaRotation: 270
   needleRotation: 359
-  needleSpeed: 0.225
-  planet: {fileID: 0}
+  needleSpeed: 0.25
+  planet: {fileID: 831654001}
 --- !u!212 &1533985052
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3675,11 +3674,11 @@ MonoBehaviour:
   itemName: Item-2
   canGetItemRange: {fileID: 133334624}
   itemCanvas: {fileID: 666403986}
-  itemCanvasHandler: {fileID: 171695630}
+  itemCanvasHandler: {fileID: 171695631}
   areaRotation: 270
   needleRotation: 359
   needleSpeed: 0.225
-  planet: {fileID: 0}
+  planet: {fileID: 831654001}
 --- !u!212 &1678581275
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
     public string itemName;
     public GameObject canGetItemRange;
     public GameObject itemCanvas;
-    public GameObject itemCanvasHandler;
+    public ItemCanvasHandler itemCanvasHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class Item : MonoBehaviour
     }
 
     public void OpenItemGetCanvas(string itemName) {
-        itemCanvasHandler.GetComponent<ItemCanvasHandler>().OpenItemGetCanvas(itemName);
+        itemCanvasHandler.OpenItemGetCanvas(itemName);
     }
 
     public virtual void ItemReset() {

@@ -21,8 +21,16 @@ public class PlanetOfCalibration : MonoBehaviour
         
     }
 
-    public void DecreaseAndShow() {
+    public bool DecreaseCanvasNum() {
         itemLeft--;
         itemCanvas.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Left click to start/stop the needle\n"+itemLeft+" more to go";
+        if (itemLeft > 0) {
+            // still item left
+            return false;
+        }
+        else {
+            // no item left
+            return true;
+        }
     }
 }
