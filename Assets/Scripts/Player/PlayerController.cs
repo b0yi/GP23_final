@@ -8,11 +8,19 @@ public class PlayerController : MonoBehaviour
     [Header("狀態")]
     [DisplayOnly] public string stage;      // OnPlanet | InSpace
     private Rigidbody2D _rb;
+    [DisplayOnly] public float fuel;        // 油量/電量（0 - 100）
 
     [Header("輸入")]
     private InputHandler _inputHandler;
     private float _horizontal;
     private bool _w;
+
+    [Header("相機")]
+    public CinemachineVirtualCamera vcam;
+    public float changeOrthographicSpeed;
+    [DisplayOnly] public float targetOrthographicSize;
+    public GameObject dashboard;
+
 
     [Header("星球上移動")]
     public float maxWalkSpeed;
@@ -42,8 +50,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         stage = "OnPlanet";
+        targetOrthographicSize = 10f;
+        dashboard.SetActive(false);
         _rb = GetComponent<Rigidbody2D>();
         _inputHandler = GetComponent<InputHandler>();
+        fuel = 100f;
     }
 
     void Update()
@@ -58,6 +69,9 @@ public class PlayerController : MonoBehaviour
         if (stage == "InSpace")
         {
         }
+
+        vcam.m_Lens.OrthographicSize = Mathf.Lerp(vcam.m_Lens.OrthographicSize, targetOrthographicSize, changeOrthographicSpeed * Time.deltaTime);
+
     }
 
     void FixedUpdate()
@@ -141,11 +155,12 @@ public class PlayerController : MonoBehaviour
 
     private void Launch()
     {
+
         if (_w && height > (jumpHeight - .1))
         {
-            _rb.AddForce((launchAcceleration + gravity) * _rb.mass * transform.up);
-            // 只保留垂直方向的速度
+            // 只保留垂直方向的速度（TODO 怪怪的，先左右好像起飛會比較快）
             _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized;
+            _rb.AddForce((launchAcceleration + gravity) * _rb.mass * transform.up);
             // 這邊可能有 bug，IDK
         }
 
@@ -165,6 +180,12 @@ public class PlayerController : MonoBehaviour
         if (_w && _rb.velocity.magnitude < maxDriveSpeed)
         {
             _rb.AddForce(driveAcceleration * _rb.mass * ((Vector2)transform.up).normalized);
+        }
+
+        if (_w)
+        {
+            // TODO
+            fuel -= .1f;
         }
     }
 
@@ -203,9 +224,11 @@ public class PlayerController : MonoBehaviour
         // before
         if (stage == "InSpace")
         {
+            // 從太空到 ...
             _rb.drag = 0;
             _rb.angularDrag = 1000f;
-            // dashboard.SetActive(false);
+            targetOrthographicSize = 10f;
+            dashboard.SetActive(false);
         }
 
         // change
@@ -214,9 +237,11 @@ public class PlayerController : MonoBehaviour
         // after
         if (stage == "InSpace")
         {
+            // 從 ... 到太空
             _rb.drag = 1f;
             _rb.angularDrag = 1f;
-            // dashboard.SetActive(true);
+            targetOrthographicSize = 20f;
+            dashboard.SetActive(true);
         }
 
 
