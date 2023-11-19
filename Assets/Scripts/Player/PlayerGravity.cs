@@ -13,7 +13,7 @@ public class PlayerGravity : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (_playerController.stage != "InSpace")
+        if (_playerController.stage == "OnPlanet" || _playerController.stage == "Landing")
             planetGravity.AddGravity(transform);
     }
 }

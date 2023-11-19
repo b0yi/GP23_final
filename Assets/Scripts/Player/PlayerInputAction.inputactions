@@ -2,11 +2,11 @@
     "name": "PlayerInputAction",
     "maps": [
         {
-            "name": "OnPlanet",
+            "name": "Player",
             "id": "5fd1d2d1-c105-437e-8a47-5652d3be70cf",
             "actions": [
                 {
-                    "name": "Movement",
+                    "name": "Horizontal",
                     "type": "Value",
                     "id": "1a369766-aad4-4b1a-9b81-5774898c7b3e",
                     "expectedControlType": "Axis",
@@ -15,12 +15,12 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Jump",
+                    "name": "W",
                     "type": "Button",
                     "id": "be1754a1-0639-4cba-b020-c19d7b3feba7",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -32,7 +32,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Horizontal",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -43,7 +43,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Horizontal",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -54,7 +54,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Horizontal",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -62,136 +62,10 @@
                     "name": "",
                     "id": "26544b13-f623-42bd-b779-468d3d4730a3",
                     "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Launch",
-            "id": "ac125a10-613f-4507-8e81-428357d6706e",
-            "actions": [
-                {
-                    "name": "Ignition",
-                    "type": "Button",
-                    "id": "d6849503-7368-4484-99f7-3010b10f7c8b",
-                    "expectedControlType": "Button",
-                    "processors": "",
                     "interactions": "Press(behavior=2)",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "239b0598-b567-4081-88d0-fe91346d1962",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ignition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "InSpace",
-            "id": "6bfb6cc4-056a-4704-baa6-7402b4770aa4",
-            "actions": [
-                {
-                    "name": "Ignition",
-                    "type": "Button",
-                    "id": "3000ed91-4fb8-4a1c-a9ef-3aa89b0fc199",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press(behavior=2)",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Turn",
-                    "type": "Value",
-                    "id": "a2eeaf43-e4b9-4405-8a1b-dd20c1a8d074",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "714578c7-3db6-413c-9f6c-ea03619e3e0a",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Ignition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "146d183f-8959-4599-a60e-5568c03b1d73",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Turn",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "95187a96-6ae0-4fa7-9a59-8bf9d019f520",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Turn",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "46e9c366-9ca8-4158-8025-4702cf413de6",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Turn",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                }
-            ]
-        },
-        {
-            "name": "Landing",
-            "id": "1c28b15a-4a77-4cd3-80c1-c50ac6b734b7",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "3f5f4770-8c80-4c48-912a-d497979de303",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "3ac9494d-5934-4393-8587-5fce27ce921d",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
+                    "action": "W",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

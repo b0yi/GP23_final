@@ -2,106 +2,75 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 
-
-
 public class PlayerController : MonoBehaviour
 {
+
     [Header("狀態")]
-    public string stage;
-
-    [Header("星球上移動")]
-    public float maxMoveSpeed;
-    public float moveForce;
-
-    [Header("星球上跳躍")]
-    public float footOffset = 0.5f;
-    public float groundDistance = 0.1f;
-    public LayerMask groundLayer;
-    public bool isGrounded;
-    public float jumpHeight;
-    public float gravity = 20f;
-
-    [Header("升空")]
-    public float maxLaunchForce;
-    public float launchForceRate;
-    public float launchForce = 0f;
-
-    [Header("太空")]
-    public float maxDriveSpeed;
-    public float driveForce;
-    public float maxAngularVelocity;
-    public float turnTorque;
-    public GameObject dashboard;
-
-    [Header("降落")]
-    public float landingForce = 100f;
-
-    private PlayerInputHandler _input;
+    [DisplayOnly] public string stage;      // OnPlanet | InSpace
     private Rigidbody2D _rb;
+    [DisplayOnly] public float fuel;        // 油量/電量（0 - 100）
 
-    private float _movement;
-    private float _turn;
-    private bool _jump;
-    private bool _ignition;
+    [Header("輸入")]
+    private InputHandler _inputHandler;
+    private float _horizontal;
+    private bool _w;
 
     [Header("相機")]
     public CinemachineVirtualCamera vcam;
-    public float onPlanetOrtho;
-    public float inSpaceOrtho;
-    public float orthoSmoothSpeed; // true for OnPlanet
-    public bool orthoStatus = true; // true for OnPlanet
-    public float changeHeight;
-    // test
-    private void Ortho()
-    {
-
-        if (stage == "Launch" || stage == "Landing")
-        {
-            if (transform.position.y < changeHeight)
-            {
-                orthoStatus = true;
-            }
-            else
-            {
-                orthoStatus = false;
-            }
-        }
+    public float changeOrthographicSpeed;
+    [DisplayOnly] public float targetOrthographicSize;
+    public GameObject dashboard;
 
 
-        if (orthoStatus)
-        {
-            // OnPlanet
-            vcam.m_Lens.OrthographicSize = Mathf.MoveTowards(vcam.m_Lens.OrthographicSize, onPlanetOrtho, orthoSmoothSpeed * Time.deltaTime);
-        }
-        else
-        {
-            vcam.m_Lens.OrthographicSize = Mathf.MoveTowards(vcam.m_Lens.OrthographicSize, inSpaceOrtho, orthoSmoothSpeed * Time.deltaTime);
-        }
+    [Header("星球上移動")]
+    public float maxWalkSpeed;
+    public float WalkAcceleration;
 
+    [Header("星球上跳躍")]
+    [DisplayOnly] public bool isGrounded;
+    [DisplayOnly] public float height;      // 物體海拔（RayCast 檢測發生距離）
+    [DisplayOnly] public float gravity;     // 所受重力
+    public float jumpHeight;                // 跳躍高度
+    public GameObject planet;               // 所在星球
+    public float launchAcceleration;        // 發射加速度
+    public float footOffset = 0.5f;         // RayCast 起點
+    public float raycastDistance;           // RayCast 長度（要設定超大）
+    public LayerMask groundLayer;           // RayCast 層設定
 
+    [Header("太空移動")]
+    public float maxDriveSpeed;
+    public float driveAcceleration;
 
+    public float maxTurnAngularVelocity;
+    public float turnAcceleration;
 
-
-    }
-
-
+    [Header("降落")]
+    public float resistAcceleration;
 
     void Start()
     {
         stage = "OnPlanet";
-        _input = GetComponent<PlayerInputHandler>();
+        targetOrthographicSize = 10f;
+        dashboard.SetActive(false);
         _rb = GetComponent<Rigidbody2D>();
+        _inputHandler = GetComponent<InputHandler>();
+        fuel = 100f;
     }
 
     void Update()
     {
-        _movement = _input.movement;
-        _turn = _input.turn;
-        _jump = _input.jump;
-        _ignition = _input.ignition;
 
+        _horizontal = _inputHandler.horizontal;
+        _w = _inputHandler.w;
+        if (stage == "OnPlanet")
+        {
+            gravity = planet.GetComponent<PlanetGravity>().gravity;
+        }
+        if (stage == "InSpace")
+        {
+        }
 
-        Ortho();
+        vcam.m_Lens.OrthographicSize = Mathf.Lerp(vcam.m_Lens.OrthographicSize, targetOrthographicSize, changeOrthographicSpeed * Time.deltaTime);
 
     }
 
@@ -111,30 +80,50 @@ public class PlayerController : MonoBehaviour
 
         if (stage == "OnPlanet")
         {
-            Move();
+            Walk();
             Jump();
-        }
-        if (stage == "Launch")
-        {
             Launch();
         }
+
         if (stage == "InSpace")
         {
             Drive();
             Turn();
         }
+
         if (stage == "Landing")
         {
-            Landing();
+            Land();
         }
     }
 
-    private void Move()
+
+    private void GroundCheck()
+    {
+        Vector2 position = (Vector2)transform.position - (Vector2)transform.up * footOffset; // 射線起點
+        RaycastHit2D raycast = Physics2D.Raycast(position, -(Vector2)transform.up, raycastDistance, groundLayer);
+        height = raycast.distance;
+        if (raycast && height < .05)
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
+        /* DEBUG START */
+        Color color = (!isGrounded) ? Color.red : Color.green;
+        Debug.DrawRay(position, -(Vector2)transform.up * raycastDistance, color);
+        /* DEBUG END */
+    }
+
+    private void Walk()
     {
 
         if (isGrounded)
         {
-            if (_movement == 0)
+            if (_horizontal == 0)
             {
                 // 只保留垂直方向的速度
                 _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized;
@@ -142,10 +131,10 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Vector2 horizontalVelocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
-                if (horizontalVelocity.magnitude < maxMoveSpeed)
+                if (horizontalVelocity.magnitude < maxWalkSpeed)
                 {
                     // 水平加速
-                    _rb.AddForce(_movement * moveForce * ((Vector2)transform.right).normalized);
+                    _rb.AddForce(_horizontal * WalkAcceleration * _rb.mass * ((Vector2)transform.right).normalized);
                 }
             }
         }
@@ -155,100 +144,63 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (isGrounded && _jump)
+        if (isGrounded && _w)
         {
+            // 只保留水平方向的速度
+            _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
+            // 往上初速度
             _rb.velocity += Mathf.Sqrt(2f * jumpHeight * gravity) * (Vector2)transform.up;
         }
     }
 
-    private void GroundCheck()
-    {
-        Vector2 position = (Vector2)transform.position - (Vector2)transform.up * footOffset;
-        RaycastHit2D check = Physics2D.Raycast(position, -(Vector2)transform.up, groundDistance, groundLayer);
-
-        if (check)
-        {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-
-        Color color = check ? Color.red : Color.green;
-        Debug.DrawRay(position, -(Vector2)transform.up * groundDistance, color);
-    }
-
-
-    private void Landing()
-    {
-        _rb.AddForce(landingForce * ((Vector2)transform.up).normalized);
-    }
-
-
     private void Launch()
     {
 
-        if (_ignition)
+        if (_w && height > (jumpHeight - .1))
         {
-            if (launchForce < maxLaunchForce)
-            {
-                launchForce += launchForceRate * Time.fixedDeltaTime;
-            }
+            // 只保留垂直方向的速度（TODO 怪怪的，先左右好像起飛會比較快）
+            _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized;
+            _rb.AddForce((launchAcceleration + gravity) * _rb.mass * transform.up);
+            // 這邊可能有 bug，IDK
         }
-        else
-        {
-            launchForce = landingForce;
-        }
-
-        _rb.AddForce(launchForce * ((Vector2)transform.up).normalized);
 
     }
 
+    private void Land()
+    {
+        // _rb.AddForce(_rb.mass * resistAcceleration * transform.up);
+        if (isGrounded)
+        {
+            ChangeStage("OnPlanet");
+        }
+    }
 
     private void Drive()
     {
-        if (_ignition && _rb.velocity.magnitude < maxDriveSpeed)
+        if (_w && _rb.velocity.magnitude < maxDriveSpeed)
         {
-            _rb.AddForce(driveForce * ((Vector2)transform.up).normalized);
+            _rb.AddForce(driveAcceleration * _rb.mass * ((Vector2)transform.up).normalized);
+        }
+
+        if (_w)
+        {
+            // TODO
+            fuel -= .1f;
         }
     }
 
     private void Turn()
     {
-        if (_turn != 0)
+        if (_horizontal != 0)
         {
-            _rb.AddTorque(-_turn * turnTorque);
+            _rb.AddTorque(-_horizontal * turnAcceleration * _rb.mass * .5f); // .5 是力臂
         }
 
-        if (_rb.angularVelocity > maxAngularVelocity)
-            _rb.angularVelocity = maxAngularVelocity;
+        if (_rb.angularVelocity > maxTurnAngularVelocity)
+            _rb.angularVelocity = maxTurnAngularVelocity;
 
-        if (_rb.angularVelocity < -maxAngularVelocity)
-            _rb.angularVelocity = -maxAngularVelocity;
-
-    }
-
-
-
-    void OnTriggerStay2D(Collider2D collider)
-    {
-        if (collider.gameObject.name == "Launcher" && Input.GetKeyDown(KeyCode.F))
-        {
-            if (stage == "OnPlanet")
-            {
-                ChangeStage("Launch");
-            }
-            else if (stage == "Launch" && isGrounded)
-            {
-                ChangeStage("OnPlanet");
-            }
-        }
-
-        if (collider.gameObject.name == "Launcher" && stage == "Landing" && isGrounded)
-        {
-            ChangeStage("OnPlanet");
-        }
+        if (_rb.angularVelocity < -maxTurnAngularVelocity)
+            _rb.angularVelocity = -maxTurnAngularVelocity;
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -257,58 +209,45 @@ public class PlayerController : MonoBehaviour
         {
             ChangeStage("Landing");
         }
-
     }
 
     void OnTriggerExit2D(Collider2D collider)
     {
-        if (stage == "Launch" && collider.gameObject.name == "Field")
+        if (stage == "OnPlanet" && collider.gameObject.name == "Field")
         {
             ChangeStage("InSpace");
         }
     }
-
 
     void ChangeStage(string stageName)
     {
         // before
         if (stage == "InSpace")
         {
+            // 從太空到 ...
             _rb.drag = 0;
             _rb.angularDrag = 1000f;
+            targetOrthographicSize = 10f;
             dashboard.SetActive(false);
         }
 
-
         // change
-        _input.ChangeActionMap(stageName);
         stage = stageName;
 
         // after
         if (stage == "InSpace")
         {
+            // 從 ... 到太空
             _rb.drag = 1f;
             _rb.angularDrag = 1f;
+            targetOrthographicSize = 20f;
             dashboard.SetActive(true);
         }
 
 
-        if (stage == "Launch")
-        {
-            transform.position = new Vector3(0, 30.5f, 0);
-            _rb.velocity = Vector3.zero;
-            _rb.angularVelocity = 0;
-        }
         if (stage == "Landing")
         {
-            transform.position = new Vector3(0, transform.position.y, 0);
             _rb.velocity = Vector3.zero;
         }
-        print("Change stage to: " + stage);
-
-
     }
-
-
-
 }
