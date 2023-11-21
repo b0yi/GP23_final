@@ -10,7 +10,7 @@ public class ClickingItem : Item
 
     [SerializeField]
     float maxCount = 30f;
-    [SerializeField]
+    [SerializeField][DisplayOnly]
     float currentCount;
 
     private bool canCollect;
@@ -28,7 +28,11 @@ public class ClickingItem : Item
     // Update is called once per frame
     void Update()
     {
-        if (canCollect) {
+        if (isPlayerInRange) {
+            isPlayerOnGround = GameObject.Find("Player").GetComponent<PlayerController>().isGrounded;
+        }
+        if (canCollect && isPlayerOnGround) {
+        // if (canCollect) {
             if (currentCount == maxCount) {
                 // Counter is smaller than 0, player can collect!
                 OpenItemGetCanvas(itemName);

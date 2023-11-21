@@ -13,9 +13,9 @@ public class CalibrationItem : Item
     private bool isStarted;
     private bool isNeedleStopped;
 
-    [SerializeField][Tooltip("The rotation of the area.")]
+    [SerializeField][Tooltip("The rotation of the area.")][DisplayOnly]
     float areaRotation;
-    [SerializeField][Tooltip("The rotation of the needle.")]
+    [SerializeField][Tooltip("The rotation of the needle.")][DisplayOnly]
     float needleRotation;
     [SerializeField][Tooltip("The rotation speed of the needle.")]
     float needleSpeed = 0.25f;
@@ -34,7 +34,11 @@ public class CalibrationItem : Item
     // Update is called once per frame
     void Update()
     {
-        if (canCollect) {
+        if (isPlayerInRange) {
+            isPlayerOnGround = GameObject.Find("Player").GetComponent<PlayerController>().isGrounded;
+        }
+        if (canCollect && isPlayerOnGround) {
+        // if (canCollect) {
             // Player is in the collect range
             if (isNeedleStopped == true) {
                 // Is the needle stopped?

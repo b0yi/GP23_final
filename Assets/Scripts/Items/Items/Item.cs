@@ -11,6 +11,11 @@ public class Item : MonoBehaviour
     public GameObject itemCanvas;
     public ItemCanvasHandler itemCanvasHandler;
 
+    [DisplayOnly]
+    public bool isPlayerOnGround;
+    [DisplayOnly]
+    public bool isPlayerInRange;
+
     // Start is called before the first frame update
     void Start()
     {

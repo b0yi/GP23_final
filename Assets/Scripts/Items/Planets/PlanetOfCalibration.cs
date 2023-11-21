@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlanetOfCalibration : MonoBehaviour
 {
     public GameObject itemCanvas;
-    [SerializeField]
+    [SerializeField][DisplayOnly]
     int itemLeft = 3;
 
     // Start is called before the first frame update
