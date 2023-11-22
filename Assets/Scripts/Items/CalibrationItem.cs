@@ -13,14 +13,14 @@ public class CalibrationItem : Item
     private bool isStarted;
     private bool isNeedleStopped;
 
-    [SerializeField][Tooltip("The rotation of the area.")]
+    [SerializeField][Tooltip("The rotation of the area.")][DisplayOnly]
     float areaRotation;
-    [SerializeField][Tooltip("The rotation of the needle.")]
+    [SerializeField][Tooltip("The rotation of the needle.")][DisplayOnly]
     float needleRotation;
     [SerializeField][Tooltip("The rotation speed of the needle.")]
-    float needleSpeed;
+    float needleSpeed = 0.25f;
 
-    public GameObject planet;
+    public PlanetOfCalibration planet;
 
     // Start is called before the first frame update
     void Start()
@@ -28,17 +28,17 @@ public class CalibrationItem : Item
         stopArea = itemCanvas.transform.Find("Area");
         needle = itemCanvas.transform.Find("Needle");
 
-        needleSpeed = 0.15f;
-        
-        // calibrationFailedCanvas.SetActive(false);
-
         ItemReset();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canCollect) {
+        if (isPlayerInRange) {
+            isPlayerOnGround = GameObject.Find("Player").GetComponent<PlayerController>().isGrounded;
+        }
+        if (canCollect && isPlayerOnGround) {
+        // if (canCollect) {
             // Player is in the collect range
             if (isNeedleStopped == true) {
                 // Is the needle stopped?
@@ -46,7 +46,9 @@ public class CalibrationItem : Item
                     // Whether the needle is in the right place
                     // Yes, player succeeded
                     Debug.Log("Succeeded to calibration");
-                    OpenItemGetCanvas(itemName);
+                    if (planet.DecreaseCanvasNum()) {
+                        OpenItemGetCanvas(itemName);
+                    }
                     ItemReset();
                     Destroy(gameObject);
                 }

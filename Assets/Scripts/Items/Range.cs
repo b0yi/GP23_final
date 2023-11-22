@@ -21,9 +21,11 @@ public class Range : MonoBehaviour
         if (other.name == "Player") {
             if (transform.parent.name == "ClickingItem") {
                 transform.parent.GetComponent<ClickingItem>().ShowItemCanvas();
+                transform.parent.GetComponent<Item>().isPlayerInRange = true;
             }
             else if (transform.parent.name == "CalibrationItem") {
                 transform.parent.GetComponent<CalibrationItem>().ShowItemCanvas();
+                transform.parent.GetComponent<Item>().isPlayerInRange = true;
             }
         }
     }
@@ -33,9 +35,11 @@ public class Range : MonoBehaviour
         if (other.name == "Player") {
             if (transform.parent.name == "ClickingItem") {
                 transform.parent.GetComponent<ClickingItem>().CloseItemCanvas();
+                transform.parent.GetComponent<Item>().isPlayerInRange = false;
             }
             else if (transform.parent.name == "CalibrationItem") {
                 transform.parent.GetComponent<CalibrationItem>().CloseItemCanvas();
+                transform.parent.GetComponent<Item>().isPlayerInRange = false;
             }
         }
     }

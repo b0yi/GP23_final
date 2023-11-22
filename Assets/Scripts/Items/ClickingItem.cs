@@ -9,13 +9,13 @@ public class ClickingItem : Item
     private Slider progressBar;
 
     [SerializeField]
-    float maxCount = 30f;
-    [SerializeField]
+    float maxCount = 50f;
+    [SerializeField][DisplayOnly]
     float currentCount;
 
     private bool canCollect;
 
-    public GameObject protector;
+    public EnemyController protector;
 
     // Start is called before the first frame update
     void Start()
@@ -28,9 +28,14 @@ public class ClickingItem : Item
     // Update is called once per frame
     void Update()
     {
-        if (canCollect) {
+        if (isPlayerInRange) {
+            isPlayerOnGround = GameObject.Find("Player").GetComponent<PlayerController>().isGrounded;
+        }
+        if (canCollect && isPlayerOnGround) {
+        // if (canCollect) {
             if (currentCount == maxCount) {
                 // Counter is smaller than 0, player can collect!
+                protector.StopMove();
                 OpenItemGetCanvas(itemName);
                 Destroy(itemCanvas);
                 Destroy(gameObject);
@@ -41,6 +46,7 @@ public class ClickingItem : Item
             if (Input.GetMouseButtonDown(0)) {
                 // Reduce the counter
                 currentCount += 1;
+                protector.CaculateDirection();
             }
         }
     }
