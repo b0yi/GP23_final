@@ -7,16 +7,18 @@ public class PlayerAnimation : MonoBehaviour
     private Animator _animator;
     private PlayerController _playerController;
     private InputHandler _inputHandler;
+    
 
     void Start()
     {
         _animator = GetComponent<Animator>();
         _playerController = GetComponent<PlayerController>();
-        _inputHandler = GetComponent<InputHandler>();
+        _inputHandler = GetComponent<InputHandler>();      
     }
 
     void Update()
     {
+        print(_playerController.stage);
         if (_playerController.stage == "OnPlanet")
         {
             if (_inputHandler.horizontal != 0)
@@ -44,6 +46,11 @@ public class PlayerAnimation : MonoBehaviour
         if (_playerController.stage == "OnPlanet")
         {
             _animator.SetBool("isGrounded", _playerController.isGrounded);
+        }
+
+        if (_playerController.stage == "Landing")
+        {
+            _animator.SetBool("isTransforming", false);
         }
     }
 }
