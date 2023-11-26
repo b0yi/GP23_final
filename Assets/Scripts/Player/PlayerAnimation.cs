@@ -8,6 +8,8 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerController _playerController;
     private InputHandler _inputHandler;
     
+    public ParticleSystem fire;
+
 
     void Start()
     {
@@ -51,6 +53,18 @@ public class PlayerAnimation : MonoBehaviour
         if (_playerController.stage == "Landing")
         {
             _animator.SetBool("isTransforming", false);
+        }
+
+        if (_playerController.stage == "InSpace")
+        {
+            if (_inputHandler.w)
+            {
+                fire.Play();
+            }
+            else
+            {
+                ;
+            }
         }
     }
 }
