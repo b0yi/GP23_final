@@ -1431,7 +1431,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       scalar: 0.052359875
-      minScalar: 0.7853982
+      minScalar: -0.052359875
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10241,7 +10241,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 1428052401
+  m_SortingLayerID: -1687630259
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &82310110
@@ -36583,9 +36583,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01601543, y: -0.18137908}
-  m_Size: {x: 0.3353347, y: 0.497348}
-  m_Direction: 0
+  m_Offset: {x: 0.08000748, y: -0.33927277}
+  m_Size: {x: 0.43867713, y: 0.23416103}
+  m_Direction: 1
 --- !u!212 &354402523
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36627,7 +36627,7 @@ SpriteRenderer:
   m_SortingLayerID: 283453537
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5bb061152adeca74281913856363ad53, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 270cb584f59487c4a8e7c3f45d4ac0af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -36635,7 +36635,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &354402524
@@ -74682,7 +74682,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 200
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -79315,10 +79315,10 @@ MonoBehaviour:
   cam: {fileID: 1022788479}
   player: {fileID: 162701293}
   target: {fileID: 750649723}
-  paddingTop: 50
-  paddingRight: 20
-  paddingBottom: 50
-  paddingLeft: 20
+  paddingTop: 10
+  paddingRight: 10
+  paddingBottom: 10
+  paddingLeft: 10
   boundary: []
 --- !u!114 &1782691700
 MonoBehaviour:
@@ -86678,8 +86678,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 283453537
-  m_SortingLayer: 3
+  m_SortingLayerID: 1428052401
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 4
   m_MeshDistribution: 0
