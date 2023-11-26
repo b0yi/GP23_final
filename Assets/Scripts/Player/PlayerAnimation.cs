@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour
     private Animator _animator;
     private PlayerController _playerController;
     private InputHandler _inputHandler;
-    
+
     public ParticleSystem fire;
 
 
@@ -15,7 +15,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _playerController = GetComponent<PlayerController>();
-        _inputHandler = GetComponent<InputHandler>();      
+        _inputHandler = GetComponent<InputHandler>();
     }
 
     void Update()
@@ -60,11 +60,19 @@ public class PlayerAnimation : MonoBehaviour
             if (_inputHandler.w)
             {
                 fire.Play();
+                _animator.SetBool("isAccelerating", true);
             }
             else
             {
+                _animator.SetBool("isAccelerating", false);
                 ;
             }
         }
+        else
+        {
+            _animator.SetBool("isAccelerating", false);
+            ;
+        }
+
     }
 }
