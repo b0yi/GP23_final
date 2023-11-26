@@ -7,18 +7,20 @@ public class PlayerAnimation : MonoBehaviour
     private Animator _animator;
     private PlayerController _playerController;
     private InputHandler _inputHandler;
+    
+    public ParticleSystem fire;
 
 
     void Start()
     {
         _animator = GetComponent<Animator>();
         _playerController = GetComponent<PlayerController>();
-        _inputHandler = GetComponent<InputHandler>();
+        _inputHandler = GetComponent<InputHandler>();      
     }
 
     void Update()
     {
-        // print(_playerController.stage);
+        print(_playerController.stage);
         if (_playerController.stage == "OnPlanet")
         {
             if (_inputHandler.horizontal != 0)
@@ -51,6 +53,18 @@ public class PlayerAnimation : MonoBehaviour
         if (_playerController.stage == "Landing")
         {
             _animator.SetBool("isTransforming", false);
+        }
+
+        if (_playerController.stage == "InSpace")
+        {
+            if (_inputHandler.w)
+            {
+                fire.Play();
+            }
+            else
+            {
+                ;
+            }
         }
     }
 }

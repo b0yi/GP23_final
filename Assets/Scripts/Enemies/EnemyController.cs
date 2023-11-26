@@ -71,7 +71,7 @@ public class EnemyController : MonoBehaviour
         Vector2 position = (Vector2)transform.position - (Vector2)transform.up * footOffset; // 射線起點
         RaycastHit2D raycast = Physics2D.Raycast(position, -(Vector2)transform.up, raycastDistance, groundLayer);
         height = raycast.distance;
-        if (raycast && height < .05)
+        if (raycast && height < 1f)
         {
             isGrounded = true;
         }
@@ -98,7 +98,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                transform.localScale = (direction > 0) ? new Vector3(1f, 1, 1) : new Vector3(-1f, 1, 1);
+                transform.localScale = (direction > 0) ? new Vector3(-3f, 3, 1) : new Vector3(3f, 3, 1);
                 Vector2 horizontalVelocity = Vector2.Dot(rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
                 if (horizontalVelocity.magnitude < maxWalkSpeed)
                 {

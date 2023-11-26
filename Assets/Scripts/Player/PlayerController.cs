@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
     [Header("降落")]
     public float resistAcceleration;
 
+    
+    
+
     void Start()
     {
         stage = "OnPlanet";
@@ -123,6 +126,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
+           
             if (_horizontal == 0)
             {
                 // 只保留垂直方向的速度
@@ -178,9 +182,10 @@ public class PlayerController : MonoBehaviour
 
     private void Drive()
     {
+        
         if (_w && _rb.velocity.magnitude < maxDriveSpeed)
         {
-            _rb.AddForce(driveAcceleration * _rb.mass * ((Vector2)transform.up).normalized);
+            _rb.AddForce(driveAcceleration * _rb.mass * ((Vector2)transform.up).normalized);           
         }
 
         if (_w)
