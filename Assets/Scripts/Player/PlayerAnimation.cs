@@ -20,7 +20,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
-        print(_playerController.stage);
+        //print(_playerController.stage);
         if (_playerController.stage == "OnPlanet")
         {
             if (_inputHandler.horizontal != 0)
