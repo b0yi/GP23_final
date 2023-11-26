@@ -12,11 +12,11 @@ public class EnemyController : MonoBehaviour
 
     [Header("狀態")]
     [DisplayOnly] public string stage;      // OnPlanet | InSpace
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
     [Header("移動")]
-    private float direction;
-    private bool jump;
+    protected float direction;
+    public bool jump;
 
     [Header("星球上移動")]
     public float maxWalkSpeed;
@@ -26,11 +26,23 @@ public class EnemyController : MonoBehaviour
     [DisplayOnly] public bool isGrounded;
     [DisplayOnly] public float height;      // 物體海拔（RayCast 檢測發生距離）
     [DisplayOnly] public float gravity;     // 所受重力
+    [DisplayOnly] public bool canJump = true;  // 可否跳躍
+    public float jumpCoolDown = 1f;
     public float jumpHeight;                // 跳躍高度
     public float launchAcceleration;        // 發射加速度
     public float footOffset = 0.5f;         // RayCast 起點
     public float raycastDistance;           // RayCast 長度（要設定超大）
     public LayerMask groundLayer;           // RayCast 層設定
+
+    [Header("太空移動")]
+    public float maxDriveSpeed;
+    public float driveAcceleration;
+
+    public float maxTurnAngularVelocity;
+    public float turnAcceleration;
+
+    [Header("降落")]
+    public float resistAcceleration;
 
     [Header("攻擊")]
     public float detectRange = 10f;
@@ -66,12 +78,12 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    private void GroundCheck()
+    protected virtual void GroundCheck()
     {
         Vector2 position = (Vector2)transform.position - (Vector2)transform.up * footOffset; // 射線起點
         RaycastHit2D raycast = Physics2D.Raycast(position, -(Vector2)transform.up, raycastDistance, groundLayer);
         height = raycast.distance;
-        if (raycast && height < 1f)
+        if (raycast && height < 0.5f)
         {
             isGrounded = true;
         }
@@ -86,7 +98,7 @@ public class EnemyController : MonoBehaviour
         /* DEBUG END */
     }
 
-    private void Walk()
+    protected void Walk()
     {
 
         if (isGrounded)
@@ -111,7 +123,7 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    private void Jump()
+    protected virtual void Jump()
     {
         if (isGrounded && jump)
         {
@@ -122,15 +134,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.collider.name == "Player") {
-            // TODO: Hurt player
-            player.transform.position = player.transform.position - (Vector3)other.contacts[0].normal * 8;
-        }
-    }
-
-    private void DetectPlayer() {
+    protected void DetectPlayer() {
         if (IsPlayerInRange()) {
             CaculateDirection();
         }
@@ -141,7 +145,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public bool IsPlayerInRange() {
+    protected bool IsPlayerInRange() {
         Vector3 playerPos = player.transform.position;
         float distance = (playerPos - transform.position).magnitude;
 
@@ -191,6 +195,11 @@ public class EnemyController : MonoBehaviour
         isPlayerLocked = false;
         isPlayerOnceInRange = false;
         direction = 0;
+    }
+
+    protected IEnumerator JumpCoolDown(float sec) {
+        yield return new WaitForSeconds(sec);
+        canJump = true;
     }
 }
 

@@ -6,7 +6,7 @@ public class EnemyGravity : MonoBehaviour
 {
     public PlanetGravity planetGravity; // see PlanetGravity.cs
 
-    private EnemyController _EnemyController;
+    public EnemyController _EnemyController;
 
     void Start()
     {
