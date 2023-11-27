@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [DisplayOnly] public string stage;      // OnPlanet | InSpace
     private Rigidbody2D _rb;
     [DisplayOnly] public float fuel;        // 油量/電量（0 - 100）
+    [DisplayOnly] public bool direction;    // 速度往上 or 往下 or 0
+
 
     [Header("輸入")]
     private InputHandler _inputHandler;
@@ -47,8 +49,8 @@ public class PlayerController : MonoBehaviour
     [Header("降落")]
     public float resistAcceleration;
 
-    
-    
+
+
 
     void Start()
     {
@@ -98,6 +100,25 @@ public class PlayerController : MonoBehaviour
         {
             Land();
         }
+
+
+        if (isGrounded)
+        {
+            direction = false;
+        }
+        else
+        {
+            if (Vector2.Dot(_rb.velocity, transform.up) > 0)
+            {
+                direction = true;
+            }
+            else if (Vector2.Dot(_rb.velocity, transform.up) < -1)
+            {
+                direction = false;
+            }
+        }
+
+
     }
 
 
@@ -126,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-           
+
             if (_horizontal == 0)
             {
                 // 只保留垂直方向的速度
@@ -182,10 +203,10 @@ public class PlayerController : MonoBehaviour
 
     private void Drive()
     {
-        
+
         if (_w && _rb.velocity.magnitude < maxDriveSpeed)
         {
-            _rb.AddForce(driveAcceleration * _rb.mass * ((Vector2)transform.up).normalized);           
+            _rb.AddForce(driveAcceleration * _rb.mass * ((Vector2)transform.up).normalized);
         }
 
         if (_w)

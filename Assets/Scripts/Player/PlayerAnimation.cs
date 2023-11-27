@@ -20,59 +20,34 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
-        //print(_playerController.stage);
         if (_playerController.stage == "OnPlanet")
         {
+
             if (_inputHandler.horizontal != 0)
             {
-                _animator.SetBool("isWalking", true);
+                _animator.SetInteger("state", 1);
             }
-            else
+            if (_playerController.direction)
             {
-                _animator.SetBool("isWalking", false);
+                _animator.SetInteger("state", 2);
             }
-        }
 
-        if (_playerController.stage == "OnPlanet")
-        {
-            if (_inputHandler.w)
+            if ((_inputHandler.horizontal == 0) && (!_playerController.direction))
             {
-                _animator.SetBool("isTransforming", true);
+                _animator.SetInteger("state", 0);
             }
-            else
-            {
-                _animator.SetBool("isTransforming", false);
-            }
-        }
-
-        if (_playerController.stage == "OnPlanet")
-        {
-            _animator.SetBool("isGrounded", _playerController.isGrounded);
-        }
-
-        if (_playerController.stage == "Landing")
-        {
-            _animator.SetBool("isTransforming", false);
         }
 
         if (_playerController.stage == "InSpace")
         {
             if (_inputHandler.w)
             {
-                Debug.Log("fire");
-                fire.Play();
-                _animator.SetBool("isAccelerating", true);
+                _animator.SetBool("accel", true);
             }
             else
             {
-                _animator.SetBool("isAccelerating", false);
-                ;
+                _animator.SetBool("accel", false);
             }
-        }
-        else
-        {
-            _animator.SetBool("isAccelerating", false);
-            ;
         }
 
     }

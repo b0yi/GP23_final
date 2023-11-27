@@ -15945,6 +15945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stage: 
   fuel: 0
+  direction: 0
   vcam: {fileID: 789786456}
   changeOrthographicSpeed: 3.5
   targetOrthographicSize: 0
