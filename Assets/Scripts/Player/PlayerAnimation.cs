@@ -59,6 +59,7 @@ public class PlayerAnimation : MonoBehaviour
         {
             if (_inputHandler.w)
             {
+                Debug.Log("fire");
                 fire.Play();
                 _animator.SetBool("isAccelerating", true);
             }
