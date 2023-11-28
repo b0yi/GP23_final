@@ -32,6 +32,13 @@ public class PlayerAnimation : MonoBehaviour
                 _animator.SetInteger("state", 2);
             }
 
+            if (_inputHandler.w && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spaceship"))
+            {
+                fire.Play();
+            }
+
+
+
             if ((_inputHandler.horizontal == 0) && (!_playerController.direction))
             {
                 _animator.SetInteger("state", 0);
@@ -43,6 +50,7 @@ public class PlayerAnimation : MonoBehaviour
             if (_inputHandler.w)
             {
                 _animator.SetBool("accel", true);
+                fire.Play();
             }
             else
             {

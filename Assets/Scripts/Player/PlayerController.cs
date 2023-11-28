@@ -204,9 +204,14 @@ public class PlayerController : MonoBehaviour
     private void Drive()
     {
 
-        if (_w && _rb.velocity.magnitude < maxDriveSpeed)
+        if (_w)
         {
             _rb.AddForce(driveAcceleration * _rb.mass * ((Vector2)transform.up).normalized);
+        }
+
+        if (_rb.velocity.magnitude > maxDriveSpeed)
+        {
+            _rb.velocity = _rb.velocity.normalized * maxDriveSpeed;
         }
 
         if (_w)
@@ -265,8 +270,8 @@ public class PlayerController : MonoBehaviour
         if (stage == "InSpace")
         {
             // 從 ... 到太空
-            _rb.drag = 1f;
-            _rb.angularDrag = 1f;
+            _rb.drag = 0f;
+            _rb.angularDrag = 0f;
             targetOrthographicSize = 20f;
             dashboard.SetActive(true);
         }
