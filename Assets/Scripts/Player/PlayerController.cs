@@ -5,11 +5,16 @@ using Cinemachine;
 public class PlayerController : MonoBehaviour
 {
 
+    [Header("測試")]
+    public bool test;
+
     [Header("狀態")]
     [DisplayOnly] public string stage;      // OnPlanet | InSpace
     private Rigidbody2D _rb;
     [DisplayOnly] public float fuel;        // 油量/電量（0 - 100）
+    public float fuelDelta;
     [DisplayOnly] public bool direction;    // 速度往上 or 往下 or 0
+    [DisplayOnly] public UIManager uIManager;
 
 
     [Header("輸入")]
@@ -52,11 +57,13 @@ public class PlayerController : MonoBehaviour
 
 
 
+
     void Start()
     {
+        uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
         stage = "OnPlanet";
         targetOrthographicSize = 10f;
-        dashboard.SetActive(false);
+        dashboard.SetActive(true);
         _rb = GetComponent<Rigidbody2D>();
         _inputHandler = GetComponent<InputHandler>();
         fuel = 100f;
@@ -217,7 +224,11 @@ public class PlayerController : MonoBehaviour
         if (_w)
         {
             // TODO
-            fuel -= .1f;
+            fuel -= fuelDelta;
+            if (fuel <= 0)
+            {
+                uIManager.LoadPlayScene();
+            }
         }
     }
 
@@ -260,7 +271,6 @@ public class PlayerController : MonoBehaviour
             _rb.drag = 0;
             _rb.angularDrag = 1000f;
             targetOrthographicSize = 10f;
-            dashboard.SetActive(false);
         }
 
         // change
@@ -270,10 +280,19 @@ public class PlayerController : MonoBehaviour
         if (stage == "InSpace")
         {
             // 從 ... 到太空
-            _rb.drag = 0f;
-            _rb.angularDrag = 0f;
             targetOrthographicSize = 20f;
-            dashboard.SetActive(true);
+            if (test)
+            {
+                _rb.drag = 10f;
+                _rb.angularDrag = 10f;
+
+            }
+            else
+            {
+                _rb.drag = 0f;
+                _rb.angularDrag = 0f;
+
+            }
         }
 
 

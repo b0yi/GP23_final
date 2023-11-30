@@ -3,7 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     private void LoadScene(string target)
     {
         SceneManager.LoadSceneAsync(target);
