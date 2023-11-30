@@ -14,7 +14,7 @@ TagManager:
   - Player
   - StarParticle
   - NebulaParticle
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 133605035
+    locked: 0
+  - name: Starground
+    uniqueID: 1511874623
     locked: 0
   - name: Midground
     uniqueID: 1428052401
