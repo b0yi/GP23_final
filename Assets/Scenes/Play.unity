@@ -26188,6 +26188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fire: {fileID: 266044103}
+  playerLight: {fileID: 208988072}
 --- !u!70 &162701307
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
