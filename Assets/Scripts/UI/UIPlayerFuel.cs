@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIPlayerFuel : MonoBehaviour
 {
     private Image _image;
-    public GameObject full;
+    //public GameObject full;
 
     public GameObject player;
     private PlayerController _playerPC;
@@ -27,14 +27,14 @@ public class UIPlayerFuel : MonoBehaviour
     {
         _image.fillAmount = _playerPC.fuel / (_max - _min);
 
-        if (_playerPC.fuel > 95f)
+        /*if (_playerPC.fuel > 95f)
         {
             full.SetActive(true);
         }
         else
         {
             full.SetActive(false);
-        }
+        }*/
 
         if (_playerPC.fuel < 30f)
         {
@@ -42,7 +42,7 @@ public class UIPlayerFuel : MonoBehaviour
         }
         else
         {
-            _image.color = Color.white;
+            _image.color = Color.black;
         }
     }
 }
