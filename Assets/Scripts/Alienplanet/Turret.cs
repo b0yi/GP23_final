@@ -28,7 +28,7 @@ public class Turret : MonoBehaviour
         /* DEBUG END */
         if (rayInfo)
         {
-            print(rayInfo.collider.gameObject.name);
+            //print(rayInfo.collider.gameObject.name);
         }
         if (rayInfo && rayInfo.collider.gameObject.name == "Player")
         {
