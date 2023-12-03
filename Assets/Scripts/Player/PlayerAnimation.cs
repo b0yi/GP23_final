@@ -9,6 +9,7 @@ public class PlayerAnimation : MonoBehaviour
     private InputHandler _inputHandler;
 
     public ParticleSystem fire;
+    public GameObject playerLight;
 
 
     void Start()
@@ -22,7 +23,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (_playerController.stage == "OnPlanet")
         {
-
+            playerLight.SetActive(false);
             if (_inputHandler.horizontal != 0)
             {
                 _animator.SetInteger("state", 1);
@@ -47,6 +48,7 @@ public class PlayerAnimation : MonoBehaviour
 
         if (_playerController.stage == "InSpace")
         {
+            playerLight.SetActive(true);
             if (_inputHandler.w)
             {
                 _animator.SetBool("accel", true);
