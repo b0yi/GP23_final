@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public float fuelDelta;
     [DisplayOnly] public bool direction;    // 速度往上 or 往下 or 0
     [DisplayOnly] public UIManager uIManager;
+    [DisplayOnly] public bool isLocked;
 
 
     [Header("輸入")]
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _inputHandler = GetComponent<InputHandler>();
         fuel = 100f;
+        isLocked = false;
     }
 
     void Update()
@@ -90,14 +92,14 @@ public class PlayerController : MonoBehaviour
     {
         GroundCheck();
 
-        if (stage == "OnPlanet")
+        if (stage == "OnPlanet" && (!isLocked))
         {
             Walk();
             Jump();
             Launch();
         }
 
-        if (stage == "InSpace")
+        if (stage == "InSpace" && (!isLocked))
         {
             Drive();
             Turn();
