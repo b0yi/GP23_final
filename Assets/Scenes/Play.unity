@@ -53390,8 +53390,7 @@ Transform:
   m_LocalPosition: {x: -0.0982, y: 0.4955, z: 0}
   m_LocalScale: {x: 0.03, y: 0.03, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 354211942}
+  m_Children: []
   m_Father: {fileID: 582345612}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 13}
 --- !u!212 &414270007
@@ -53493,7 +53492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 296e89cb826b49b73b9e6dc07eb47a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeline: {fileID: 1983869794}
+  timeline: {fileID: 1645554293}
   player: {fileID: 162701304}
 --- !u!1 &417315275
 GameObject:
@@ -64468,6 +64467,7 @@ Transform:
   - {fileID: 1854932514}
   - {fileID: 2043473317}
   - {fileID: 2121571402}
+  - {fileID: 414270006}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &582345613
@@ -103445,7 +103445,7 @@ RectTransform:
   m_Father: {fileID: 1700922637}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -115351,7 +115351,7 @@ RectTransform:
   m_Father: {fileID: 1950881042}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -120828,7 +120828,6 @@ Transform:
   - {fileID: 1007184205}
   - {fileID: 349780315}
   - {fileID: 347647657}
-  - {fileID: 1970192674}
   - {fileID: 1743313903}
   - {fileID: 1096283646}
   m_Father: {fileID: 0}
@@ -121315,6 +121314,61 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.9710609, y: 30.212606, z: -8.4401865}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1645554292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1645554294}
+  - component: {fileID: 1645554293}
+  m_Layer: 0
+  m_Name: TimelinePlanetR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!320 &1645554293
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645554292}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 8353386f3910301cdb576a4c95a31530, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 6788597045164806086, guid: 8353386f3910301cdb576a4c95a31530, type: 2}
+    value: {fileID: 1022788483}
+  m_ExposedReferences:
+    m_References:
+    - 812e43b2b5b9c8aaf9b9be0b9134424b: {fileID: 1931916614}
+    - 7273f7a6867773f43b2691bc367d8080: {fileID: 1931916614}
+    - 5b396eab23f0332b8ba78417322a867e: {fileID: 789786456}
+    - 5a1d0025cd20cd0108b96b531084e05b: {fileID: 789786456}
+--- !u!4 &1645554294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645554292}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.9775715, y: 30.10065, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -148854,66 +148908,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 885931625}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!1 &1983869793
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1970192674}
-  - component: {fileID: 1970192676}
-  - component: {fileID: 1970192675}
-  m_Layer: 8
-  m_Name: Nebula blue foreground
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!320 &1983869794
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1983869793}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 8353386f3910301cdb576a4c95a31530, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 6788597045164806086, guid: 8353386f3910301cdb576a4c95a31530, type: 2}
-    value: {fileID: 1022788483}
-  m_ExposedReferences:
-    m_References:
-    - d046f40cd8e3921479362a0d290f2310: {fileID: 789786456}
-    - a4f1d5b9e77b52f639c492f6a9d34d12: {fileID: 0}
-    - c80335967930da7d38d07449288d112b: {fileID: 0}
-    - 7273f7a6867773f43b2691bc367d8080: {fileID: 1931916614}
-    - 5b396eab23f0332b8ba78417322a867e: {fileID: 789786456}
-    - 5a1d0025cd20cd0108b96b531084e05b: {fileID: 789786456}
-    - c194632467b483df78a6fb15a3d765d6: {fileID: 0}
-    - 04efd996ed62df343ab00517056cb83d: {fileID: 0}
---- !u!4 &1983869795
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970192673}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 53.2, y: 148.8, z: 20.7}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1472588221}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &1970192675
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -148921,7 +148915,7 @@ ParticleSystemRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970192673}
+  m_GameObject: {fileID: 1983869793}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -148994,7 +148988,7 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970192673}
+  m_GameObject: {fileID: 1983869793}
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 1
@@ -153711,6 +153705,67 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &1983869793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1983869795}
+  - component: {fileID: 1970192676}
+  - component: {fileID: 1970192675}
+  - component: {fileID: 1983869794}
+  m_Layer: 8
+  m_Name: Nebula blue foreground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!320 &1983869794
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983869793}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 8353386f3910301cdb576a4c95a31530, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 6788597045164806086, guid: 8353386f3910301cdb576a4c95a31530, type: 2}
+    value: {fileID: 1022788483}
+  m_ExposedReferences:
+    m_References:
+    - d046f40cd8e3921479362a0d290f2310: {fileID: 789786456}
+    - a4f1d5b9e77b52f639c492f6a9d34d12: {fileID: 0}
+    - c80335967930da7d38d07449288d112b: {fileID: 0}
+    - 7273f7a6867773f43b2691bc367d8080: {fileID: 1931916614}
+    - 5b396eab23f0332b8ba78417322a867e: {fileID: 789786456}
+    - 5a1d0025cd20cd0108b96b531084e05b: {fileID: 789786456}
+    - c194632467b483df78a6fb15a3d765d6: {fileID: 0}
+    - 04efd996ed62df343ab00517056cb83d: {fileID: 0}
+--- !u!4 &1983869795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983869793}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1990297849
 GameObject:
   m_ObjectHideFlags: 0
@@ -164952,6 +165007,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1983869795}
   - {fileID: 1154106383}
   - {fileID: 630375939}
   - {fileID: 1022788480}
@@ -164978,3 +165034,6 @@ SceneRoots:
   - {fileID: 514693965}
   - {fileID: 2001952443}
   - {fileID: 885931625}
+  - {fileID: 263976057}
+  - {fileID: 1931916615}
+  - {fileID: 1645554294}
