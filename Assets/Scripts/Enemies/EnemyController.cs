@@ -29,6 +29,7 @@ public class EnemyController : MonoBehaviour
     [DisplayOnly] public bool canJump = true;  // 可否跳躍
     public float jumpCoolDown = 1f;
     public float jumpHeight;                // 跳躍高度
+    public float jumpRange;                 // 可起跳距離
     public float launchAcceleration;        // 發射加速度
     public float footOffset = 0.5f;         // RayCast 起點
     public float raycastDistance;           // RayCast 長度（要設定超大）
@@ -47,8 +48,11 @@ public class EnemyController : MonoBehaviour
     [Header("攻擊")]
     public float detectRange = 10f;
     public float damage = 10f;
-    [DisplayOnly] public bool isPlayerLocked = false;       // 玩家是否被敵人鎖定
-    [DisplayOnly] public bool isPlayerOnceInRange = false;  // 玩家是否曾在感知範圍內 
+    [DisplayOnly] public bool chasePlayer = false;          // 是否要追玩家
+    [DisplayOnly] public bool isPlayerInEnemyRange = false; // 玩家是否在感知範圍內 
+
+    [Header("其他部分 (e.g. Inherited Class)")]
+    [DisplayOnly] public bool IUnderstoodThis = true;
 
     void Start()
     {
@@ -77,13 +81,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-
-    protected virtual void GroundCheck()
+    protected void GroundCheck()
     {
         Vector2 position = (Vector2)transform.position - (Vector2)transform.up * footOffset; // 射線起點
         RaycastHit2D raycast = Physics2D.Raycast(position, -(Vector2)transform.up, raycastDistance, groundLayer);
         height = raycast.distance;
-        if (raycast && height < 0.5f)
+        if (raycast && height < 0.15f)
         {
             isGrounded = true;
         }
@@ -119,8 +122,6 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-
-
     }
 
     protected virtual void Jump()
@@ -134,72 +135,68 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected void DetectPlayer() {
-        if (IsPlayerInRange()) {
+
+
+
+
+    protected virtual void DetectPlayer() {
+        if (IsPlayerInRange(detectRange) || chasePlayer) {
             CaculateDirection();
         }
         else {
-            if (!isPlayerLocked) {
-                direction = 0;
-            }
+            direction = 0;
         }
     }
 
-    protected bool IsPlayerInRange() {
+    /// <summary>
+    /// Use to detect whether player is in the given range.
+    /// </summary>
+    /// <param name="rangeToDetect">The range you want to check. (e.g. detectRange)</param>
+    /// <returns>Return true if player is in the range, else false.</returns>
+    protected bool IsPlayerInRange(float rangeToDetect) {
         Vector3 playerPos = player.transform.position;
         float distance = (playerPos - transform.position).magnitude;
 
-        if (distance <= detectRange/2) {
-            isPlayerOnceInRange = true;
+        if (distance <= rangeToDetect / 2) {
+            isPlayerInEnemyRange = true;
             return true;
         }
         else {
-            if (isPlayerOnceInRange) {
-                isPlayerLocked = false;
-                isPlayerOnceInRange = false;
-            }
+            isPlayerInEnemyRange = false;
             return false;
         }
     }
 
     public void CaculateDirection() {
-        if (!isPlayerLocked) {
-            // 玩家若尚未被鎖定
-            // 鎖定玩家 (同時避免重複執行此函式)
-            isPlayerLocked = true;
+        // 玩家相對於星球中心的向量
+        Vector3 playerToCenter = player.transform.position - planet.transform.position;
 
-            // 玩家相對於星球中心的向量
-            Vector3 playerToCenter = player.transform.position - planet.transform.position;
+        // 敵人相對於星球中心的向量
+        Vector3 enemyToCenter = transform.position - planet.transform.position;
 
-            // 敵人相對於星球中心的向量
-            Vector3 enemyToCenter = transform.position - planet.transform.position;
+        // 使用Vector3.Cross計算兩個向量的外積，以確定玩家在敵人的左邊還是右邊
+        float crossProduct = Vector3.Cross(enemyToCenter, playerToCenter).z;
 
-            // 使用Vector3.Cross計算兩個向量的外積，以確定玩家在敵人的左邊還是右邊
-            float crossProduct = Vector3.Cross(enemyToCenter, playerToCenter).z;
-
-            // 如果外積為正，玩家在敵人的左邊，反之在右邊
-            if (crossProduct > 0) {
-                // 玩家在左邊，敵人向左移動
-                Debug.Log("Enemy Go Left.");
-                direction = -1f;
-            }
-            else if (crossProduct <= 0) {
-                // 玩家在右邊，敵人向右移動
-                Debug.Log("Enemy Go Right.");
-                direction = 1f;
-            }
+        // 如果外積為正，玩家在敵人的左邊，反之在右邊
+        if (crossProduct > 0) {
+            // 玩家在左邊，敵人向左移動
+            Debug.Log("Enemy Go Left.");
+            direction = -1f;
         }
-    }
-
-    public void StopMove() {
-        isPlayerLocked = false;
-        isPlayerOnceInRange = false;
-        direction = 0;
+        else if (crossProduct <= 0) {
+            // 玩家在右邊，敵人向右移動
+            Debug.Log("Enemy Go Right.");
+            direction = 1f;
+        }
     }
 
     protected IEnumerator JumpCoolDown(float sec) {
         yield return new WaitForSeconds(sec);
         canJump = true;
+    }
+
+    public void GoChasePlayer() {
+        chasePlayer = true;
     }
 }
 
