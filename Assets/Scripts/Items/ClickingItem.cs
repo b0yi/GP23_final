@@ -15,7 +15,7 @@ public class ClickingItem : Item
 
     private bool canCollect;
 
-    public EnemyController protector;
+    public CatEnemy protector;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +35,6 @@ public class ClickingItem : Item
         // if (canCollect) {
             if (currentCount == maxCount) {
                 // Counter is smaller than 0, player can collect!
-                protector.StopMove();
                 OpenItemGetCanvas(itemName);
                 Destroy(itemCanvas);
                 Destroy(gameObject);
