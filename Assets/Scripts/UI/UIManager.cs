@@ -1,10 +1,22 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GameProgressStage
+{
+    PlanetR,
+    PlanetE,
+    PlanetF,
+    Final,
+}
+
 public class UIManager : MonoBehaviour
 {
+    [DisplayOnly] public GameProgressStage stage;
+
     void Start()
     {
+        stage = GameProgressStage.PlanetR;
         DontDestroyOnLoad(gameObject);
     }
     private void LoadScene(string target)

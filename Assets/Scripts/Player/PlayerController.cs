@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public float changeOrthographicSpeed;
     [DisplayOnly] public float targetOrthographicSize;
     public GameObject dashboard;
+    public GameObject arrowContainer;
 
 
     [Header("星球上移動")]
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
         stage = "OnPlanet";
         targetOrthographicSize = 10f;
         dashboard.SetActive(true);
+        arrowContainer.SetActive(false);
         _rb = GetComponent<Rigidbody2D>();
         _inputHandler = GetComponent<InputHandler>();
         fuel = 100f;
@@ -79,6 +81,7 @@ public class PlayerController : MonoBehaviour
         }
         if (stage == "InSpace")
         {
+            arrowContainer.SetActive(true);
         }
 
         vcam.m_Lens.OrthographicSize = Mathf.Lerp(vcam.m_Lens.OrthographicSize, targetOrthographicSize, changeOrthographicSpeed * Time.deltaTime);
