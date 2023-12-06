@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("移動")]
     protected float direction;
-    public bool jump;
+    [DisplayOnly] public bool jump;
 
     [Header("星球上移動")]
     public float maxWalkSpeed;
@@ -180,12 +180,12 @@ public class EnemyController : MonoBehaviour
         // 如果外積為正，玩家在敵人的左邊，反之在右邊
         if (crossProduct > 0) {
             // 玩家在左邊，敵人向左移動
-            Debug.Log("Enemy Go Left.");
+            // Debug.Log("Enemy Go Left.");
             direction = -1f;
         }
         else if (crossProduct <= 0) {
             // 玩家在右邊，敵人向右移動
-            Debug.Log("Enemy Go Right.");
+            // Debug.Log("Enemy Go Right.");
             direction = 1f;
         }
     }
