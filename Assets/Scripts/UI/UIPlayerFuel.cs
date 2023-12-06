@@ -25,24 +25,17 @@ public class UIPlayerFuel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _image.fillAmount = _playerPC.fuel / (_max - _min);
+        float fillAmount = _playerPC.fuel / (_max - _min);
+        float alignedFillAmount = Mathf.Round(fillAmount / 0.03125f) * 0.03125f;
+        _image.fillAmount = alignedFillAmount;
 
-        /*if (_playerPC.fuel > 95f)
+        if (_playerPC.fuel < 20f)
         {
-            full.SetActive(true);
+            _image.color = new Color(255f, 0f, 40f, 1f);
         }
         else
         {
-            full.SetActive(false);
-        }*/
-
-        if (_playerPC.fuel < 30f)
-        {
-            _image.color = Color.red;
-        }
-        else
-        {
-            _image.color = Color.black;
+            _image.color = new Color(0f, 255f, 235f, 1f);
         }
     }
 }

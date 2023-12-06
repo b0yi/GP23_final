@@ -5,9 +5,6 @@ using Cinemachine;
 public class PlayerController : MonoBehaviour
 {
 
-    [Header("測試")]
-    public bool test;
-
     [Header("狀態")]
     [DisplayOnly] public string stage;      // OnPlanet | InSpace
     private Rigidbody2D _rb;
@@ -283,18 +280,9 @@ public class PlayerController : MonoBehaviour
         {
             // 從 ... 到太空
             targetOrthographicSize = 20f;
-            if (test)
-            {
-                _rb.drag = 10f;
-                _rb.angularDrag = 10f;
+            _rb.drag = 1f;
+            _rb.angularDrag = 10f;
 
-            }
-            else
-            {
-                _rb.drag = 0f;
-                _rb.angularDrag = 0f;
-
-            }
         }
 
 
