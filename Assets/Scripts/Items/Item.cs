@@ -7,14 +7,13 @@ using UnityEngine.UI;
 public class Item : MonoBehaviour
 {
     public string itemName;
-    public GameObject canGetItemRange;
-    public GameObject itemCanvas;
+    public float itemRange;
     public ItemCanvasHandler itemCanvasHandler;
 
-    [DisplayOnly]
-    public bool isPlayerOnGround;
-    [DisplayOnly]
-    public bool isPlayerInRange;
+    protected GameObject player;
+
+    [DisplayOnly] public bool isPlayerOnGround;
+    [DisplayOnly] public bool isPlayerInRange;
 
     // Start is called before the first frame update
     void Start()
@@ -28,20 +27,21 @@ public class Item : MonoBehaviour
         
     }
 
+    protected bool IsPlayerInRange(float rangeToDetect) {
+        Vector3 playerPos = player.transform.position;
+        float distance = (playerPos - transform.position).magnitude;
+
+        if (distance <= rangeToDetect / 2) {
+            isPlayerInRange = true;
+            return true;
+        }
+        else {
+            isPlayerInRange = false;
+            return false;
+        }
+    }
+
     public void OpenItemGetCanvas(string itemName) {
         itemCanvasHandler.OpenItemGetCanvas(itemName);
-    }
-
-    public virtual void ItemReset() {
-        // Reset the item's state
-        Debug.Log("Reset the item!");
-    }
-
-    public virtual void ShowItemCanvas() {
-        itemCanvas.SetActive(true);
-    }
-
-    public virtual void CloseItemCanvas() {
-        itemCanvas.SetActive(false);
     }
 }
