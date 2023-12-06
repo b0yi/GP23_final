@@ -26124,7 +26124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e611d33f70dc0452a04ec915e93c0db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: 0
   stage: 
   fuel: 0
   fuelDelta: 0.05
@@ -26135,6 +26134,7 @@ MonoBehaviour:
   changeOrthographicSpeed: 3.5
   targetOrthographicSize: 0
   dashboard: {fileID: 1873108618}
+  arrowContainer: {fileID: 0}
   maxWalkSpeed: 5
   WalkAcceleration: 30
   isGrounded: 0
@@ -52478,6 +52478,7 @@ MonoBehaviour:
   canJump: 1
   jumpCoolDown: 1.5
   jumpHeight: 1.4
+  jumpRange: 8
   launchAcceleration: 0
   footOffset: 0.2
   raycastDistance: 10
@@ -52491,9 +52492,9 @@ MonoBehaviour:
   resistAcceleration: 0
   detectRange: 13.5
   damage: 10
-  isPlayerLocked: 0
-  isPlayerOnceInRange: 0
-  jumpRange: 8
+  chasePlayer: 0
+  isPlayerInEnemyRange: 0
+  IUnderstoodThis: 1
   boolForJumpAnim: 0
 --- !u!1 &367444436
 GameObject:
@@ -53346,8 +53347,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 296e89cb826b49b73b9e6dc07eb47a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeline: {fileID: 1645554293}
+  timelinePlanetR: {fileID: 0}
+  timelinePlanetE: {fileID: 0}
+  timelinePlanetF: {fileID: 0}
   player: {fileID: 162701304}
+  uIManager: {fileID: 0}
 --- !u!1 &417315275
 GameObject:
   m_ObjectHideFlags: 0
@@ -98180,6 +98184,7 @@ MonoBehaviour:
   canJump: 1
   jumpCoolDown: 1.5
   jumpHeight: 1.4
+  jumpRange: 8
   launchAcceleration: 0
   footOffset: 0.2
   raycastDistance: 10
@@ -98193,9 +98198,9 @@ MonoBehaviour:
   resistAcceleration: 0
   detectRange: 13.5
   damage: 10
-  isPlayerLocked: 0
-  isPlayerOnceInRange: 0
-  jumpRange: 8
+  chasePlayer: 0
+  isPlayerInEnemyRange: 0
+  IUnderstoodThis: 1
   boolForJumpAnim: 0
 --- !u!114 &1054163576
 MonoBehaviour:
@@ -118941,6 +118946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308189c29fbec77428487961ae9a4669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GRAVITY_PULL: 10
 --- !u!1 &1199647515
 GameObject:
   m_ObjectHideFlags: 0
