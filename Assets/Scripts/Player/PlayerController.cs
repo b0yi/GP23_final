@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour
     public float maxTurnAngularVelocity;
     public float turnAcceleration;
 
+    public float driveDrag;
+    public float turnDrag;
+
     [Header("降落")]
     public float resistAcceleration;
 
@@ -283,8 +286,8 @@ public class PlayerController : MonoBehaviour
         {
             // 從 ... 到太空
             targetOrthographicSize = 20f;
-            _rb.drag = 1f;
-            _rb.angularDrag = 10f;
+            _rb.drag = driveDrag;
+            _rb.angularDrag = turnDrag;
 
         }
 
