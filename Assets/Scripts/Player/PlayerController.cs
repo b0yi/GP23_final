@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -57,8 +58,11 @@ public class PlayerController : MonoBehaviour
     public float resistAcceleration;
 
     [Header("敵人互動")]
-    [DisplayOnly] public bool isHurtByCat = false;
+    [DisplayOnly] public bool isHurtByCat;  // 被貓攻擊
 
+    [Header("Others for debugging")]
+    [DisplayOnly] public bool calledReset;  // Temporary use, for reseting enemies hit
+    [DisplayOnly] public bool playerCanMove;
 
 
     void Start()
@@ -72,13 +76,28 @@ public class PlayerController : MonoBehaviour
         _inputHandler = GetComponent<InputHandler>();
         fuel = 100f;
         isLocked = false;
+
+        isHurtByCat = false;
+        calledReset = false;
     }
 
     void Update()
     {
-
-        _horizontal = _inputHandler.horizontal;
-        _w = _inputHandler.w;
+        if (IsHurtByEnemies()) {
+            playerCanMove = false;
+            if (!calledReset) {
+                calledReset = true;
+                StartCoroutine(CallResetEnemiesHit(1.45f));
+            }
+            _horizontal = 0;
+            _w = false;
+        }
+        else {
+            playerCanMove = true;
+            _horizontal = _inputHandler.horizontal;
+            _w = _inputHandler.w;
+        }
+        
         if (stage == "OnPlanet")
         {
             gravity = planet.GetComponent<PlanetGravity>().gravity;
@@ -89,7 +108,6 @@ public class PlayerController : MonoBehaviour
         }
 
         vcam.m_Lens.OrthographicSize = Mathf.Lerp(vcam.m_Lens.OrthographicSize, targetOrthographicSize, changeOrthographicSpeed * Time.deltaTime);
-
     }
 
     void FixedUpdate()
@@ -130,8 +148,6 @@ public class PlayerController : MonoBehaviour
                 direction = false;
             }
         }
-
-
     }
 
 
@@ -157,10 +173,8 @@ public class PlayerController : MonoBehaviour
 
     private void Walk()
     {
-
         if (isGrounded)
         {
-
             if (_horizontal == 0)
             {
                 // 只保留垂直方向的速度
@@ -177,8 +191,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-
     }
 
     private void Jump()
@@ -194,7 +206,6 @@ public class PlayerController : MonoBehaviour
 
     private void Launch()
     {
-
         if (_w && height > (jumpHeight - .1))
         {
             // 只保留垂直方向的速度（TODO 怪怪的，先左右好像起飛會比較快）
@@ -216,7 +227,6 @@ public class PlayerController : MonoBehaviour
 
     private void Drive()
     {
-
         if (_w)
         {
             _rb.AddForce(driveAcceleration * _rb.mass * ((Vector2)transform.up).normalized);
@@ -297,5 +307,28 @@ public class PlayerController : MonoBehaviour
         {
             _rb.velocity = Vector3.zero;
         }
+    }
+
+    /// <summary>
+    /// Compute the player is hurt by enemies. (e.g. Cat, Rock, Alien...)
+    /// </summary>
+    /// <returns>True if player is hurt, else false</returns>
+    public bool IsHurtByEnemies() {
+        // Add other enemies here
+        // isHurtByCat || isHurtBy... || isHurtBy...
+        bool isHurt = isHurtByCat; 
+        return isHurt;
+    }
+
+    public void ResetEnemiesHit() {
+        isHurtByCat = false;
+        // isHurtBy... = false
+        // isHurtBy... = false
+    }
+
+    private IEnumerator CallResetEnemiesHit(float t) {
+        yield return new WaitForSeconds(t);
+        ResetEnemiesHit();
+        calledReset = false;
     }
 }
