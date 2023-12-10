@@ -62,5 +62,8 @@ public class PlayerAnimation : MonoBehaviour
             }
         }
 
+        if (_playerController.isHurtByCat) {
+            _animator.SetBool("dead", true);
+        }
     }
 }
