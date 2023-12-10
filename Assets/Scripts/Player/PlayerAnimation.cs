@@ -9,6 +9,7 @@ public class PlayerAnimation : MonoBehaviour
     private InputHandler _inputHandler;
 
     public ParticleSystem fire;
+    public ParticleSystem speed;
     public GameObject playerLight;
 
 
@@ -53,6 +54,7 @@ public class PlayerAnimation : MonoBehaviour
             {
                 _animator.SetBool("accel", true);
                 fire.Play();
+                speed.Play();
             }
             else
             {
