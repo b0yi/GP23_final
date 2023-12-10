@@ -52,7 +52,7 @@ public class EnemyController : MonoBehaviour
     [DisplayOnly] public bool isPlayerInEnemyRange = false; // 玩家是否在感知範圍內 
 
     [Header("其他部分 (e.g. Inherited Class)")]
-    [DisplayOnly] public bool IUnderstoodThis = true;
+    [DisplayOnly] public bool InheritedClass = true;
 
     void Start()
     {

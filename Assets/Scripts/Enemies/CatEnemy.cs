@@ -92,10 +92,13 @@ public class CatEnemy : EnemyController
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.collider.name == "Player") {
-            // TODO: Hurt player
-            Vector2 direct = player.transform.position - planet.transform.position;
-            Vector3 knockback = direction < 0 ? new Vector3(direct.y, -direct.x, 0) : new Vector3(-direct.y, direct.x, 0);
-            player.transform.position = player.transform.position - knockback.normalized * 8;
+            // Knock back player
+            // Vector2 direct = player.transform.position - planet.transform.position;
+            // Vector3 knockback = direction < 0 ? new Vector3(direct.y, -direct.x, 0) : new Vector3(-direct.y, direct.x, 0);
+            // player.transform.position = player.transform.position - knockback.normalized * 8;
+
+            // kill player
+            player.GetComponent<PlayerController>().isHurtByCat = true;
         }
     }
 
