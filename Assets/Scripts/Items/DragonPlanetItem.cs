@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DragonPlanetItem : MonoBehaviour
 {
+    //public PlayerController player;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class DragonPlanetItem : MonoBehaviour
     {
         if (other.name == "Player") {
             Destroy(gameObject);
+            //player.ChangeStage("InSpace");
         }
     }
     
