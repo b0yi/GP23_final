@@ -2,18 +2,28 @@
 using System.Collections;
 
 [RequireComponent(typeof(Explodable))]
-public class ExplodeOnClick : MonoBehaviour {
+public class ExplodeOnClick : MonoBehaviour 
+{
 
 	private Explodable _explodable;
-
+	public GameObject finalitem;
 	void Start()
 	{
 		_explodable = GetComponent<Explodable>();
 	}
-	void OnMouseDown()
-	{
-		_explodable.explode();
-		ExplosionForce ef = GameObject.FindObjectOfType<ExplosionForce>();
-		ef.doExplosion(transform.position);
-	}
+
+	void Update()
+    {
+        if(finalitem==null)
+		{
+			_explodable.explode();
+			ExplosionForce ef = GameObject.FindObjectOfType<ExplosionForce>();
+			ef.doExplosion(transform.position);
+		}
+    }
+
+// 	void OnMouseDown()
+// 	{
+		
+// 	}
 }
