@@ -56,7 +56,8 @@ public class PlayerController : MonoBehaviour
     [Header("降落")]
     public float resistAcceleration;
 
-
+    [Header("敵人互動")]
+    [DisplayOnly] public bool isHurtByCat = false;
 
 
 
