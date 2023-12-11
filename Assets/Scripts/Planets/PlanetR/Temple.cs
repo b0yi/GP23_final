@@ -14,6 +14,9 @@ public class Temple : MonoBehaviour
     public float teleportCD = 8f;
     [DisplayOnly] public float currentCD;
 
+    public ParticleSystem teleportParticle;
+    public GameObject teleportLight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +26,14 @@ public class Temple : MonoBehaviour
         startCounting = false;
         currentTime = 0f;
         currentCD = teleportCD;
+        StopParticle();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (canTeleport) {
+            teleportLight.SetActive(true);
             if (startCounting) {
                 currentTime += Time.deltaTime;
                 if (currentTime >= teleportTime) {
@@ -37,6 +42,7 @@ public class Temple : MonoBehaviour
             }
         }
         else {
+            teleportLight.SetActive(false);
             currentCD -= Time.deltaTime;
             if (currentCD < 0f) {
                 canTeleport = true;
@@ -48,23 +54,25 @@ public class Temple : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.name == "Player") {
-            Debug.Log("Player Entered");
             startCounting = true;
         }
-        else {
-            Debug.Log("None entered");
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.name == "Player") {
+            if (canTeleport && startCounting) {
+                GenerateParticle();
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.name == "Player") {
-            Debug.Log("Player Left");
             startCounting = false;
             currentTime = 0f;
-        }
-        else {
-            Debug.Log("None left");
+            StopParticle();
         }
     }
 
@@ -74,5 +82,13 @@ public class Temple : MonoBehaviour
         canTeleport = false;
         otherTemple.canTeleport = false;
         player.position = otherTemple.transform.position;
+    }
+
+    private void GenerateParticle() {
+        teleportParticle.Play();
+    }
+
+    private void StopParticle() {
+        teleportParticle.Stop();
     }
 }
