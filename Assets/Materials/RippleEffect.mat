@@ -54,6 +54,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RippleCount: 0.3
     - _RippleSpeed: 2
     - _RippleStrength: 1.7
