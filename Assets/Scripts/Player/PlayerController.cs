@@ -315,20 +315,20 @@ public class PlayerController : MonoBehaviour
     /// <returns>True if player is hurt, else false</returns>
     public bool IsHurtByEnemies() {
         // Add other enemies here
-        // isHurtByCat || isHurtBy... || isHurtBy...
+        // bool isHurt = isHurtByCat || isHurtBy... || isHurtBy...
         bool isHurt = isHurtByCat; 
         return isHurt;
-    }
-
-    public void ResetEnemiesHit() {
-        isHurtByCat = false;
-        // isHurtBy... = false
-        // isHurtBy... = false
     }
 
     private IEnumerator CallResetEnemiesHit(float t) {
         yield return new WaitForSeconds(t);
         ResetEnemiesHit();
         calledReset = false;
+    }
+
+    public void ResetEnemiesHit() {
+        isHurtByCat = false;
+        // isHurtBy... = false
+        // isHurtBy... = false
     }
 }
