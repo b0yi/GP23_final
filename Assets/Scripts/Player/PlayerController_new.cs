@@ -13,6 +13,7 @@ public enum PlayerState
 {
     OnPlanet,
     Transform,
+    Untransform,
     Launch,
     InSpace
 }
@@ -21,30 +22,31 @@ public enum PlayerState
 public class PlayerController_new : MonoBehaviour
 {
 
-    private Rigidbody2D _rb;
+    [Header("鎖定")]
+    [DisplayOnly] public bool isLocked;
+
+    [Header("燃料")]
     [DisplayOnly] public float fuel;            // 油量/電量（0 - 100）
+    public float fuelDelta;
 
-    [DisplayOnly] public float horizontal;
-    [DisplayOnly] public bool up;
 
-    [DisplayOnly] public Location location;
-
-    [Header("星球上動作")]
+    [Header("星球上移動跳躍")]
     public float walkSpeed;
     public float jumpHeight;
     public float launchAcceleration;
 
-
-    public GameObject planet;                   // 所在星球
-    [DisplayOnly] public bool isGrounded;
+    [Header("狀態")]
     [DisplayOnly] public PlayerState playerState;
+
+    [Header("所在星球")]
+    [DisplayOnly] public GameObject planet;
 
 
     [Header("變身時間")]
     [DisplayOnly] public float transformTimer;
     public float transformTime;
+    public float untransformTime;
 
-    private float _gravity;
 
     [Header("阻力")]
     public float linearDragOnPlanet;
@@ -57,19 +59,38 @@ public class PlayerController_new : MonoBehaviour
     public float turnAcceleration;
 
 
-    // ======== animation ========
     private Animator _animator;
+    private UIManager _uIManager;
+    private float _gravity;
+    private Rigidbody2D _rb;
+    private float horizontal;
+    private bool up;
+    private bool isGrounded;
 
+    public void Lock()
+    {
+        isLocked = true;
+    }
+
+    public void Unlock()
+    {
+        isLocked = false;
+    }
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         fuel = 100f;
         transformTimer = transformTime;
-        location = Location.Planet;
         _animator = GetComponent<Animator>();
         isGrounded = false;
-        playerState = PlayerState.OnPlanet;
+        playerState = PlayerState.Untransform;
+        _uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+        if (!_uIManager)
+        {
+            print("測試模式");
+        }
+
     }
 
     void Update()
@@ -96,19 +117,21 @@ public class PlayerController_new : MonoBehaviour
 
     private void WalkOrNot()
     {
-
-        if (playerState == PlayerState.OnPlanet && isGrounded)
+        if (playerState == PlayerState.OnPlanet)
         {
             if (horizontal != 0)
             {
                 int param = (horizontal > 0f) ? 1 : -1;
                 transform.localScale = new Vector3(param, 1f, 1f); // 角色左右轉向 
-                _rb.velocity = param * walkSpeed * transform.right.normalized;
-                _animator.SetTrigger("walk");
+                // _rb.velocity = param * walkSpeed * transform.right.normalized;
+                _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized
+                                + param * walkSpeed * ((Vector2)transform.right).normalized;
+
+                _animator.SetBool("walk", true);
             }
             else
             {
-                _animator.SetTrigger("idle");
+                _animator.SetBool("walk", false);
             }
         }
 
@@ -128,51 +151,85 @@ public class PlayerController_new : MonoBehaviour
 
     private void LaunchOrNot()
     {
-        if (playerState == PlayerState.OnPlanet && !isGrounded && Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.2f && up)
+        if (playerState == PlayerState.OnPlanet)
         {
-            playerState = PlayerState.Transform;
-            _animator.SetTrigger("transform");
-            transformTimer = transformTime;
+            _rb.constraints = RigidbodyConstraints2D.None;
+
+            if (!isGrounded && Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.1f && up)
+            {
+                playerState = PlayerState.Transform;
+                transformTimer = transformTime;
+                _animator.ResetTrigger("planet");
+                _animator.SetTrigger("transform");
+            }
+
         }
 
         if (playerState == PlayerState.Transform)
         {
-            _rb.velocity = Vector2.zero;
-            _rb.AddForce(_gravity * _rb.mass * transform.up); // F = m a
+            _rb.constraints = RigidbodyConstraints2D.FreezeAll;
             transformTimer -= Time.fixedDeltaTime;
 
-            if (!up)
-            {
-                playerState = PlayerState.OnPlanet;
-                _animator.SetTrigger("untransform");
-            }
 
             if (transformTimer <= 0f)
             {
+                if (!up)
+                {
+                    playerState = PlayerState.Untransform;
+                    transformTimer = untransformTime;
+                    _animator.ResetTrigger("transform");
+                    _animator.SetTrigger("untransform");
+                }
+
                 playerState = PlayerState.Launch;
-                // _rb.velocity = (Vector2)transform.up.normalized * launchSpeed;
-                _animator.SetTrigger("space");
+                _animator.ResetTrigger("transform");
+                _animator.SetTrigger("spaceship_idle");
+            }
+        }
+
+        if (playerState == PlayerState.Untransform)
+        {
+            _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            transformTimer -= Time.fixedDeltaTime;
+
+            int param = (horizontal > 0f) ? 1 : -1;
+            transform.localScale = new Vector3(param, 1f, 1f); // 角色左右轉向 
+
+            if (transformTimer <= 0f)
+            {
+                playerState = PlayerState.OnPlanet;
+                _animator.ResetTrigger("untransform");
+                _animator.SetTrigger("planet");
             }
         }
 
         if (playerState == PlayerState.Launch)
         {
+            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
             _rb.AddForce((_gravity + launchAcceleration) * _rb.mass * transform.up); // F = m a
 
-
             if (!up)
             {
-                playerState = PlayerState.OnPlanet;
+                playerState = PlayerState.Untransform;
+                transformTimer = untransformTime;
+                _animator.ResetTrigger("spaceship_idle");
                 _animator.SetTrigger("untransform");
             }
         }
 
         if (playerState == PlayerState.InSpace)
         {
+            _rb.constraints = RigidbodyConstraints2D.None;
+
             if (up)
             {
                 _rb.AddForce(driveAcceleration * _rb.mass * transform.up);
+                fuel -= fuelDelta;
+                if (_uIManager && fuel <= 0)
+                {
+                    _uIManager.LoadPlayScene();
+                }
             }
             if (horizontal != 0)
             {
@@ -186,11 +243,6 @@ public class PlayerController_new : MonoBehaviour
     }
 
 
-
-
-    private void Turn()
-    {
-    }
 
 
     void OnCollisionEnter2D(Collision2D other)
