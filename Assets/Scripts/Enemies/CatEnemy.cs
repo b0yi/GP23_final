@@ -15,6 +15,9 @@ public class CatEnemy : EnemyController
     private int runState;
     private int jumpState;
 
+    public float questRange;                // 互動距離
+    [DisplayOnly] public string catStage;   // stages: water / fish / reward / kill / ...
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,8 @@ public class CatEnemy : EnemyController
         findState = Animator.StringToHash("Base Layer.Cat_findPlayer");
         runState = Animator.StringToHash("Base Layer.Cat_run");
         jumpState = Animator.StringToHash("Base Layer.Cat_jump");
+
+        catStage = "water";
     }
 
     // Update is called once per frame
@@ -92,17 +97,37 @@ public class CatEnemy : EnemyController
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.collider.name == "Player") {
-            // Knock back player
-            // Vector2 direct = player.transform.position - planet.transform.position;
-            // Vector3 knockback = direction < 0 ? new Vector3(direct.y, -direct.x, 0) : new Vector3(-direct.y, direct.x, 0);
-            // player.transform.position = player.transform.position - knockback.normalized * 8;
-
             // kill player
             player.GetComponent<PlayerController>().isHurtByCat = true;
         }
     }
 
-    public void CatGetUp() {
+    private void StageBehavior() {
+        if (catStage == "water" || catStage == "fish") {
+            if (IsPlayerInRange(questRange)) {
+                ShowQuest();
+            }
+        }
+        else if (catStage == "reward") {
 
+        }
+        else if (catStage == "kill") {
+            GoChasePlayer();
+        }
+        else {
+
+        }
+    }
+
+    private void ShowQuest() {
+        if (catStage == "water") {
+
+        }
+        else if (catStage == "fish") {
+
+        }
+        else {
+            
+        }
     }
 }
