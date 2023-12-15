@@ -5,6 +5,7 @@ using UnityEngine;
 public class Whale : MonoBehaviour
 {
     public Transform waterPlanetTF;
+    public Transform whaleAttackCenterTF;
     public Transform playerTF;
     public float radius;
     public float shift = 0;
@@ -12,12 +13,10 @@ public class Whale : MonoBehaviour
     public bool attack;
     public float speed = 1;
     public float attackSpeed;
-    private UIManager _uIManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        _uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
 
         timeCounter = shift;
     }
@@ -36,8 +35,13 @@ public class Whale : MonoBehaviour
     {
         if (attack)
         {
-            transform.position += (playerTF.position - transform.position).normalized * Time.deltaTime * attackSpeed;
-            transform.rotation = Quaternion.FromToRotation(transform.right, playerTF.position - transform.position);
+            transform.position += (playerTF.position - whaleAttackCenterTF.position).normalized * Time.deltaTime * attackSpeed;
+
+            Vector2 targ = playerTF.position - whaleAttackCenterTF.position;
+            float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+            //transform.rotation = Quaternion.FromToRotation(transform.right, playerTF.position - transform.position);
         }
         else
         {
@@ -50,18 +54,5 @@ public class Whale : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-
-        if (other.CompareTag("Player"))
-        {
-            if (_uIManager)
-            {
-                _uIManager.LoadPlayScene();
-            }
-
-        }
-
-    }
 
 }
