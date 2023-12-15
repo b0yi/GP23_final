@@ -15,28 +15,32 @@ public class PlanetController : MonoBehaviour
     {
         uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
 
-        switch (uIManager.stage)
+        if (uIManager)
         {
-            case GameProgressStage.PlanetR:
-                planetR.SetActive(true);
-                planetE.SetActive(false);
-                planetF.SetActive(false);
-                break;
-            case GameProgressStage.PlanetE:
-                planetR.SetActive(true);
-                planetE.SetActive(true);
-                planetF.SetActive(false);
-                break;
-            case GameProgressStage.PlanetF:
-                planetR.SetActive(true);
-                planetE.SetActive(true);
-                planetF.SetActive(true);
-                break;
-            default:
-                planetR.SetActive(true);
-                planetE.SetActive(true);
-                planetF.SetActive(true);
-                break;
+            switch (uIManager.stage)
+            {
+                case GameProgressStage.PlanetR:
+                    planetR.SetActive(true);
+                    planetE.SetActive(false);
+                    planetF.SetActive(false);
+                    break;
+                case GameProgressStage.PlanetE:
+                    planetR.SetActive(true);
+                    planetE.SetActive(true);
+                    planetF.SetActive(false);
+                    break;
+                case GameProgressStage.PlanetF:
+                    planetR.SetActive(true);
+                    planetE.SetActive(true);
+                    planetF.SetActive(true);
+                    break;
+                default:
+                    planetR.SetActive(true);
+                    planetE.SetActive(true);
+                    planetF.SetActive(true);
+                    break;
+            }
+
         }
 
 
