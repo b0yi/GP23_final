@@ -153,6 +153,9 @@ public class PlayerController_new : MonoBehaviour
     {
         if (playerState == PlayerState.OnPlanet)
         {
+            _rb.drag = linearDragOnPlanet;
+            _rb.angularDrag = angularDragOnPlanet;
+
             _rb.constraints = RigidbodyConstraints2D.None;
 
             if (!isGrounded && Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.1f && up)
@@ -205,6 +208,9 @@ public class PlayerController_new : MonoBehaviour
 
         if (playerState == PlayerState.Launch)
         {
+            _rb.drag = 0;
+            _rb.angularDrag = 0;
+
             _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
             _rb.AddForce((_gravity + launchAcceleration) * _rb.mass * transform.up); // F = m a
@@ -267,8 +273,6 @@ public class PlayerController_new : MonoBehaviour
         if (other.name == "Field")
         {
             playerState = PlayerState.Launch;
-            _rb.drag = linearDragOnPlanet;
-            _rb.angularDrag = angularDragOnPlanet;
         }
 
     }
