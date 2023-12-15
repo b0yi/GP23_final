@@ -13,12 +13,6 @@ public class ZoomInAndOut : MonoBehaviour
     public float orthographicSizeOnPlanet;
     private PlayerState _playerState;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        vcam = GetComponent<CinemachineVirtualCamera>();
-    }
-
     // Update is called once per frame
     void Update()
     {
