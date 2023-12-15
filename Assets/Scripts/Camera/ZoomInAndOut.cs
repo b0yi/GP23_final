@@ -6,12 +6,12 @@ using UnityEngine;
 public class ZoomInAndOut : MonoBehaviour
 {
     public CinemachineVirtualCamera vcam;
+    public PlayerController_new playerController_New;
     [DisplayOnly] public float targetOrthographicSize;
     public float changeOrthographicSpeed;
     public float orthographicSizeInSpace;
     public float orthographicSizeOnPlanet;
     private PlayerState _playerState;
-    public PlayerController_new playerController_New;
 
     // Start is called before the first frame update
     void Start()
