@@ -13,8 +13,8 @@ public class WaterForce : MonoBehaviour
     [DisplayOnly] public float linearDrag;
     [DisplayOnly] public float angularDrag;
 
-    // public float idleTime = 2f;
-    // [DisplayOnly] public float idleTimer = 0f;
+    public float idleTime = 2f;
+    [DisplayOnly] public float idleTimer = 0f;
 
 
     private Rigidbody2D _playerRB;
@@ -34,27 +34,23 @@ public class WaterForce : MonoBehaviour
     {
         if (isPlayerInWater)
         {
-            Vector2 forceDirection = (Vector2)(_playerTF.position - transform.position).normalized;
-            float magnitude = (_playerTF.position - transform.position).magnitude / radius;
-            _playerRB.AddForce(acceleration / magnitude * _playerRB.mass * forceDirection); // F = m a
+            //Vector2 forceDirection = (Vector2)(_playerTF.position - transform.position).normalized;
+            //float magnitude = (_playerTF.position - transform.position).magnitude / radius;
+            //_playerRB.AddForce(acceleration / magnitude * _playerRB.mass * forceDirection); // F = m a
 
-
-
-
-
-            // if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W)) // TODO: 之後改寫
-            // {
-            //     idleTimer = idleTime;
-            // }
-            // else
-            // {
-            //     idleTimer -= Time.deltaTime;
-            //     if (idleTimer <= 0f)
-            //     {
-            //         Vector2 forceDirection = ((Vector2)(_playerTF.position - transform.position)).normalized;
-            //         _playerRB.AddForce(acceleration * _playerRB.mass * forceDirection); // F = m a
-            //     }
-            // }
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W)) // TODO: 之後改寫
+            {
+                idleTimer = idleTime;
+            }
+            else
+            {
+                idleTimer -= Time.deltaTime;
+                if (idleTimer <= 0f)
+                {
+                    Vector2 forceDirection = ((Vector2)(_playerTF.position - transform.position)).normalized;
+                    _playerRB.AddForce(acceleration * _playerRB.mass * forceDirection); // F = m a
+                }
+            }
         }
     }
 
