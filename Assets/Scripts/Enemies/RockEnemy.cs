@@ -53,24 +53,54 @@ public class RockEnemy : EnemyController
         if (stage == "OnPlanet")
         {
             Walk();
+            //print(isGrounded);
         }
     }
 
-
-    protected override void DetectPlayer() {
-        bool inDetectRange = IsPlayerInRange(detectRange);
-        if (inDetectRange || chasePlayer) {
-            isPlayerInEnemyRange = true;
-            if (inDetectRange) {
-                chasePlayer = false;
+    protected override void Walk()
+    {
+        if (isGrounded)
+        {
+            if (direction == 0)
+            {
+                // 只保留垂直方向的速度
+                rb.velocity = Vector2.Dot(rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized;
             }
-            // animState = anim.GetCurrentAnimatorStateInfo(0);
-            // if (animState.fullPathHash == runState || animState.fullPathHash == jumpState) {
-            //     CaculateDirection();
-            // }
+            else
+            {
+                transform.localScale = (direction > 0) ? new Vector3(2.0f, 2, 1) : new Vector3(-2.0f, 2, 1);
+                Vector2 horizontalVelocity = Vector2.Dot(rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
+                if (horizontalVelocity.magnitude < maxWalkSpeed)
+                {
+                    // 水平加速
+                    rb.AddForce(direction * WalkAcceleration * rb.mass * ((Vector2)transform.right).normalized);
+                }
+            }
+        }
+    }
+    protected override void DetectPlayer() {
+        // bool inDetectRange = IsPlayerInRange(detectRange);
+        // if (inDetectRange || chasePlayer) {
+        //     isPlayerInEnemyRange = true;
+        //     if (inDetectRange) {
+        //         chasePlayer = false;
+        //     }
+        //     animState = anim.GetCurrentAnimatorStateInfo(0);
+        //     // print(animState.fullPathHash );
+        //     // print(runState);
+        //     // if (animState.fullPathHash == runState ) {
+        //     //     CaculateDirection();
+        //     // }
+        // }
+        // else {
+        //     isPlayerInEnemyRange = false;
+        //     direction = 0;
+        // }
+        if (IsPlayerInRange(detectRange) || chasePlayer) {
+            CaculateDirection();
+
         }
         else {
-            isPlayerInEnemyRange = false;
             direction = 0;
         }
     }

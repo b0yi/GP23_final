@@ -101,7 +101,7 @@ public class EnemyController : MonoBehaviour
         /* DEBUG END */
     }
 
-    protected void Walk()
+    protected virtual void Walk()
     {
 
         if (isGrounded)
