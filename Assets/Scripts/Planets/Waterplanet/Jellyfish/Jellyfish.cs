@@ -4,51 +4,63 @@ using UnityEngine;
 
 public class Jellyfish : MonoBehaviour
 {
-    public float forwardVelocity = 5f;
-    public float backVelocity = 3f;
+    public float forwardSpeed = 5f;
+    public float backSpeed = 3f;
+
     private bool isMovingForward = true;
+
 
     public float radius = 50f;
     public Transform waterPlanetTF;
 
-    private Rigidbody2D _rigidbody;
 
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
         InvokeRepeating(nameof(ToggleMovementDirection), 0f, 1f);
     }
 
     void Update()
     {
-        Vector2 nomalVector = (Vector2)(transform.position - waterPlanetTF.position);
-        if (nomalVector.magnitude >= radius)
-        {
-            float angle = Vector2.SignedAngle(nomalVector, transform.up);
-            transform.rotation = Quaternion.Euler(0f, 0f, 180 - 2 * angle);
-        }
-    }
 
-    void FixedUpdate()
-    {
-        if (isMovingForward)
+        // Vector3 directionToCenter = center.position - transform.position;
+        Vector2 directionToCenter = waterPlanetTF.position - transform.position;
+
+        if (directionToCenter.magnitude > radius)
         {
-            Move(forwardVelocity);
+            Reflect();
         }
         else
         {
-            Move(-backVelocity);
+            if (isMovingForward)
+            {
+                Move(forwardSpeed);
+            }
+            else
+            {
+                Move(-backSpeed);
+            }
+
         }
     }
 
     void Move(float speed)
     {
-        Vector2 movement = transform.up * speed;
-        _rigidbody.velocity = movement;
+        transform.Translate(speed * Time.deltaTime * Vector2.up);
     }
 
     void ToggleMovementDirection()
     {
         isMovingForward = !isMovingForward;
     }
+
+    void Reflect()
+    {
+        Vector2 reflection = Vector2.Reflect(transform.up, waterPlanetTF.position - transform.position);
+
+        transform.up = reflection;
+
+        transform.Translate(forwardSpeed * 10f * Time.deltaTime * Vector2.up);
+        isMovingForward = true;
+    }
+
 }
