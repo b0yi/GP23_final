@@ -10,6 +10,8 @@ public class WaterForce : MonoBehaviour
     public float linearDragInWater;
     public float angularDragInWater;
 
+    public Whale whale;
+
     [DisplayOnly] public float linearDrag;
     [DisplayOnly] public float angularDrag;
 
@@ -72,9 +74,11 @@ public class WaterForce : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
+            whale.Unattack();
             isPlayerInWater = false;
             _playerRB.drag = linearDrag;
             _playerRB.angularDrag = angularDrag;
+
         }
 
     }
