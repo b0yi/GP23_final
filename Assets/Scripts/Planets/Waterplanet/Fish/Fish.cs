@@ -8,6 +8,7 @@ public class Fish : MonoBehaviour
     public float radius;
     public float shift = 0;
     private float timeCounter;
+    public float speed = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class Fish : MonoBehaviour
 
     void Update()
     {
-        timeCounter += Time.deltaTime;
+        timeCounter += Time.deltaTime * speed;
         float x = radius * Mathf.Cos(timeCounter) + waterPlanetTF.position.x;
         float y = radius * Mathf.Sin(timeCounter) + waterPlanetTF.position.y;
         float z = 0;

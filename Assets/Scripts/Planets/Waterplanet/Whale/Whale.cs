@@ -10,6 +10,7 @@ public class Whale : MonoBehaviour
     public float shift = 0;
     private float timeCounter;
     public bool attack;
+    public float speed = 1;
     public float attackSpeed;
     private UIManager _uIManager;
 
@@ -40,7 +41,7 @@ public class Whale : MonoBehaviour
         }
         else
         {
-            timeCounter += Time.deltaTime;
+            timeCounter += Time.deltaTime * speed;
             float x = radius * Mathf.Cos(timeCounter) + waterPlanetTF.position.x;
             float y = radius * Mathf.Sin(timeCounter) + waterPlanetTF.position.y;
             float z = 0;
