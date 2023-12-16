@@ -47,12 +47,8 @@ public class EnemyController : MonoBehaviour
 
     [Header("攻擊")]
     public float detectRange = 10f;
-    public float damage = 10f;
     [DisplayOnly] public bool chasePlayer = false;          // 是否要追玩家
-    [DisplayOnly] public bool isPlayerInEnemyRange = false; // 玩家是否在感知範圍內 
-
-    [Header("其他部分 (e.g. Inherited Class)")]
-    [DisplayOnly] public bool InheritedClass = true;
+    [DisplayOnly] public bool isPlayerInEnemyRange = false; // 玩家是否在感知範圍內
 
     void Start()
     {
@@ -103,7 +99,6 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Walk()
     {
-
         if (isGrounded)
         {
             if (direction == 0)
@@ -113,7 +108,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                transform.localScale = (direction > 0) ? new Vector3(-3f, 3, 1) : new Vector3(3f, 3, 1);
+                transform.localScale = (direction > 0) ? new Vector3(-0.1f, 0.1f, 1f) : new Vector3(0.1f, 0.1f, 1f);
                 Vector2 horizontalVelocity = Vector2.Dot(rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
                 if (horizontalVelocity.magnitude < maxWalkSpeed)
                 {
@@ -134,10 +129,6 @@ public class EnemyController : MonoBehaviour
             rb.velocity += Mathf.Sqrt(2f * jumpHeight * gravity) * (Vector2)transform.up;
         }
     }
-
-
-
-
 
     protected virtual void DetectPlayer() {
         if (IsPlayerInRange(detectRange) || chasePlayer) {
