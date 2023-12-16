@@ -66,7 +66,8 @@ public class UIArrow : MonoBehaviour
             Vector2 arrowPosition = Vector2.zero;
             if (SegmentsInterPoint(playerRectPosition, targetRectPosition, boundary[i], boundary[i + 1], ref arrowPosition))
             {
-                _arrow.rectTransform.anchoredPosition = arrowPosition;
+                _arrow.rectTransform.anchoredPosition = Vector2.Lerp(_arrow.rectTransform.anchoredPosition, arrowPosition, 10f * Time.deltaTime);
+                // _arrow.rectTransform.anchoredPosition = arrowPosition;
                 _arrow.rectTransform.localEulerAngles = new Vector3(0, 0, 90f * i);
                 break;
             }

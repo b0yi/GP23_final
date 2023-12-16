@@ -21,6 +21,9 @@ public enum PlayerState
 
 public class PlayerController_new : MonoBehaviour
 {
+    [Header("")]
+    public ParticleSystem fireParticleSystem;
+
 
     [Header("鎖定")]
     [DisplayOnly] public bool isLocked;
@@ -230,11 +233,24 @@ public class PlayerController_new : MonoBehaviour
 
             if (up)
             {
+                _animator.SetBool("accelerate", true);
+                if (!fireParticleSystem.isPlaying)
+                {
+                    fireParticleSystem.Play();
+                }
                 _rb.AddForce(driveAcceleration * _rb.mass * transform.up);
                 fuel -= fuelDelta;
                 if (_uIManager && fuel <= 0)
                 {
                     _uIManager.LoadPlayScene();
+                }
+            }
+            else
+            {
+                _animator.SetBool("accelerate", false);
+                if (fireParticleSystem.isPlaying)
+                {
+                    fireParticleSystem.Stop();
                 }
             }
             if (horizontal != 0)
