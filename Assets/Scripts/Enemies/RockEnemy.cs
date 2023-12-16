@@ -8,19 +8,22 @@ public class RockEnemy : EnemyController
     [Header("Cat Enemy Scripts Parameters")]
     private Animator anim;
     private AnimatorStateInfo animState;
-    [DisplayOnly] public bool boolForJumpAnim;
+    [DisplayOnly] public bool boolForIdleAnim=false;
+    [DisplayOnly] public bool boolForWandering=true;
 
     private int idleState;
     private int walkState;
     private int runState;
-    private int jumpState;
-
+    float _changeDirectionCooldown=1.0f;
+    float _idletime=3.0f;
+    //Random rnd = new Random();
     // Start is called before the first frame update
     void Start()
     {
         stage = "OnPlanet";
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        direction=1;
         //canJump = true;
 
         idleState = Animator.StringToHash("Base Layer.Rock_idle");
@@ -40,6 +43,8 @@ public class RockEnemy : EnemyController
         DetectPlayer();
 
         anim.SetBool("isPlayerInRange", isPlayerInEnemyRange);
+        anim.SetBool("IsWandering", boolForWandering);
+        anim.SetBool("idle", boolForIdleAnim);
         // anim.SetBool("jump", boolForJumpAnim);
         // if (boolForJumpAnim) {
         //     boolForJumpAnim = !boolForJumpAnim;
@@ -53,14 +58,46 @@ public class RockEnemy : EnemyController
         if (stage == "OnPlanet")
         {
             Walk();
+            Run();
             //print(isGrounded);
         }
     }
+    private void HandleRandomDirectionChange()
+    {
+        _changeDirectionCooldown -= Time.deltaTime;
 
+        if (_changeDirectionCooldown <= 0)
+        {
+            boolForIdleAnim=true;
+            _idletime-= Time.deltaTime;
+            direction=0;
+            if (_idletime <= 0)
+            {
+                boolForIdleAnim=false;
+                _changeDirectionCooldown = Random.Range(1f, 5f);
+
+                do
+                {
+                    direction=Random.Range(-2,2);
+                }
+                while(direction==0);
+                _idletime=3.0f;
+            }
+        }
+    }
+
+    // private void Idle()
+    // {
+    //    _idletime-= Time.deltaTime;
+    // }
     protected override void Walk()
     {
-        if (isGrounded)
+        
+        if (isGrounded&&boolForWandering)
         {
+            HandleRandomDirectionChange();
+            //print(_changeDirectionCooldown);
+            //print(direction);
             if (direction == 0)
             {
                 // 只保留垂直方向的速度
@@ -78,31 +115,45 @@ public class RockEnemy : EnemyController
             }
         }
     }
-    protected override void DetectPlayer() {
-        // bool inDetectRange = IsPlayerInRange(detectRange);
-        // if (inDetectRange || chasePlayer) {
-        //     isPlayerInEnemyRange = true;
-        //     if (inDetectRange) {
-        //         chasePlayer = false;
-        //     }
-        //     animState = anim.GetCurrentAnimatorStateInfo(0);
-        //     // print(animState.fullPathHash );
-        //     // print(runState);
-        //     // if (animState.fullPathHash == runState ) {
-        //     //     CaculateDirection();
-        //     // }
-        // }
-        // else {
-        //     isPlayerInEnemyRange = false;
-        //     direction = 0;
-        // }
-        if (IsPlayerInRange(detectRange) || chasePlayer) {
-            CaculateDirection();
 
+    protected void Run()
+    {
+        if (isGrounded)
+        {
+            if (direction == 0)
+            {
+                // 只保留垂直方向的速度
+                rb.velocity = Vector2.Dot(rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized;
+            }
+            else
+            {
+                transform.localScale = (direction > 0) ? new Vector3(2.0f, 2, 1) : new Vector3(-2.0f, 2, 1);
+                Vector2 horizontalVelocity = Vector2.Dot(rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
+                if (horizontalVelocity.magnitude < maxWalkSpeed*2)
+                {
+                    // 水平加速
+                    rb.AddForce(direction * WalkAcceleration * rb.mass * ((Vector2)transform.right).normalized*2);
+                }
+            }
+        }
+    }
+    protected override void DetectPlayer() {
+        
+        if (IsPlayerInRange(detectRange) ) {
+            CaculateDirection();
+            boolForWandering=false;
         }
         else {
-            direction = 0;
+            //direction = 0;
+            boolForWandering=true;
         }
     }
 
+    void OnCollisionEnter2D(Collision2D other)
+    {
+         if (other.gameObject.name == "Player") {
+            // kill player
+            player.GetComponent<PlayerController_new>().isHurt = true;
+        }
+    }
 }

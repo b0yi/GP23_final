@@ -70,6 +70,9 @@ public class PlayerController_new : MonoBehaviour
     private bool up;
     private bool isGrounded;
 
+
+    [DisplayOnly] public bool isHurt;
+
     public void Lock()
     {
         isLocked = true;
