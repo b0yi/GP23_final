@@ -16,14 +16,16 @@ public class BigCat : EnemyController
     public float talkRange;
     [DisplayOnly] public bool isTalking;
     [DisplayOnly] public CatTalkState talkState;
+    private CatSubtitle catSubtitle;
 
     // Start is called before the first frame update
     void Start()
     {
-        stage = "onPlanet";
+        stage = "OnPlanet";
         rb = GetComponent<Rigidbody2D>();
         isTalking = false;
         talkState = CatTalkState.FirstTalk;
+        catSubtitle = GetComponent<CatSubtitle>();
     }
 
     // Update is called once per frame
@@ -33,7 +35,11 @@ public class BigCat : EnemyController
         FacePlayer();
         Talk();
     }
-
+    
+    void FixedUpdate()
+    {
+        GroundCheck();
+    }
 
     protected override void DetectPlayer()
     {
@@ -47,7 +53,23 @@ public class BigCat : EnemyController
 
     private void Talk() {
         if (IsPlayerInRange(talkRange) && player.GetComponent<PlayerController_new>().playerState == PlayerState.OnPlanet) {
-            isTalking = true;
+            if (!catSubtitle.isTalking) {
+                if (talkState == CatTalkState.FirstTalk) {
+                    StartCoroutine(catSubtitle.ShowSubtitles(catSubtitle.firstTalk));
+                }
+                else if (talkState == CatTalkState.WaterTalk) {
+                    int pickOne = Random.Range(0, 2);
+                    StartCoroutine(catSubtitle.ShowSubtitles(catSubtitle.waterTalk[pickOne]));
+                }
+                else if (talkState == CatTalkState.FishTalk) {
+                    int pickOne = Random.Range(0, 2);
+                    StartCoroutine(catSubtitle.ShowSubtitles(catSubtitle.fishTalk[pickOne]));
+                }
+                else {
+                    int pickOne = Random.Range(0, 9);
+                    StartCoroutine(catSubtitle.ShowSubtitles(catSubtitle.keepTalk[pickOne]));
+                }
+            }
         }
     }
 
