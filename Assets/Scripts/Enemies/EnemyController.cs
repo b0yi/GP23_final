@@ -144,7 +144,7 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     /// <param name="rangeToDetect">The range you want to check. (e.g. detectRange)</param>
     /// <returns>Return true if player is in the range, else false.</returns>
-    protected bool IsPlayerInRange(float rangeToDetect) {
+    protected virtual bool IsPlayerInRange(float rangeToDetect) {
         Vector3 playerPos = player.transform.position;
         float distance = (playerPos - transform.position).magnitude;
 

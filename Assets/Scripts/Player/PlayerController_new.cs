@@ -71,6 +71,9 @@ public class PlayerController_new : MonoBehaviour
     private bool up;
     private bool isGrounded;
 
+
+    [DisplayOnly] public bool isHurt;
+
     public void Lock()
     {
         isLocked = true;
@@ -90,6 +93,8 @@ public class PlayerController_new : MonoBehaviour
         isGrounded = false;
         playerState = PlayerState.Untransform;
         _uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+        isHurt=false;
+        _animator.SetBool("ishurt", isHurt);
         if (!_uIManager)
         {
             print("測試模式");
@@ -99,10 +104,23 @@ public class PlayerController_new : MonoBehaviour
 
     void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        up = Input.GetKey(KeyCode.W);
-
+        if(!isHurt)
+        {
+            horizontal = Input.GetAxis("Horizontal");
+            up = Input.GetKey(KeyCode.W);
+        }
         _gravity = planet.GetComponent<PlanetGravity>().gravity;
+        _animator.SetBool("ishurt", isHurt);
+        // if(isHurt)
+        // {
+        //     horizontal = Input.GetAxis("Horizontal");
+        //     up = Input.GetKey(KeyCode.W);
+        // }
+        if(isHurt)
+        {
+            this.GetComponent<CapsuleCollider2D>().enabled=false;
+            
+        }
 
     }
 
@@ -318,5 +336,11 @@ public class PlayerController_new : MonoBehaviour
 
     }
 
+    // public bool IsHurtByEnemies() {
+    //     // Add other enemies here
+    //     // bool isHurt = isHurtByCat || isHurtBy... || isHurtBy...
+    //     bool isHurt = isHurtByCat; 
+    //     return isHurt;
+    // }
 
 }
