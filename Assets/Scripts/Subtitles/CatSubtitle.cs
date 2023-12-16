@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CatSubtitle : Subtitle
 {
-    private List<string> firstTalk = new List<string>() {
+    public List<string> firstTalk = new List<string>() {
         "C-111：「我的天啊，一個活跳跳的金星人！」",
         "C-111：「Messenger-107，這真是......令本喵驚訝。」",
         "M-107(玩家)：「我該如何返回我的家園...」",
@@ -18,7 +18,7 @@ public class CatSubtitle : Subtitle
         "C-111：「或許你可以到哪邊看看。」"
     };
 
-    private List<List<string>> keepTalk = new List<List<string>>() {
+    public List<List<string>> keepTalk = new List<List<string>>() {
         new List<string>() {
             "C-111：「如你所見，這裡全是沙。」",
             "C-111：「除了會說話跟可愛程度以外，本喵跟普通的貓沒什麼差別。」"
@@ -55,7 +55,7 @@ public class CatSubtitle : Subtitle
         }
     };
 
-    private List<List<string>> waterTalk = new List<List<string>>() {
+    public List<List<string>> waterTalk = new List<List<string>>() {
         new List<string>() {
             "C-111：「嘖。」",
             "C-111：「不，你聽錯了。」",
@@ -68,7 +68,7 @@ public class CatSubtitle : Subtitle
         }
     };
 
-    private List<List<string>> fishTalk = new List<List<string>>() {
+    public List<List<string>> fishTalk = new List<List<string>>() {
         new List<string>() {
             "C-111：「聽說海洋星裡住著一種危險的生物。不少探險隊折在牠手裡。」",
             "C-111：「人們稱呼那個怪物為『海洋老人』。」",
@@ -86,7 +86,7 @@ public class CatSubtitle : Subtitle
     // Start is called before the first frame update
     void Start()
     {
-        
+        isTalking = false;
     }
 
     // Update is called once per frame
