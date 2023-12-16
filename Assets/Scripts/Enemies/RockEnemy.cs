@@ -11,6 +11,7 @@ public class RockEnemy : EnemyController
     [DisplayOnly] public bool boolForIdleAnim=false;
     [DisplayOnly] public bool boolForWandering=true;
     [DisplayOnly] public bool inAttackRange=false;
+    [DisplayOnly] public bool Stop=false;
 
     private int idleState;
     private int walkState;
@@ -43,6 +44,10 @@ public class RockEnemy : EnemyController
         }
 
         DetectPlayer();
+        if(Stop)
+            direction=0;
+
+
 
         anim.SetBool("isPlayerInRange", isPlayerInEnemyRange);
         anim.SetBool("IsWandering", boolForWandering);
