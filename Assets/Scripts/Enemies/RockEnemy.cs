@@ -10,12 +10,14 @@ public class RockEnemy : EnemyController
     private AnimatorStateInfo animState;
     [DisplayOnly] public bool boolForIdleAnim=false;
     [DisplayOnly] public bool boolForWandering=true;
+    [DisplayOnly] public bool inAttackRange=false;
 
     private int idleState;
     private int walkState;
     private int runState;
     float _changeDirectionCooldown=1.0f;
     float _idletime=3.0f;
+    float attackRange=8.0f;
     //Random rnd = new Random();
     // Start is called before the first frame update
     void Start()
@@ -45,6 +47,7 @@ public class RockEnemy : EnemyController
         anim.SetBool("isPlayerInRange", isPlayerInEnemyRange);
         anim.SetBool("IsWandering", boolForWandering);
         anim.SetBool("idle", boolForIdleAnim);
+        anim.SetBool("inAttackRange", inAttackRange);
         // anim.SetBool("jump", boolForJumpAnim);
         // if (boolForJumpAnim) {
         //     boolForJumpAnim = !boolForJumpAnim;
@@ -92,8 +95,8 @@ public class RockEnemy : EnemyController
     // }
     protected override void Walk()
     {
-        
-        if (isGrounded&&boolForWandering)
+        // player.GetComponent<CapsuleCollider2D>().enabled==false
+        if ((isGrounded&&boolForWandering))
         {
             HandleRandomDirectionChange();
             //print(_changeDirectionCooldown);
@@ -137,23 +140,73 @@ public class RockEnemy : EnemyController
             }
         }
     }
-    protected override void DetectPlayer() {
-        
-        if (IsPlayerInRange(detectRange) ) {
-            CaculateDirection();
+    protected override void DetectPlayer() 
+    {
+        if(player.GetComponent<PlayerController_new>().isHurt==true)
+            isPlayerInEnemyRange=false;
+
+        if (IsPlayerInRange(detectRange)&& player.GetComponent<PlayerController_new>().isHurt==false)
+        //if (IsPlayerInRange(detectRange))
+        {
+            //print("In detect range");
             boolForWandering=false;
+            isPlayerInEnemyRange=true;
+            //print(isPlayerInEnemyRange);
+            CaculateDirection();
+            if(IsPlayerInRange(attackRange))
+            {
+                //print(isPlayerInEnemyRange);
+                
+                inAttackRange=true;
+            }
         }
-        else {
+        else 
+        {
             //direction = 0;
             boolForWandering=true;
+            inAttackRange=false;
         }
+        //print(isPlayerInEnemyRange);
     }
 
+    protected override bool IsPlayerInRange(float rangeToDetect) 
+    {
+        Vector3 playerPos = player.transform.position;
+        float distance = (playerPos - transform.position).magnitude;
+
+        if (distance <= rangeToDetect / 2) {
+            //isPlayerInEnemyRange = true;
+            return true;
+        }
+        else {
+            //isPlayerInEnemyRange = false;
+            return false;
+        }
+    }
     void OnCollisionEnter2D(Collision2D other)
     {
-         if (other.gameObject.name == "Player") {
+         if (other.gameObject.name == "Player")
+          {
             // kill player
             player.GetComponent<PlayerController_new>().isHurt = true;
         }
     }
+
+    // void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.name == "Player")
+    //     {
+    //         inAttackRange=true;
+    //     }
+
+    // }
+
+    
+    // void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if (other.name == "Player")
+    //     {
+    //         inAttackRange=false;
+    //     }
+    // }
 }
