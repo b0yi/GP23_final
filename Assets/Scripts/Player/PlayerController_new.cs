@@ -23,6 +23,7 @@ public class PlayerController_new : MonoBehaviour
 {
     [Header("")]
     public ParticleSystem fireParticleSystem;
+    public ParticleSystem speedupParticleSystem;
 
 
     [Header("鎖定")]
@@ -168,6 +169,11 @@ public class PlayerController_new : MonoBehaviour
                 _animator.ResetTrigger("planet");
                 _animator.SetTrigger("transform");
             }
+            if (fireParticleSystem.isPlaying)
+            {
+                fireParticleSystem.Stop();
+            }
+
 
         }
 
@@ -217,6 +223,10 @@ public class PlayerController_new : MonoBehaviour
             _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
             _rb.AddForce((_gravity + launchAcceleration) * _rb.mass * transform.up); // F = m a
+            if (!fireParticleSystem.isPlaying)
+            {
+                fireParticleSystem.Play();
+            }
 
             if (!up)
             {
@@ -237,6 +247,10 @@ public class PlayerController_new : MonoBehaviour
                 if (!fireParticleSystem.isPlaying)
                 {
                     fireParticleSystem.Play();
+                }
+                if(!speedupParticleSystem.isPlaying)
+                {
+                    speedupParticleSystem.Play();
                 }
                 _rb.AddForce(driveAcceleration * _rb.mass * transform.up);
                 fuel -= fuelDelta;
