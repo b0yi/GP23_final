@@ -23,6 +23,7 @@ public class Stele : MonoBehaviour
         {
             _stageManager.UpdateStage();
             preview.playCatPlanetPreview();
+            //preview.playMazePlanetPreview();
         }
     }
 }

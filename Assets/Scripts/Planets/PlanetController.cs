@@ -22,21 +22,40 @@ public class PlanetController : MonoBehaviour
 
         if (_stageManager != null)
         {
-            if (_stageManager.stage >= Stage.ToCatPlanet && !catPlanet.activeSelf)
+            if (_stageManager.stage >= Stage.ToCatPlanet)
             {
                 catPlanet.SetActive(true);
             }
-            if (_stageManager.stage >= Stage.ToWaterPlanet && !waterPlanet.activeSelf)
+            else
+            {
+                catPlanet.SetActive(false);
+            }
+
+            if (_stageManager.stage >= Stage.ToWaterPlanet)
             {
                 waterPlanet.SetActive(true);
             }
-            if (_stageManager.stage >= Stage.ToMazePlanet && !mazePlanet.activeSelf)
+            else
+            {
+                waterPlanet.SetActive(false);
+            }
+
+            if (_stageManager.stage >= Stage.ToMazePlanet)
             {
                 mazePlanet.SetActive(true);
             }
-            if (_stageManager.stage >= Stage.Dragon && !dragonPlanet.activeSelf)
+            else
+            {
+                mazePlanet.SetActive(false);
+            }
+
+            if (_stageManager.stage >= Stage.Dragon)
             {
                 dragonPlanet.SetActive(true);
+            }
+            else
+            {
+                dragonPlanet.SetActive(false);
             }
         }
         else

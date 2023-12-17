@@ -566,6 +566,7 @@ GameObject:
   - component: {fileID: 430800272}
   - component: {fileID: 430800271}
   - component: {fileID: 430800273}
+  - component: {fileID: 430800274}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: UIManager
@@ -613,6 +614,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: 0
+--- !u!114 &430800274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430800270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea11e75e93e261846aee874bbaa5edbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSubtitle: 0
 --- !u!1 &431567609
 GameObject:
   m_ObjectHideFlags: 0
