@@ -87,9 +87,15 @@ public class CatSubtitle : Subtitle
     //         "C-111: 「老話說得好: 地球人，狗都不如。」"
     //     }
     // };
-    
+    public PreviewPlanet preview;
+    private StageManager _stageManager;
+
+
     void Start()
     {
+        GameObject m = GameObject.FindWithTag("UIManager");
+        _stageManager = m.GetComponent<StageManager>();
+
         player = GameObject.Find("Player").GetComponent<PlayerController_new>();
         talkManager = GameObject.FindWithTag("UIManager").GetComponent<TalkManager>();
         generator = subtitleArea.GetComponent<SubtitleGenerator>();
@@ -137,10 +143,13 @@ public class CatSubtitle : Subtitle
             yield return new WaitForSeconds(delayTime);
             subtitleArea.text = "";
         }
-        
+
         // TODO: Call camera here
         // ...
-        
+        _stageManager.UpdateStage();
+        preview.playWaterPlanetPreview();
+
+
         generator.isUsingSubtitle = false;
         player.Unlock();
     }
