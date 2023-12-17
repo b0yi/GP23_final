@@ -4,40 +4,44 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-    [DisplayOnly] public StageManager stageManager;
+    private StageManager _stageManager;
 
-    public GameObject planetR; // cat
-    public GameObject planetWater;
-    public GameObject planetMaze;
-    public GameObject planetDragon;
+    public GameObject catPlanet; // cat
+    public GameObject waterPlanet;
+    public GameObject mazePlanet;
+    public GameObject dragonPlanet;
 
 
     void Start()
     {
-        stageManager = GameObject.FindWithTag("UIManager").GetComponent<StageManager>();
+        _stageManager = GameObject.FindWithTag("UIManager").GetComponent<StageManager>();
     }
 
     private void Update()
     {
 
-        if (stageManager != null)
+        if (_stageManager != null)
         {
-            if (stageManager.stage >= Stage.ToCatPlanet)
+            if (_stageManager.stage >= Stage.ToCatPlanet && !catPlanet.activeSelf)
             {
-                planetR.SetActive(true);
+                catPlanet.SetActive(true);
             }
-            if (stageManager.stage >= Stage.ToWaterPlanet)
+            if (_stageManager.stage >= Stage.ToWaterPlanet && !waterPlanet.activeSelf)
             {
-                planetWater.SetActive(true);
+                waterPlanet.SetActive(true);
             }
-            if (stageManager.stage >= Stage.ToMazePlanet)
+            if (_stageManager.stage >= Stage.ToMazePlanet && !mazePlanet.activeSelf)
             {
-                planetMaze.SetActive(true);
+                mazePlanet.SetActive(true);
             }
-            if (stageManager.stage >= Stage.Dragon)
+            if (_stageManager.stage >= Stage.Dragon && !dragonPlanet.activeSelf)
             {
-                planetDragon.SetActive(true);
+                dragonPlanet.SetActive(true);
             }
+        }
+        else
+        {
+            print("_stageManager not found");
         }
 
     }

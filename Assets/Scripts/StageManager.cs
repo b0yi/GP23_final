@@ -15,9 +15,9 @@ public enum Stage
 
 public class StageManager : MonoBehaviour
 {
-    [DisplayOnly] public Stage stage;
+    public Stage stage;
 
-    void UpdateStage()
+    public void UpdateStage()
     {
         stage += 1;
     }

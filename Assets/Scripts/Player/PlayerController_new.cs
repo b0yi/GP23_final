@@ -69,13 +69,13 @@ public class PlayerController_new : MonoBehaviour
     [DisplayOnly] public bool up;
 
     [Header("重生點")]
-    public StageManager stageManager;
     public Transform rezPlanetO;
     public Transform rezMaze;
     public Transform rezDragon;
 
     private Animator _animator;
     private UIManager _uIManager;
+    private StageManager _stageManager;
     private float _gravity;
     private Rigidbody2D _rb;
     private bool isLoading; // used when dead
@@ -104,7 +104,14 @@ public class PlayerController_new : MonoBehaviour
         _animator = GetComponent<Animator>();
         isGrounded = false;
         playerState = PlayerState.Untransform;
-        _uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+
+        // UIManager
+        GameObject m = GameObject.FindWithTag("UIManager");
+
+        _uIManager = m.GetComponent<UIManager>();
+        _stageManager = m.GetComponent<StageManager>();
+
+
         isHurt = false;
         isLoading = false;
         _animator.SetBool("ishurt", isHurt);
@@ -123,9 +130,9 @@ public class PlayerController_new : MonoBehaviour
     void ResetPosition()
     {
 
-        if (stageManager)
+        if (_stageManager)
         {
-            switch (stageManager.stage)
+            switch (_stageManager.stage)
             {
                 case Stage.Intro:
                 case Stage.ToCatPlanet:
