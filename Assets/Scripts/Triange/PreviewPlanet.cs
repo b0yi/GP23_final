@@ -9,57 +9,55 @@ public class PreviewPlanet : MonoBehaviour
     public PlayableDirector timelinePlanetF;
 
     public PlayerController_new player;
-    [DisplayOnly] public UIManager uIManager;
+    [DisplayOnly] public StageManager stageManager;
 
     // 之後根據不同 player 的狀態（現在要去哪個星球來播放不同的 timeline）
 
     void Start()
     {
-        uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+        stageManager = GameObject.FindWithTag("UIManager").GetComponent<StageManager>();
     }
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (uIManager && collider.CompareTag("Player"))
+        if (stageManager && collider.CompareTag("Player"))
         {
 
-            if (uIManager.stage == GameProgressStage.PlanetR)
-            {
-                timelinePlanetR.Play();
-                player.Lock();
-            }
-            if (uIManager.stage == GameProgressStage.PlanetE)
-            {
-                timelinePlanetE.Play();
-                player.Lock();
-            }
-            if (uIManager.stage == GameProgressStage.PlanetF)
-            {
-                timelinePlanetF.Play();
-                player.Lock();
-            }
-
-
+            //if (stageManager.stage == GameProgressStage.PlanetR)
+            //{
+            //    timelinePlanetR.Play();
+            //    player.Lock();
+            //}
+            //if (stageManager.stage == GameProgressStage.PlanetE)
+            //{
+            //    timelinePlanetE.Play();
+            //    player.Lock();
+            //}
+            //if (stageManager.stage == GameProgressStage.PlanetF)
+            //{
+            //    timelinePlanetF.Play();
+            //    player.Lock();
+            //}
 
         }
     }
 
     void Update()
     {
-        if (uIManager)
+        if (stageManager)
         {
-            if (uIManager.stage == GameProgressStage.PlanetR && timelinePlanetR.state == PlayState.Paused)
-            {
-                player.Unlock();
-            }
-            if (uIManager.stage == GameProgressStage.PlanetE && timelinePlanetE.state == PlayState.Paused)
-            {
-                player.Unlock();
-            }
-            if (uIManager.stage == GameProgressStage.PlanetF && timelinePlanetF.state == PlayState.Paused)
-            {
-                player.Unlock();
-            }
+            //if (stageManager.stage == GameProgressStage.PlanetR && timelinePlanetR.state == PlayState.Paused)
+            //{
+            //    player.Unlock();
+            //}
+            //if (stageManager.stage == GameProgressStage.PlanetE && timelinePlanetE.state == PlayState.Paused)
+            //{
+            //    player.Unlock();
+            //}
+            //if (stageManager.stage == GameProgressStage.PlanetF && timelinePlanetF.state == PlayState.Paused)
+            //{
+            //    player.Unlock();
+            //}
 
         }
 

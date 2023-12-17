@@ -4,45 +4,41 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-    [DisplayOnly] public UIManager uIManager;
+    [DisplayOnly] public StageManager stageManager;
 
-    public GameObject planetR;
-    public GameObject planetE;
-    public GameObject planetF;
+    public GameObject planetR; // cat
+    public GameObject planetWater;
+    public GameObject planetMaze;
+    public GameObject planetDragon;
 
 
     void Start()
     {
-        uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+        stageManager = GameObject.FindWithTag("UIManager").GetComponent<StageManager>();
+    }
 
-        if (uIManager)
+    private void Update()
+    {
+
+        if (stageManager != null)
         {
-            switch (uIManager.stage)
+            if (stageManager.stage >= Stage.ToCatPlanet)
             {
-                case GameProgressStage.PlanetR:
-                    planetR.SetActive(true);
-                    planetE.SetActive(false);
-                    planetF.SetActive(false);
-                    break;
-                case GameProgressStage.PlanetE:
-                    planetR.SetActive(true);
-                    planetE.SetActive(true);
-                    planetF.SetActive(false);
-                    break;
-                case GameProgressStage.PlanetF:
-                    planetR.SetActive(true);
-                    planetE.SetActive(true);
-                    planetF.SetActive(true);
-                    break;
-                default:
-                    planetR.SetActive(true);
-                    planetE.SetActive(true);
-                    planetF.SetActive(true);
-                    break;
+                planetR.SetActive(true);
             }
-
+            if (stageManager.stage >= Stage.ToWaterPlanet)
+            {
+                planetWater.SetActive(true);
+            }
+            if (stageManager.stage >= Stage.ToMazePlanet)
+            {
+                planetMaze.SetActive(true);
+            }
+            if (stageManager.stage >= Stage.Dragon)
+            {
+                planetDragon.SetActive(true);
+            }
         }
-
 
     }
 

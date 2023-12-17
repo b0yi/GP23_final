@@ -68,6 +68,11 @@ public class PlayerController_new : MonoBehaviour
     [DisplayOnly] public float horizontal;
     [DisplayOnly] public bool up;
 
+    [Header("重生點")]
+    public StageManager stageManager;
+    public Transform rezPlanetO;
+    public Transform rezMaze;
+    public Transform rezDragon;
 
     private Animator _animator;
     private UIManager _uIManager;
@@ -105,12 +110,37 @@ public class PlayerController_new : MonoBehaviour
         _animator.SetBool("ishurt", isHurt);
         if (!_uIManager)
         {
-            //walkSpeed *= 3f;
-            //driveAcceleration *= 5f;
-            //turnAcceleration *= 5f;
+            walkSpeed *= 3f;
+            driveAcceleration *= 5f;
+            turnAcceleration *= 5f;
             print("測試模式(速度很快)");
         }
 
+        ResetPosition();
+
+    }
+
+    void ResetPosition()
+    {
+
+        if (stageManager)
+        {
+            switch (stageManager.stage)
+            {
+                case Stage.Intro:
+                case Stage.ToCatPlanet:
+                case Stage.ToWaterPlanet:
+                case Stage.ToMazePlanet:
+                    transform.position = rezPlanetO.position;
+                    break;
+                case Stage.Maze:
+                    transform.position = rezMaze.position;
+                    break;
+                case Stage.Dragon:
+                    transform.position = rezDragon.position;
+                    break;
+            }
+        }
     }
 
     public void Transform()
