@@ -41,9 +41,11 @@ public class PlayerController_new : MonoBehaviour
 
     [Header("狀態")]
     [DisplayOnly] public PlayerState playerState;
+    [DisplayOnly] public bool isGrounded;
+    [DisplayOnly] public bool isHurt;
 
     [Header("所在星球")]
-    [DisplayOnly] public GameObject planet;
+    public GameObject planet;
 
 
     [Header("變身時間")]
@@ -62,17 +64,18 @@ public class PlayerController_new : MonoBehaviour
     public float driveAcceleration;
     public float turnAcceleration;
 
+    [Header("鍵盤輸入")]
+    [DisplayOnly] public float horizontal;
+    [DisplayOnly] public bool up;
+
 
     private Animator _animator;
     private UIManager _uIManager;
     private float _gravity;
     private Rigidbody2D _rb;
-    private float horizontal;
-    private bool up;
-    private bool isGrounded;
+    private bool isLoading; // used when dead
 
 
-    [DisplayOnly] public bool isHurt;
 
     public void Lock()
     {
@@ -84,16 +87,21 @@ public class PlayerController_new : MonoBehaviour
         isLocked = false;
     }
 
+    void Awake()
+    {
+        fuel = 100f;
+    }
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        fuel = 100f;
         transformTimer = transformTime;
         _animator = GetComponent<Animator>();
         isGrounded = false;
         playerState = PlayerState.Untransform;
         _uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
-        isHurt=false;
+        isHurt = false;
+        isLoading = false;
         _animator.SetBool("ishurt", isHurt);
         if (!_uIManager)
         {
@@ -119,7 +127,6 @@ public class PlayerController_new : MonoBehaviour
         if(isHurt)
         {
             this.GetComponent<CapsuleCollider2D>().enabled=false;
-            
         }
 
     }
@@ -179,8 +186,8 @@ public class PlayerController_new : MonoBehaviour
             _rb.angularDrag = angularDragOnPlanet;
 
             _rb.constraints = RigidbodyConstraints2D.None;
-
-            if (!isGrounded && Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.1f && up)
+            
+            if ((!isGrounded) && (Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.2f) && up)
             {
                 playerState = PlayerState.Transform;
                 transformTimer = transformTime;
@@ -272,9 +279,10 @@ public class PlayerController_new : MonoBehaviour
                 }
                 _rb.AddForce(driveAcceleration * _rb.mass * transform.up);
                 fuel -= fuelDelta;
-                if (_uIManager && fuel <= 0)
+                if (_uIManager && fuel <= 0 && (!isLoading))
                 {
                     _uIManager.LoadPlayScene();
+                    isLoading = true;
                 }
             }
             else
