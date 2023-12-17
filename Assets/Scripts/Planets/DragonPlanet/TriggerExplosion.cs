@@ -44,6 +44,8 @@ public class TriggerExplosion : MonoBehaviour
             delayExplosionTimer = delayExplosionTime;
             playerController.Lock();
             playerController.Transform();
+            CinemachineShake.finalitem=false;
+            print(other.gameObject.name);
         }
     }
 }
