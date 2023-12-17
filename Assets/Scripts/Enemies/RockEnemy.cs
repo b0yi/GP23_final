@@ -12,6 +12,7 @@ public class RockEnemy : EnemyController
     [DisplayOnly] public bool boolForWandering=true;
     [DisplayOnly] public bool inAttackRange=false;
     [DisplayOnly] public bool Stop=false;
+    [DisplayOnly] public bool WallDetected=false;
 
     private int idleState;
     private int walkState;
@@ -122,6 +123,12 @@ public class RockEnemy : EnemyController
                 }
             }
         }
+        //print(WallDetected);
+        if(WallDetected==true)
+        {
+            direction*=-1;
+            print(direction);
+        }
     }
 
     protected void Run()
@@ -170,6 +177,7 @@ public class RockEnemy : EnemyController
             //direction = 0;
             boolForWandering=true;
             inAttackRange=false;
+            isPlayerInEnemyRange=false;
         }
         //print(isPlayerInEnemyRange);
     }
