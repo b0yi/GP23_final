@@ -109,7 +109,7 @@ public class CatSubtitle : Subtitle
 
     public override void Talk() {
         if (IsPlayerInRange(talkRange) && player.isGrounded) {
-            if (talkManager.currentSubtitle == 0) {
+            if (talkManager.currentSubtitle == 2) {
                 if (!generator.isUsingSubtitle) {
                     if (talkState == CatTalkState.FirstTalk && !isFirstFinished) {
                         StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));

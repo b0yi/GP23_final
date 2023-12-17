@@ -15,21 +15,30 @@ public class TalkManager : MonoBehaviour
     public int currentSubtitle = 0;
 
     public List<List<string>> subtitles = new List<List<string>>() {
+        // treeInfo
+        new List<string>() {
+            "This is the Energy Extraction Tree planted by the Venusians to obtain energy called 'Gensokyo' from other planets.",
+            "When the Energy Extraction Tree draws a sufficient amount of Gensokyo, it produces the Gensokyo Fruit, which provides the Venusians with the energy to navigate.",
+        },
+        // steleInfo
+        new List<string>() {
+            "Go to Litter Box Star to find Cat-111." 
+        },
         // catFirstTalk
         new List<string>() {
-            "C-111: My God, a living Venusian!",
-            "C-111: Messenger-107, this is really ...... amazing.",
+            "Cat-111: My God, a living Venusian!",
+            "Cat-111: Messenger-107, this is really ...... amazing.",
             "M-107 (You): How do I go back to my home?",
-            "C-111: Are you serious?",
-            "C-111: It's not easy to go home.",
+            "Cat-111: Are you serious?",
+            "Cat-111: It's not easy to go home.",
             "M-107 (You): You think I like being here?",
-            "C-111: ...... Uh, I don't hate it.",
-            "C-111: Look at all those cute little kittens on my planet.",
-            "C-111: Anyway, I can't help you.",
-            "C-111: But there's a mysterious ocean star in the neighborhood.",
-            @"C-111: There's liquid water so far away from the sun.
+            "Cat-111: ...... Uh, I don't hate it.",
+            "Cat-111: Look at all those cute little kittens on my planet.",
+            "Cat-111: Anyway, I can't help you.",
+            "Cat-111: But there's a mysterious ocean star in the neighborhood.",
+            @"Cat-111: There's liquid water so far away from the sun.
 What is the heat source?",
-            "C-111: Maybe you could look around."
+            "Cat-111: Maybe you could look around."
         },
         // fishFirstTalk
         new List<string>() {
