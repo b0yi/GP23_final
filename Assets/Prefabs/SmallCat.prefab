@@ -70,8 +70,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0.7
-  m_PointLightOuterRadius: 3.5
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 3.25
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -109,7 +109,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4999999, y: 1.4999999, z: 1}
+  m_LocalScale: {x: 1.3333334, y: 1.3333334, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5991887140585075168}
@@ -358,7 +358,7 @@ MonoBehaviour:
   canJump: 1
   jumpCoolDown: 1.5
   jumpHeight: 0.6
-  jumpRange: 4.5
+  jumpRange: 4
   launchAcceleration: 0
   footOffset: 0.2
   raycastDistance: 10
@@ -370,7 +370,7 @@ MonoBehaviour:
   maxTurnAngularVelocity: 0
   turnAcceleration: 0
   resistAcceleration: 0
-  detectRange: 7
+  detectRange: 6.5
   chasePlayer: 0
   isPlayerInEnemyRange: 0
   boolForJumpAnim: 0
@@ -422,7 +422,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.3333333, y: 2.3333333, z: 1}
+  m_LocalScale: {x: 2.1666667, y: 2.1666667, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5991887140585075168}

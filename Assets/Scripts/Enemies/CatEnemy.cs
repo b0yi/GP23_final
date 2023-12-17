@@ -59,7 +59,8 @@ public class CatEnemy : EnemyController
 
     protected override void Jump()
     {
-        if (canJump && isGrounded && IsPlayerInRange(jumpRange)) {
+        animState = anim.GetCurrentAnimatorStateInfo(0);
+        if (canJump && isGrounded && IsPlayerInRange(jumpRange) && animState.fullPathHash == runState) {
             canJump = false;
             boolForJumpAnim = true;
             // 只保留水平方向的速度
@@ -89,13 +90,26 @@ public class CatEnemy : EnemyController
         }
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    // void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     if (other.collider.name == "Player") {
+    //         // Knock back player
+    //         Vector2 direct = player.transform.position - planet.transform.position;
+    //         Vector3 knockback = direction < 0 ? new Vector3(direct.y, -direct.x, 0) : new Vector3(-direct.y, direct.x, 0);
+    //         player.transform.position = player.transform.position - knockback.normalized * 8;
+    //     }
+    // }
+    
+    void OnCollisionStay2D(Collision2D other)
     {
         if (other.collider.name == "Player") {
-            // Knock back player
-            Vector2 direct = player.transform.position - planet.transform.position;
-            Vector3 knockback = direction < 0 ? new Vector3(direct.y, -direct.x, 0) : new Vector3(-direct.y, direct.x, 0);
-            player.transform.position = player.transform.position - knockback.normalized * 8;
+            animState = anim.GetCurrentAnimatorStateInfo(0);
+            if (animState.fullPathHash == jumpState) {
+                // Knock back player
+                Vector2 direct = player.transform.position - planet.transform.position;
+                Vector3 knockback = direction < 0 ? new Vector3(direct.y, -direct.x, 0) : new Vector3(-direct.y, direct.x, 0);
+                player.transform.position = player.transform.position - knockback.normalized * 8f;
+            }
         }
     }
 }
