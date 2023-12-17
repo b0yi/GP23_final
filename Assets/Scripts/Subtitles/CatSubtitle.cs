@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class CatSubtitle : Subtitle
 {
-    public List<string> firstTalk = new List<string>() {
-        "C-111: My God, a living Venusian!",
-        "C-111: Messenger-107, this is really ...... amazing.",
-        "M-107 (Player): How do I go back to my home?",
-        "C-111: Are you serious?",
-        "C-111: It's not easy to go home.",
-        "M-107 (Player): You think I like being here?",
-        "C-111: ...... Uh, I don't hate it.",
-        "C-111: Look at all those cute little kittens on my planet.",
-        "C-111: Anyway, I can't help you.",
-        "C-111: But there's a mysterious ocean star in the neighborhood.",
-        "C-111: There's liquid water so far away from the sun. What is the heat source?",
-        "C-111: Maybe you could look around."
-    };
+    [DisplayOnly] public bool isTalking;
+    [DisplayOnly] public CatTalkState talkState;
+
+    [DisplayOnly] public bool isFirstFinished;
+
+    // public List<string> firstTalk = new List<string>() {
+    //     "C-111: My God, a living Venusian!",
+    //     "C-111: Messenger-107, this is really ...... amazing.",
+    //     "M-107 (Player): How do I go back to my home?",
+    //     "C-111: Are you serious?",
+    //     "C-111: It's not easy to go home.",
+    //     "M-107 (Player): You think I like being here?",
+    //     "C-111: ...... Uh, I don't hate it.",
+    //     "C-111: Look at all those cute little kittens on my planet.",
+    //     "C-111: Anyway, I can't help you.",
+    //     "C-111: But there's a mysterious ocean star in the neighborhood.",
+    //     "C-111: There's liquid water so far away from the sun. What is the heat source?",
+    //     "C-111: Maybe you could look around."
+    // };
 
     // public List<List<string>> keepTalk = new List<List<string>>() {
     //     new List<string>() {
@@ -83,16 +88,60 @@ public class CatSubtitle : Subtitle
     //     }
     // };
     
-
-    // Start is called before the first frame update
     void Start()
     {
-
+        player = GameObject.Find("Player").GetComponent<PlayerController_new>();
+        talkManager = GameObject.FindWithTag("UIManager").GetComponent<TalkManager>();
+        generator = subtitleArea.GetComponent<SubtitleGenerator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Talk();
+    }
+
+    public override void Talk() {
+        if (IsPlayerInRange(talkRange) && player.isGrounded) {
+            if (talkManager.currentSubtitle == 0) {
+                if (!generator.isUsingSubtitle) {
+                    if (talkState == CatTalkState.FirstTalk && !isFirstFinished) {
+                        StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
+                        isFirstFinished = true;
+                        talkManager.currentSubtitle += 1;
+                    }
+                    else {
+                        ;
+                    }
+                }
+            }
+        }
+    }
+
+    public override IEnumerator ShowSubtitle(List<string> subtitles)
+    {
+        player.Lock();
+        generator.isUsingSubtitle = true;
+
+        float showCharTime = 1f / charPerSec;
+        for (int i = 0; i < subtitles.Count; i++) {
+            string[] nameAndWord = subtitles[i].Split(": ");
+            string dispText = nameAndWord[0] + ": ";
+
+            foreach (char c in nameAndWord[1]) {
+                dispText += c;
+                subtitleArea.text = dispText;
+                yield return new WaitForSeconds(showCharTime);
+            }
+
+            yield return new WaitForSeconds(delayTime);
+            subtitleArea.text = "";
+        }
         
+        // TODO: Call camera here
+        // ...
+        
+        generator.isUsingSubtitle = false;
+        player.Unlock();
     }
 }
