@@ -340,7 +340,6 @@ GameObject:
   - component: {fileID: 391580716}
   - component: {fileID: 391580715}
   - component: {fileID: 391580714}
-  - component: {fileID: 391580717}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -422,50 +421,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &391580717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 391580713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_AllowHDROutput: 1
-  m_UseScreenCoordOverride: 0
-  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
-  m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
 --- !u!1 &407914106
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,7 +585,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1403d11b0c3c8ee9eb8670900c35809b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: 0
 --- !u!4 &430800272
 Transform:
   m_ObjectHideFlags: 0
@@ -655,9 +609,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 430800270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea11e75e93e261846aee874bbaa5edbd, type: 3}
+  m_Script: {fileID: 11500000, guid: ff78c7b4f15a15e438a79f9c7c638b08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stage: 0
 --- !u!1 &431567609
 GameObject:
   m_ObjectHideFlags: 0

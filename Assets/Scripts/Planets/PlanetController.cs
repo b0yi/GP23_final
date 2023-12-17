@@ -4,45 +4,45 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-    [DisplayOnly] public UIManager uIManager;
+    private StageManager _stageManager;
 
-    public GameObject planetR;
-    public GameObject planetE;
-    public GameObject planetF;
+    public GameObject catPlanet; // cat
+    public GameObject waterPlanet;
+    public GameObject mazePlanet;
+    public GameObject dragonPlanet;
 
 
     void Start()
     {
-        uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+        _stageManager = GameObject.FindWithTag("UIManager").GetComponent<StageManager>();
+    }
 
-        if (uIManager)
+    private void Update()
+    {
+
+        if (_stageManager != null)
         {
-            switch (uIManager.stage)
+            if (_stageManager.stage >= Stage.ToCatPlanet && !catPlanet.activeSelf)
             {
-                case GameProgressStage.PlanetR:
-                    planetR.SetActive(true);
-                    planetE.SetActive(false);
-                    planetF.SetActive(false);
-                    break;
-                case GameProgressStage.PlanetE:
-                    planetR.SetActive(true);
-                    planetE.SetActive(true);
-                    planetF.SetActive(false);
-                    break;
-                case GameProgressStage.PlanetF:
-                    planetR.SetActive(true);
-                    planetE.SetActive(true);
-                    planetF.SetActive(true);
-                    break;
-                default:
-                    planetR.SetActive(true);
-                    planetE.SetActive(true);
-                    planetF.SetActive(true);
-                    break;
+                catPlanet.SetActive(true);
             }
-
+            if (_stageManager.stage >= Stage.ToWaterPlanet && !waterPlanet.activeSelf)
+            {
+                waterPlanet.SetActive(true);
+            }
+            if (_stageManager.stage >= Stage.ToMazePlanet && !mazePlanet.activeSelf)
+            {
+                mazePlanet.SetActive(true);
+            }
+            if (_stageManager.stage >= Stage.Dragon && !dragonPlanet.activeSelf)
+            {
+                dragonPlanet.SetActive(true);
+            }
         }
-
+        else
+        {
+            print("_stageManager not found");
+        }
 
     }
 
