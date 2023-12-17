@@ -50,8 +50,8 @@ public class CinemachineShake : MonoBehaviour
     {
         elapsedTime+=Time.deltaTime;
         
-        noisePerlin.m_AmplitudeGain=Mathf.Lerp(2,10,elapsedTime/shakeTimerTotal);
-        noisePerlin.m_FrequencyGain=5;
+        noisePerlin.m_AmplitudeGain=Mathf.Lerp(8,30,elapsedTime/shakeTimerTotal);
+        noisePerlin.m_FrequencyGain=10;
         isShaking=true;
         shakeTimer=0f;
         hasShaken=true;
