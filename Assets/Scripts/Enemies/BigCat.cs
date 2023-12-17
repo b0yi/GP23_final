@@ -7,6 +7,7 @@ public enum CatTalkState {
     KeepTalk,
     WaterTalk,
     FishTalk,
+    NoTalk
 }
 
 public class BigCat : EnemyController
@@ -53,21 +54,25 @@ public class BigCat : EnemyController
 
     private void Talk() {
         if (IsPlayerInRange(talkRange) && player.GetComponent<PlayerController_new>().playerState == PlayerState.OnPlanet) {
-            if (!catSubtitle.isTalking) {
+            if (!catSubtitle.subtitleGenerator.isUsingSubtitle) {
                 if (talkState == CatTalkState.FirstTalk) {
-                    StartCoroutine(catSubtitle.ShowSubtitles(catSubtitle.firstTalk));
+                    catSubtitle.GenerateSubtitle(catSubtitle.firstTalk);
+                    talkState = CatTalkState.NoTalk;
                 }
-                else if (talkState == CatTalkState.WaterTalk) {
-                    int pickOne = Random.Range(0, 2);
-                    StartCoroutine(catSubtitle.ShowSubtitles(catSubtitle.waterTalk[pickOne]));
-                }
-                else if (talkState == CatTalkState.FishTalk) {
-                    int pickOne = Random.Range(0, 2);
-                    StartCoroutine(catSubtitle.ShowSubtitles(catSubtitle.fishTalk[pickOne]));
-                }
+                // else if (talkState == CatTalkState.WaterTalk) {
+                //     int pickOne = Random.Range(0, 2);
+                //     catSubtitle.GenerateSubtitle(catSubtitle.waterTalk[pickOne]);
+                // }
+                // else if (talkState == CatTalkState.FishTalk) {
+                //     int pickOne = Random.Range(0, 2);
+                //     catSubtitle.GenerateSubtitle(catSubtitle.fishTalk[pickOne]);
+                // }
+                // else if (talkState == CatTalkState.KeepTalk) {
+                //     int pickOne = Random.Range(0, 9);
+                //     catSubtitle.GenerateSubtitle(catSubtitle.keepTalk[pickOne]);
+                // }
                 else {
-                    int pickOne = Random.Range(0, 9);
-                    StartCoroutine(catSubtitle.ShowSubtitles(catSubtitle.keepTalk[pickOne]));
+                    
                 }
             }
         }

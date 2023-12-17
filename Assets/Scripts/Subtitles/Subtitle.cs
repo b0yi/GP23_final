@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class Subtitle : MonoBehaviour
 {
-    public CanvasGroup subtitleCanvas;
-    public TextMeshProUGUI subtitleArea;
-    private float emptyTime = 0.5f;
-    [DisplayOnly] public bool isTalking;
+    public SubtitleGenerator subtitleGenerator;
 
     // Start is called before the first frame update
     void Start()
@@ -22,16 +19,9 @@ public class Subtitle : MonoBehaviour
         
     }
 
-    public IEnumerator ShowSubtitles(List<string> subtitles) {
-        isTalking = true;
-        for (int i = 0; i < subtitles.Count; i++) {
-            int stringLength = subtitles[i].Length;
-            float stringTime = 3f; // 230wpm + 1sec
-            subtitleArea.text = subtitles[i]; 
-            yield return new WaitForSeconds(stringTime);
-            subtitleArea.text = "";
-            yield return new WaitForSeconds(emptyTime);
+    public void GenerateSubtitle(List<string> subtitles) {
+        if (!subtitleGenerator.isUsingSubtitle) {
+            StartCoroutine(subtitleGenerator.GenerateSubtitle(subtitles));
         }
-        isTalking = false;
     }
 }
