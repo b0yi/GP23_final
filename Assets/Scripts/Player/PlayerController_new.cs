@@ -364,6 +364,13 @@ public class PlayerController_new : MonoBehaviour
             isGrounded = true;
             transformTimer = transformTime;
         }
+        
+        // if(other.gameObject.name=="DragonItem")
+        // {
+            
+        // }
+
+
     }
 
     void OnCollisionExit2D(Collision2D other)
