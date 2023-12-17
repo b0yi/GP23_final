@@ -4,26 +4,20 @@ using UnityEngine;
 
 public class Fuel : MonoBehaviour
 {
-    public GameObject player;
-    private PlayerController _playerController;
-
-    void Start()
-    {
-        _playerController = player.GetComponent<PlayerController>();
-    }
+    public PlayerController_new playerController;
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player") && _playerController.fuel != 100f)
+        if (collider.CompareTag("Player") && playerController.fuel != 100f)
         {
 
-            if (_playerController.fuel + 15f < 100f)
+            if (playerController.fuel + 15f < 100f)
             {
-                _playerController.fuel += 15f;
+                playerController.fuel += 15f;
             }
             else
             {
-                _playerController.fuel = 100f;
+                playerController.fuel = 100f;
             }
 
             gameObject.SetActive(false);
