@@ -15,10 +15,10 @@ public class Dragon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(finalitem+"Not in if");
+        //Debug.Log(finalIem+"Not in if");
         if(finalitem==null)
 		{
-            //Debug.Log(finalitem+" in if");
+            //Debug.Log(finalIem+" in if");
 			dragon.SetActive(true);
 		}
     }

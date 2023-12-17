@@ -105,25 +105,45 @@ public class PlayerController_new : MonoBehaviour
         _animator.SetBool("ishurt", isHurt);
         if (!_uIManager)
         {
-            print("測試模式");
+            //walkSpeed *= 3f;
+            //driveAcceleration *= 5f;
+            //turnAcceleration *= 5f;
+            print("測試模式(速度很快)");
         }
 
     }
 
+    public void Transform()
+    {
+        playerState = PlayerState.Transform;
+        transformTimer = transformTime;
+        _animator.ResetTrigger("planet");
+        _animator.SetTrigger("transform");
+        up = true;
+    }
+
+    public void ExplodeToSpace()
+    {
+        //playerState = PlayerState.InSpace;
+        //_animator.ResetTrigger("transform");
+        //_animator.SetTrigger("spaceship_idle");
+        //_rb.drag = linearDragInSpace;
+        //_rb.angularDrag = angularDragInSpace;
+    }
+
     void Update()
     {
-        if(!isHurt)
+        if(!isHurt && !isLocked)
         {
             horizontal = Input.GetAxis("Horizontal");
             up = Input.GetKey(KeyCode.W);
         }
-        _gravity = planet.GetComponent<PlanetGravity>().gravity;
+        if (planet)
+        {
+            _gravity = planet.GetComponent<PlanetGravity>().gravity;
+        }
         _animator.SetBool("ishurt", isHurt);
-        // if(isHurt)
-        // {
-        //     horizontal = Input.GetAxis("Horizontal");
-        //     up = Input.GetKey(KeyCode.W);
-        // }
+
         if(isHurt)
         {
             this.GetComponent<CapsuleCollider2D>().enabled=false;
