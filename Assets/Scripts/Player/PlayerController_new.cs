@@ -84,6 +84,8 @@ public class PlayerController_new : MonoBehaviour
 
     public void Lock()
     {
+        up = false;
+        horizontal = 0f;
         isLocked = true;
     }
 
