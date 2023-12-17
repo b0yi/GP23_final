@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
     {
         LoadScene("Play");
     }
-
+        
     public void QuitGame()
     {
         Application.Quit();
