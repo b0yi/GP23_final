@@ -57,9 +57,5 @@ public class UIArrowContainer : MonoBehaviour
                 arrowMazePlanet.SetActive(false);
             }
         }
-        else
-        {
-            print("_stageManager not found");
-        }
     }
 }
