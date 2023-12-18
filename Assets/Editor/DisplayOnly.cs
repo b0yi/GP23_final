@@ -1,11 +1,12 @@
 using UnityEditor;
+using UnityEngine;
 
 namespace UnityEngine
 {
 
-    public class DisplayOnly : PropertyAttribute
-    {
-    }
+
+    public class DisplayOnly : PropertyAttribute { }
+
 
     [CustomPropertyDrawer(typeof(DisplayOnly))]
     public class ReadOnlyDrawer : PropertyDrawer
@@ -21,4 +22,6 @@ namespace UnityEngine
             GUI.enabled = true;
         }
     }
+
+
 }

@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.Playables;
+using System;
+
 
 public enum Location
 {
@@ -418,4 +420,8 @@ public class PlayerController_new : MonoBehaviour
     //     return isHurt;
     // }
 
+}
+
+internal class DisplayOnlyAttribute : Attribute
+{
 }
