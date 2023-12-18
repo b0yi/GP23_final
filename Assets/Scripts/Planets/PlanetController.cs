@@ -58,10 +58,6 @@ public class PlanetController : MonoBehaviour
                 dragonPlanet.SetActive(false);
             }
         }
-        else
-        {
-            print("_stageManager not found");
-        }
 
     }
 

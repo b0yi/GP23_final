@@ -8,7 +8,12 @@ public class PreviewPlanet : MonoBehaviour
     public PlayableDirector timelineWaterPlanet;
     public PlayableDirector timelineMazePlanet;
 
-    public PlayerController_new player;
+    public Transform vcamCatPlanetTF;
+    public Transform vcamWaterPlanetTF;
+    public Transform vcamMazePlanetTF;
+
+    // public PlayerController_new player;
+    public GameObject player;
 
     public void playCatPlanetPreview()
     {
@@ -26,5 +31,12 @@ public class PreviewPlanet : MonoBehaviour
         //player.Lock();
     }
 
+    void Update()
+    {
+        Quaternion r = player.transform.rotation;
+        vcamCatPlanetTF.rotation = r;
+        vcamWaterPlanetTF.rotation = r;
+        vcamMazePlanetTF.rotation = r;
+    }
 
 }
