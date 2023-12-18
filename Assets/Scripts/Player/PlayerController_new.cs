@@ -172,7 +172,7 @@ public class PlayerController_new : MonoBehaviour
 
     void Update()
     {
-        if(!isHurt && !isLocked)
+        if (!isHurt && !isLocked)
         {
             horizontal = Input.GetAxis("Horizontal");
             up = Input.GetKey(KeyCode.W);
@@ -183,9 +183,9 @@ public class PlayerController_new : MonoBehaviour
         }
         _animator.SetBool("ishurt", isHurt);
 
-        if(isHurt)
+        if (isHurt)
         {
-            this.GetComponent<CapsuleCollider2D>().enabled=false;
+            this.GetComponent<CapsuleCollider2D>().enabled = false;
         }
 
     }
@@ -219,6 +219,7 @@ public class PlayerController_new : MonoBehaviour
             }
             else
             {
+                _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized;
                 _animator.SetBool("walk", false);
             }
         }
@@ -245,7 +246,7 @@ public class PlayerController_new : MonoBehaviour
             _rb.angularDrag = angularDragOnPlanet;
 
             _rb.constraints = RigidbodyConstraints2D.None;
-            
+
             if ((!isGrounded) && (Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.2f) && up)
             {
                 playerState = PlayerState.Transform;
@@ -332,7 +333,7 @@ public class PlayerController_new : MonoBehaviour
                 {
                     fireParticleSystem.Play();
                 }
-                if(!speedupParticleSystem.isPlaying)
+                if (!speedupParticleSystem.isPlaying)
                 {
                     speedupParticleSystem.Play();
                 }
@@ -373,10 +374,10 @@ public class PlayerController_new : MonoBehaviour
             isGrounded = true;
             transformTimer = transformTime;
         }
-        
+
         // if(other.gameObject.name=="DragonItem")
         // {
-            
+
         // }
 
 

@@ -1,4 +1,3 @@
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,10 +23,19 @@ public class UIManager : MonoBehaviour
     {
         LoadScene("Play");
     }
-        
+
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
     }
 
 
