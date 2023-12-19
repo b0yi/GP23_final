@@ -96,6 +96,16 @@ public class PlayerController_new : MonoBehaviour
         isLocked = false;
     }
 
+    public void Freeze()
+    {
+        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    public void Unfreeze()
+    {
+        _rb.constraints = RigidbodyConstraints2D.None;
+    }
+
     void Awake()
     {
         fuel = 100f;

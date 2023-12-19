@@ -26,41 +26,51 @@ public class Subtitle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public virtual void Talk() {
-        GenerateSubtitle(new List<string>() {"..."});
+    public virtual void Talk()
+    {
+        GenerateSubtitle(new List<string>() { "..." });
     }
 
-    public void GenerateSubtitle(List<string> subtitles) {
-        if (!generator.isUsingSubtitle) {
+    public void GenerateSubtitle(List<string> subtitles)
+    {
+        if (!generator.isUsingSubtitle)
+        {
             StartCoroutine(ShowSubtitle(subtitles));
         }
     }
 
-    protected bool IsPlayerInRange(float rangeToDetect) {
+    protected bool IsPlayerInRange(float rangeToDetect)
+    {
         Vector3 playerPos = player.transform.position;
         float distance = (playerPos - transform.position).magnitude;
 
-        if (distance <= rangeToDetect / 2) {
+        if (distance <= rangeToDetect / 2)
+        {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
 
-    public virtual IEnumerator ShowSubtitle(List<string> subtitles) {
+    public virtual IEnumerator ShowSubtitle(List<string> subtitles)
+    {
         player.Lock();
+        player.Freeze();
         generator.isUsingSubtitle = true;
 
         float showCharTime = 1f / charPerSec;
-        for (int i = 0; i < subtitles.Count; i++) {
+        for (int i = 0; i < subtitles.Count; i++)
+        {
             string[] nameAndWord = subtitles[i].Split(": ");
             string dispText = nameAndWord[0] + ": ";
 
-            foreach (char c in nameAndWord[1]) {
+            foreach (char c in nameAndWord[1])
+            {
                 dispText += c;
                 subtitleArea.text = dispText;
                 yield return new WaitForSeconds(showCharTime);
@@ -72,5 +82,6 @@ public class Subtitle : MonoBehaviour
 
         generator.isUsingSubtitle = false;
         player.Unlock();
+        player.Unfreeze();
     }
 }
