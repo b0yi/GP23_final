@@ -33,6 +33,7 @@ public class FishSubtitle : Subtitle
     {
         player.Lock();
         player.Freeze();
+        gameObject.GetComponent<Fish>().Lock();
         generator.isUsingSubtitle = true;
 
         float showCharTime = 1f / charPerSec;
@@ -58,5 +59,6 @@ public class FishSubtitle : Subtitle
         generator.isUsingSubtitle = false;
         player.Unlock();
         player.Unfreeze();
+        gameObject.GetComponent<Fish>().Unlock();
     }
 }
