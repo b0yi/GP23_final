@@ -45,7 +45,6 @@ public class TriggerExplosion : MonoBehaviour
             playerController.Lock();
             playerController.Transform();
             CinemachineShake.finalitem = false;
-            print(other.gameObject.name);
         }
     }
 }

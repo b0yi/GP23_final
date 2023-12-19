@@ -36,6 +36,7 @@ public class Tree : MonoBehaviour
             // 生成果實並將其設置在樹的位置
             GameObject fruit = Instantiate(fruitPrefab, transform.position, Quaternion.identity);
             fruit.transform.parent = transform;
+            fruit.transform.localPosition = new Vector3(0f, 1f, 0f);
             isFruitAvailable = false;
         }
     }
