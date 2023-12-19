@@ -10,10 +10,11 @@ public class Subtitle : MonoBehaviour
     protected PlayerController_new player;
     protected TalkManager talkManager;
 
-    public float talkRange;
+    public float talkRange = 0f;
+    public float subtitleID = 0f;
 
-    protected float charPerSec = 25f;
-    protected float delayTime = 1.5f;
+    protected float charPerSec = 20f;
+    protected float delayTime = 1.2f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +31,14 @@ public class Subtitle : MonoBehaviour
     }
 
     public virtual void Talk() {
-        GenerateSubtitle(new List<string>() {"..."});
+        if (IsPlayerInRange(talkRange)) {
+            if (talkManager.currentSubtitle == subtitleID) {
+                if (!generator.isUsingSubtitle) {
+                    StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
+                    talkManager.currentSubtitle += 1;
+                }
+            }
+        }
     }
 
     public void GenerateSubtitle(List<string> subtitles) {

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TreeSubtitle : Subtitle
 {
+    public int treeID;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +23,19 @@ public class TreeSubtitle : Subtitle
     public override void Talk()
     {
         if (IsPlayerInRange(talkRange)) {
-            if (talkManager.currentSubtitle == 0) {
+            if ((treeID == 0 && !talkManager.tree0) || (treeID == 1 && !talkManager.tree1) || (treeID == 2 && !talkManager.tree2)) {
+                if (treeID == 0) {
+                    talkManager.tree0 = true;
+                }
+                else if (treeID == 1) {
+                    talkManager.tree1 = true;
+                }
+                else if (treeID == 2) {
+                    talkManager.tree2 = true;
+                }
+
                 if (!generator.isUsingSubtitle) {
-                    StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
-                    talkManager.currentSubtitle += 1;
+                    StartCoroutine(ShowSubtitle(talkManager.treeSubtitles[treeID]));
                 }
             }
         }
