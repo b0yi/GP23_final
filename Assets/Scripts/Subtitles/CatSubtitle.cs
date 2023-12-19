@@ -107,11 +107,16 @@ public class CatSubtitle : Subtitle
         Talk();
     }
 
-    public override void Talk() {
-        if (IsPlayerInRange(talkRange) && player.isGrounded) {
-            if (talkManager.currentSubtitle == subtitleID) {
-                if (!generator.isUsingSubtitle) {
-                    if (talkState == CatTalkState.FirstTalk && !isFirstFinished) {
+    public override void Talk()
+    {
+        if (IsPlayerInRange(talkRange) && player.isGrounded)
+        {
+            if (talkManager.currentSubtitle == subtitleID)
+            {
+                if (!generator.isUsingSubtitle)
+                {
+                    if (talkState == CatTalkState.FirstTalk && !isFirstFinished)
+                    {
                         StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
                         isFirstFinished = true;
                         talkManager.currentSubtitle += 1;
@@ -129,6 +134,8 @@ public class CatSubtitle : Subtitle
     {
         player.Lock();
         player.Freeze();
+        _stageManager.UpdateStage();
+
         generator.isUsingSubtitle = true;
 
         float showCharTime = 1f / charPerSec;
@@ -150,7 +157,6 @@ public class CatSubtitle : Subtitle
 
         // TODO: Call camera here
         // ...
-        _stageManager.UpdateStage();
         preview.playWaterPlanetPreview();
 
 

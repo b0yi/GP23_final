@@ -33,6 +33,8 @@ public class FishSubtitle : Subtitle
     {
         player.Lock();
         player.Freeze();
+        _stageManager.UpdateStage();
+
         gameObject.GetComponent<Fish>().Lock();
         generator.isUsingSubtitle = true;
 
@@ -53,7 +55,6 @@ public class FishSubtitle : Subtitle
             subtitleArea.text = "";
         }
 
-        _stageManager.UpdateStage();
         preview.playMazePlanetPreview();
 
         generator.isUsingSubtitle = false;
