@@ -15,4 +15,14 @@ public class AttackDetector : MonoBehaviour
         }
 
     }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+
+        if (other.CompareTag("Player"))
+        {
+            whale.Unattack();
+        }
+
+    }
 }
