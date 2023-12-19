@@ -48,6 +48,8 @@ public class PlayerController_new : MonoBehaviour
 
     [Header("所在星球")]
     public GameObject planet;
+    public GameObject mazePlanet;
+    public GameObject dragonPlanet;
 
 
     [Header("變身時間")]
@@ -385,6 +387,14 @@ public class PlayerController_new : MonoBehaviour
         {
             isGrounded = true;
             transformTimer = transformTime;
+            if (planet == mazePlanet && _stageManager.stage == Stage.ToMazePlanet)
+            {
+                _stageManager.UpdateStage();
+            }
+            if (planet == dragonPlanet && _stageManager.stage == Stage.Maze)
+            {
+                _stageManager.UpdateStage();
+            }
         }
 
         // if(other.gameObject.name=="DragonItem")
