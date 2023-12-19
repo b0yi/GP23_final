@@ -30,6 +30,7 @@ public class PlayerController_new : MonoBehaviour
 
     [Header("鎖定")]
     [DisplayOnly] public bool isLocked;
+    [DisplayOnly] public bool isFreezed;
 
     [Header("燃料")]
     [DisplayOnly] public float fuel;            // 油量/電量（0 - 100）
@@ -101,12 +102,12 @@ public class PlayerController_new : MonoBehaviour
 
     public void Freeze()
     {
-        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        isFreezed = true;
     }
 
     public void Unfreeze()
     {
-        _rb.constraints = RigidbodyConstraints2D.None;
+        isFreezed = false;
     }
 
     void Awake()
@@ -187,14 +188,6 @@ public class PlayerController_new : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.F))
-        {
-            Freeze();
-        }
-        else
-        {
-            Unfreeze();
-        }
         if (!isHurt && !isLocked)
         {
             horizontal = Input.GetAxis("Horizontal");
@@ -223,7 +216,9 @@ public class PlayerController_new : MonoBehaviour
 
         LaunchOrNot();
 
+
     }
+
 
 
     private void WalkOrNot()
@@ -268,7 +263,14 @@ public class PlayerController_new : MonoBehaviour
             _rb.drag = linearDragOnPlanet;
             _rb.angularDrag = angularDragOnPlanet;
 
-            _rb.constraints = RigidbodyConstraints2D.None;
+            if (isFreezed)
+            {
+                _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            else
+            {
+                _rb.constraints = RigidbodyConstraints2D.None;
+            }
 
             if ((!isGrounded) && (Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.2f) && up)
             {
@@ -328,7 +330,15 @@ public class PlayerController_new : MonoBehaviour
             _rb.drag = 0;
             _rb.angularDrag = 0;
 
-            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            if (isFreezed)
+            {
+                _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            else
+            {
+                _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+            }
 
             _rb.AddForce((_gravity + launchAcceleration) * _rb.mass * transform.up); // F = m a
             if (!fireParticleSystem.isPlaying)
@@ -347,7 +357,15 @@ public class PlayerController_new : MonoBehaviour
 
         if (playerState == PlayerState.InSpace)
         {
-            _rb.constraints = RigidbodyConstraints2D.None;
+
+            if (isFreezed)
+            {
+                _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            else
+            {
+                _rb.constraints = RigidbodyConstraints2D.None;
+            }
 
             if (up)
             {
@@ -384,7 +402,6 @@ public class PlayerController_new : MonoBehaviour
         }
 
 
-
     }
 
 
@@ -406,10 +423,6 @@ public class PlayerController_new : MonoBehaviour
             }
         }
 
-        // if(other.gameObject.name=="DragonItem")
-        // {
-
-        // }
 
 
     }
