@@ -15,17 +15,17 @@ public class PreviewPlanet : MonoBehaviour
     // public PlayerController_new player;
     public GameObject player;
 
-    public void playCatPlanetPreview()
+    public void PlayCatPlanetPreview()
     {
         timelineCatPlanet.Play();
         //player.Lock();
     }
-    public void playWaterPlanetPreview()
+    public void PlayWaterPlanetPreview()
     {
         timelineWaterPlanet.Play();
         //player.Lock();
     }
-    public void playMazePlanetPreview()
+    public void PlayMazePlanetPreview()
     {
         timelineMazePlanet.Play();
         //player.Lock();

@@ -22,7 +22,7 @@ public class Stele : MonoBehaviour
         if (other.CompareTag("Player") && _stageManager.stage == Stage.Intro)
         {
             _stageManager.UpdateStage();
-            preview.playCatPlanetPreview();
+            preview.PlayCatPlanetPreview();
             //preview.playMazePlanetPreview();
         }
     }

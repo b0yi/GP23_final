@@ -10,18 +10,18 @@ public class RockEnemy : EnemyController
     public Animator animCA;
     private AnimatorStateInfo animState;
 
-    [DisplayOnly] public bool boolForIdleAnim=false;
-    [DisplayOnly] public bool boolForWandering=true;
-    [DisplayOnly] public bool inAttackRange=false;
-    [DisplayOnly] public bool Stop=false;
-    [DisplayOnly] public bool WallDetected=false;
+    [DisplayOnly] public bool boolForIdleAnim = false;
+    [DisplayOnly] public bool boolForWandering = true;
+    [DisplayOnly] public bool inAttackRange = false;
+    [DisplayOnly] public bool Stop = false;
+    [DisplayOnly] public bool WallDetected = false;
 
     private int idleState;
     private int walkState;
     private int runState;
-    float _changeDirectionCooldown=1.0f;
-    float _idletime=3.0f;
-    float attackRange=8.0f;
+    float _changeDirectionCooldown = 1.0f;
+    float _idletime = 3.0f;
+    float attackRange = 8.0f;
     //Random rnd = new Random();
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,7 @@ public class RockEnemy : EnemyController
         stage = "OnPlanet";
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        direction=1;
+        direction = 1;
         //canJump = true;
 
         idleState = Animator.StringToHash("Base Layer.Rock_idle");
@@ -47,10 +47,10 @@ public class RockEnemy : EnemyController
         }
 
         DetectPlayer();
-        if(Stop)
+        if (Stop)
         {
-            direction=0;
-            boolForIdleAnim=true;
+            direction = 0;
+            boolForIdleAnim = true;
 
         }
 
@@ -83,20 +83,20 @@ public class RockEnemy : EnemyController
 
         if (_changeDirectionCooldown <= 0)
         {
-            boolForIdleAnim=true;
-            _idletime-= Time.deltaTime;
-            direction=0;
+            boolForIdleAnim = true;
+            _idletime -= Time.deltaTime;
+            direction = 0;
             if (_idletime <= 0)
             {
-                boolForIdleAnim=false;
+                boolForIdleAnim = false;
                 _changeDirectionCooldown = Random.Range(1f, 5f);
 
                 do
                 {
-                    direction=Random.Range(-2,2);
+                    direction = Random.Range(-2, 2);
                 }
-                while(direction==0);
-                _idletime=3.0f;
+                while (direction == 0);
+                _idletime = 3.0f;
             }
         }
     }
@@ -108,7 +108,7 @@ public class RockEnemy : EnemyController
     protected override void Walk()
     {
         // player.GetComponent<CapsuleCollider2D>().enabled==false
-        if ((isGrounded&&boolForWandering))
+        if ((isGrounded && boolForWandering))
         {
             HandleRandomDirectionChange();
             //print(_changeDirectionCooldown);
@@ -130,10 +130,9 @@ public class RockEnemy : EnemyController
             }
         }
         //print(WallDetected);
-        if(WallDetected==true)
+        if (WallDetected == true)
         {
-            direction*=-1;
-            print(direction);
+            direction *= -1;
         }
     }
 
@@ -150,67 +149,69 @@ public class RockEnemy : EnemyController
             {
                 transform.localScale = (direction > 0) ? new Vector3(2.0f, 2, 1) : new Vector3(-2.0f, 2, 1);
                 Vector2 horizontalVelocity = Vector2.Dot(rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
-                if (horizontalVelocity.magnitude < maxWalkSpeed*2)
+                if (horizontalVelocity.magnitude < maxWalkSpeed * 2)
                 {
                     // 水平加速
-                    rb.AddForce(direction * WalkAcceleration * rb.mass * ((Vector2)transform.right).normalized*2);
+                    rb.AddForce(direction * WalkAcceleration * rb.mass * ((Vector2)transform.right).normalized * 2);
                 }
             }
         }
     }
-    protected override void DetectPlayer() 
+    protected override void DetectPlayer()
     {
-        if(player.GetComponent<PlayerController_new>().isHurt==true)
-            isPlayerInEnemyRange=false;
+        if (player.GetComponent<PlayerController_new>().isHurt == true)
+            isPlayerInEnemyRange = false;
 
-        if (IsPlayerInRange(detectRange)&& player.GetComponent<PlayerController_new>().isHurt==false)
+        if (IsPlayerInRange(detectRange) && player.GetComponent<PlayerController_new>().isHurt == false)
         //if (IsPlayerInRange(detectRange))
         {
             //print("In detect range");
-            boolForWandering=false;
-            isPlayerInEnemyRange=true;
+            boolForWandering = false;
+            isPlayerInEnemyRange = true;
             animCA.SetBool("playerdetect", true);
             //print(isPlayerInEnemyRange);
             CaculateDirection();
-            
-            if(IsPlayerInRange(attackRange))
+
+            if (IsPlayerInRange(attackRange))
             {
                 //print(isPlayerInEnemyRange);
-                
-                inAttackRange=true;
-                
+
+                inAttackRange = true;
+
             }
-            
+
         }
-        else 
+        else
         {
             //direction = 0;
-            boolForWandering=true;
-            inAttackRange=false;
-            isPlayerInEnemyRange=false;
+            boolForWandering = true;
+            inAttackRange = false;
+            isPlayerInEnemyRange = false;
             animCA.SetBool("playerdetect", false);
         }
         //print(isPlayerInEnemyRange);
     }
 
-    protected override bool IsPlayerInRange(float rangeToDetect) 
+    protected override bool IsPlayerInRange(float rangeToDetect)
     {
         Vector3 playerPos = player.transform.position;
         float distance = (playerPos - transform.position).magnitude;
 
-        if (distance <= rangeToDetect / 2) {
+        if (distance <= rangeToDetect / 2)
+        {
             //isPlayerInEnemyRange = true;
             return true;
         }
-        else {
+        else
+        {
             //isPlayerInEnemyRange = false;
             return false;
         }
     }
     void OnCollisionEnter2D(Collision2D other)
     {
-         if (other.gameObject.name == "Player")
-          {
+        if (other.gameObject.name == "Player")
+        {
             // kill player
             player.GetComponent<PlayerController_new>().isHurt = true;
         }
@@ -225,7 +226,7 @@ public class RockEnemy : EnemyController
 
     // }
 
-    
+
     // void OnTriggerExit2D(Collider2D other)
     // {
     //     if (other.name == "Player")

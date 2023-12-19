@@ -157,7 +157,7 @@ public class CatSubtitle : Subtitle
 
         // TODO: Call camera here
         // ...
-        preview.playWaterPlanetPreview();
+        preview.PlayWaterPlanetPreview();
 
 
         generator.isUsingSubtitle = false;

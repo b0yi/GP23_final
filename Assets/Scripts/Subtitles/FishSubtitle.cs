@@ -55,7 +55,7 @@ public class FishSubtitle : Subtitle
             subtitleArea.text = "";
         }
 
-        preview.playMazePlanetPreview();
+        preview.PlayMazePlanetPreview();
 
         generator.isUsingSubtitle = false;
         player.Unlock();
