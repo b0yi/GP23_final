@@ -7,7 +7,9 @@ public class RockEnemy : EnemyController
 {
     [Header("Cat Enemy Scripts Parameters")]
     private Animator anim;
+    public Animator animCA;
     private AnimatorStateInfo animState;
+
     [DisplayOnly] public bool boolForIdleAnim=false;
     [DisplayOnly] public bool boolForWandering=true;
     [DisplayOnly] public bool inAttackRange=false;
@@ -167,14 +169,18 @@ public class RockEnemy : EnemyController
             //print("In detect range");
             boolForWandering=false;
             isPlayerInEnemyRange=true;
+            animCA.SetBool("playerdetect", true);
             //print(isPlayerInEnemyRange);
             CaculateDirection();
+            
             if(IsPlayerInRange(attackRange))
             {
                 //print(isPlayerInEnemyRange);
                 
                 inAttackRange=true;
+                
             }
+            
         }
         else 
         {
@@ -182,6 +188,7 @@ public class RockEnemy : EnemyController
             boolForWandering=true;
             inAttackRange=false;
             isPlayerInEnemyRange=false;
+            animCA.SetBool("playerdetect", false);
         }
         //print(isPlayerInEnemyRange);
     }
