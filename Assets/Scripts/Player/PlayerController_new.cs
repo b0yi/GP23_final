@@ -129,13 +129,13 @@ public class PlayerController_new : MonoBehaviour
         isHurt = false;
         isLoading = false;
         _animator.SetBool("ishurt", isHurt);
-        if (!_uIManager)
+        /*if (!_uIManager)
         {
             walkSpeed *= 3f;
             driveAcceleration *= 5f;
             turnAcceleration *= 5f;
             print("測試模式(速度很快)");
-        }
+        }*/
 
         ResetPosition();
 
