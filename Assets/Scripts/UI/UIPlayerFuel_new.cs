@@ -33,7 +33,7 @@ public class UIPlayerFuel_new : MonoBehaviour
 
         if (_playerPC.fuel < 10f)
         {
-            _playerPC.fuelDelta *= (1f + Time.deltaTime/2f);
+            _playerPC.fuelDecrement *= (1f + Time.deltaTime / 2f);
             _image.color = new Color(255f, 0f, 0f, 1f);
             animator.SetBool("lowbattery", true);
         }

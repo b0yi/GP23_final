@@ -33,7 +33,8 @@ public class PlayerController_new : MonoBehaviour
 
     [Header("燃料")]
     [DisplayOnly] public float fuel;            // 油量/電量（0 - 100）
-    public float fuelDelta;
+    public float fuelDecrement;
+    public float fuelIncrement;
 
 
     [Header("星球上移動跳躍")]
@@ -186,6 +187,14 @@ public class PlayerController_new : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.F))
+        {
+            Freeze();
+        }
+        else
+        {
+            Unfreeze();
+        }
         if (!isHurt && !isLocked)
         {
             horizontal = Input.GetAxis("Horizontal");
@@ -352,7 +361,7 @@ public class PlayerController_new : MonoBehaviour
                     speedupParticleSystem.Play();
                 }
                 _rb.AddForce(driveAcceleration * _rb.mass * transform.up);
-                fuel -= fuelDelta;
+                fuel -= fuelDecrement;
                 if (_uIManager && fuel <= 0 && (!isLoading))
                 {
                     _uIManager.LoadPlayScene();
@@ -419,6 +428,19 @@ public class PlayerController_new : MonoBehaviour
         {
             playerState = PlayerState.Launch;
         }
+
+        if (other.CompareTag("Fruit") && fuel < 100f)
+        {
+            Tree tree = other.GetComponentInParent<Tree>();
+            if (tree != null)
+            {
+                tree.FruitEaten();
+                Destroy(other.gameObject);
+            }
+            fuel += fuelIncrement;
+            if (fuel > 100f) fuel = 100f;
+        }
+
 
     }
 
