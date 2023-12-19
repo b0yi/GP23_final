@@ -116,7 +116,8 @@ public class CatSubtitle : Subtitle
                         isFirstFinished = true;
                         talkManager.currentSubtitle += 1;
                     }
-                    else {
+                    else
+                    {
                         ;
                     }
                 }
@@ -127,14 +128,17 @@ public class CatSubtitle : Subtitle
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
         player.Lock();
+        player.Freeze();
         generator.isUsingSubtitle = true;
 
         float showCharTime = 1f / charPerSec;
-        for (int i = 0; i < subtitles.Count; i++) {
+        for (int i = 0; i < subtitles.Count; i++)
+        {
             string[] nameAndWord = subtitles[i].Split(": ");
             string dispText = nameAndWord[0] + ": ";
 
-            foreach (char c in nameAndWord[1]) {
+            foreach (char c in nameAndWord[1])
+            {
                 dispText += c;
                 subtitleArea.text = dispText;
                 yield return new WaitForSeconds(showCharTime);
@@ -152,5 +156,6 @@ public class CatSubtitle : Subtitle
 
         generator.isUsingSubtitle = false;
         player.Unlock();
+        player.Unfreeze();
     }
 }

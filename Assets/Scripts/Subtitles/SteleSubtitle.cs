@@ -26,13 +26,16 @@ public class SteleSubtitle : Subtitle
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
         player.Lock();
+        player.Freeze();
         generator.isUsingSubtitle = true;
 
         float showCharTime = 1f / charPerSec;
-        for (int i = 0; i < subtitles.Count; i++) {
+        for (int i = 0; i < subtitles.Count; i++)
+        {
             string dispText = "";
 
-            foreach (char c in subtitles[i]) {
+            foreach (char c in subtitles[i])
+            {
                 dispText += c;
                 subtitleArea.text = dispText;
                 yield return new WaitForSeconds(showCharTime);
@@ -44,5 +47,6 @@ public class SteleSubtitle : Subtitle
 
         generator.isUsingSubtitle = false;
         player.Unlock();
+        player.Unfreeze();
     }
 }

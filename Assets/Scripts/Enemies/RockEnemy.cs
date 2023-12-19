@@ -46,7 +46,11 @@ public class RockEnemy : EnemyController
 
         DetectPlayer();
         if(Stop)
+        {
             direction=0;
+            boolForIdleAnim=true;
+
+        }
 
 
 

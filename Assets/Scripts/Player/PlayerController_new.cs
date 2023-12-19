@@ -33,7 +33,8 @@ public class PlayerController_new : MonoBehaviour
 
     [Header("燃料")]
     [DisplayOnly] public float fuel;            // 油量/電量（0 - 100）
-    public float fuelDelta;
+    public float fuelDecrement;
+    public float fuelIncrement;
 
 
     [Header("星球上移動跳躍")]
@@ -48,6 +49,8 @@ public class PlayerController_new : MonoBehaviour
 
     [Header("所在星球")]
     public GameObject planet;
+    public GameObject mazePlanet;
+    public GameObject dragonPlanet;
 
 
     [Header("變身時間")]
@@ -96,6 +99,16 @@ public class PlayerController_new : MonoBehaviour
         isLocked = false;
     }
 
+    public void Freeze()
+    {
+        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    public void Unfreeze()
+    {
+        _rb.constraints = RigidbodyConstraints2D.None;
+    }
+
     void Awake()
     {
         fuel = 100f;
@@ -119,13 +132,13 @@ public class PlayerController_new : MonoBehaviour
         isHurt = false;
         isLoading = false;
         _animator.SetBool("ishurt", isHurt);
-        if (!_uIManager)
+        /*if (!_uIManager)
         {
             walkSpeed *= 3f;
             driveAcceleration *= 5f;
             turnAcceleration *= 5f;
             print("測試模式(速度很快)");
-        }
+        }*/
 
         ResetPosition();
 
@@ -174,6 +187,14 @@ public class PlayerController_new : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.F))
+        {
+            Freeze();
+        }
+        else
+        {
+            Unfreeze();
+        }
         if (!isHurt && !isLocked)
         {
             horizontal = Input.GetAxis("Horizontal");
@@ -340,7 +361,7 @@ public class PlayerController_new : MonoBehaviour
                     speedupParticleSystem.Play();
                 }
                 _rb.AddForce(driveAcceleration * _rb.mass * transform.up);
-                fuel -= fuelDelta;
+                fuel -= fuelDecrement;
                 if (_uIManager && fuel <= 0 && (!isLoading))
                 {
                     _uIManager.LoadPlayScene();
@@ -375,6 +396,14 @@ public class PlayerController_new : MonoBehaviour
         {
             isGrounded = true;
             transformTimer = transformTime;
+            if (planet == mazePlanet && _stageManager.stage == Stage.ToMazePlanet)
+            {
+                _stageManager.UpdateStage();
+            }
+            if (planet == dragonPlanet && _stageManager.stage == Stage.Maze)
+            {
+                _stageManager.UpdateStage();
+            }
         }
 
         // if(other.gameObject.name=="DragonItem")
@@ -399,6 +428,19 @@ public class PlayerController_new : MonoBehaviour
         {
             playerState = PlayerState.Launch;
         }
+
+        if (other.CompareTag("Fruit") && fuel < 100f)
+        {
+            Tree tree = other.GetComponentInParent<Tree>();
+            if (tree != null)
+            {
+                tree.FruitEaten();
+                Destroy(other.gameObject);
+            }
+            fuel += fuelIncrement;
+            if (fuel > 100f) fuel = 100f;
+        }
+
 
     }
 

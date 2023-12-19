@@ -3,16 +3,16 @@ using System.Collections;
 using Unity.VisualScripting;
 
 //[RequireComponent(typeof(Explodable))]
-public class TriggerExplosion : MonoBehaviour 
+public class TriggerExplosion : MonoBehaviour
 {
 
-	public Explodable explodable;
+    public Explodable explodable;
     public PlayerController_new playerController;
     [DisplayOnly] public float delayExplosionTimer;
     [DisplayOnly] bool explode;
     public float delayExplosionTime;
 
-   
+
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class TriggerExplosion : MonoBehaviour
         if (explode)
         {
             delayExplosionTimer -= Time.deltaTime;
-            
+
             if (delayExplosionTimer <= 0)
             {
                 explodable.explode();
@@ -38,13 +38,13 @@ public class TriggerExplosion : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !explode) 
+        if (other.CompareTag("Player") && !explode)
         {
             explode = true;
             delayExplosionTimer = delayExplosionTime;
             playerController.Lock();
             playerController.Transform();
-            CinemachineShake.finalitem=false;
+            CinemachineShake.finalitem = false;
             print(other.gameObject.name);
         }
     }
