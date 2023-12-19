@@ -107,16 +107,11 @@ public class CatSubtitle : Subtitle
         Talk();
     }
 
-    public override void Talk()
-    {
-        if (IsPlayerInRange(talkRange) && player.isGrounded)
-        {
-            if (talkManager.currentSubtitle == 2)
-            {
-                if (!generator.isUsingSubtitle)
-                {
-                    if (talkState == CatTalkState.FirstTalk && !isFirstFinished)
-                    {
+    public override void Talk() {
+        if (IsPlayerInRange(talkRange) && player.isGrounded) {
+            if (talkManager.currentSubtitle == subtitleID) {
+                if (!generator.isUsingSubtitle) {
+                    if (talkState == CatTalkState.FirstTalk && !isFirstFinished) {
                         StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
                         isFirstFinished = true;
                         talkManager.currentSubtitle += 1;

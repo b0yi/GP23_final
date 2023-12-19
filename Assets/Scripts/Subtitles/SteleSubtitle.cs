@@ -20,17 +20,7 @@ public class SteleSubtitle : Subtitle
 
     public override void Talk()
     {
-        if (IsPlayerInRange(talkRange))
-        {
-            if (talkManager.currentSubtitle == 1)
-            {
-                if (!generator.isUsingSubtitle)
-                {
-                    StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
-                    talkManager.currentSubtitle += 1;
-                }
-            }
-        }
+        base.Talk();
     }
 
     public override IEnumerator ShowSubtitle(List<string> subtitles)
