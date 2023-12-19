@@ -23,16 +23,8 @@ public class TreeSubtitle : Subtitle
     public override void Talk()
     {
         if (IsPlayerInRange(talkRange)) {
-            if ((treeID == 0 && !talkManager.tree0) || (treeID == 1 && !talkManager.tree1) || (treeID == 2 && !talkManager.tree2)) {
-                if (treeID == 0) {
-                    talkManager.tree0 = true;
-                }
-                else if (treeID == 1) {
-                    talkManager.tree1 = true;
-                }
-                else if (treeID == 2) {
-                    talkManager.tree2 = true;
-                }
+            if (!talkManager.treeBools[treeID]) {
+                talkManager.treeBools[treeID] = true;
 
                 if (!generator.isUsingSubtitle) {
                     StartCoroutine(ShowSubtitle(talkManager.treeSubtitles[treeID]));
