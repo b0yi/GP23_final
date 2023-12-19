@@ -4,12 +4,13 @@ using UnityEngine;
 
 public enum Stage
 {
-    Intro = 0,      // ¨S¦³½bÀY, ­«¥ÍÂI¬° O
-    ToCatPlanet,    // ¸I¨ì¯«©_ªF¦èÄ²µo (ÃèÀY preview), ½bÀY ¿ß, ­«¥ÍÂI O
-    ToWaterPlanet,  // ¹ï¸Ü«áÄ²µo (ÃèÀY preview), ½bÀY ¤ô, ­«¥ÍÂI O
-    ToMazePlanet,   // ¹ï¸Ü«áÄ²µo (ÃèÀY preview), ½bÀY °g®c, ­«¥ÍÂI O
-    Maze,           // °g®c¬P²y¸¨¦aÄ²µo, ¨S¦³½bÀY, ­«¥ÍÂI °g®cªþªñ
-    Dragon,         // °g®c¬P²y¸¨¦aÄ²µo, ¨S¦³½bÀY, ­«¥ÍÂI Às¬P
+    Intro = 0,      // ï¿½Sï¿½ï¿½ï¿½bï¿½Y, ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ O
+    ToCatPlanet,    // ï¿½Iï¿½ì¯«ï¿½_ï¿½Fï¿½ï¿½Ä²ï¿½o (ï¿½ï¿½ï¿½Y preview), ï¿½bï¿½Y ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½I O
+    ToWaterPlanet,  // ï¿½ï¿½Ü«ï¿½Ä²ï¿½o (ï¿½ï¿½ï¿½Y preview), ï¿½bï¿½Y ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½I O
+    ToMazePlanet,   // ï¿½ï¿½Ü«ï¿½Ä²ï¿½o (ï¿½ï¿½ï¿½Y preview), ï¿½bï¿½Y ï¿½gï¿½c, ï¿½ï¿½ï¿½ï¿½ï¿½I O
+    Maze,           // ï¿½gï¿½cï¿½Pï¿½yï¿½ï¿½ï¿½aÄ²ï¿½o, ï¿½Sï¿½ï¿½ï¿½bï¿½Y, ï¿½ï¿½ï¿½ï¿½ï¿½I ï¿½gï¿½cï¿½ï¿½ï¿½ï¿½
+    ToDragonPlanet, // 
+    Dragon,         // ï¿½gï¿½cï¿½Pï¿½yï¿½ï¿½ï¿½aÄ²ï¿½o, ï¿½Sï¿½ï¿½ï¿½bï¿½Y, ï¿½ï¿½ï¿½ï¿½ï¿½I ï¿½sï¿½P
 }
 
 
@@ -29,6 +30,6 @@ public class StageManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 }

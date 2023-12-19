@@ -16,10 +16,14 @@ public class Temple : MonoBehaviour
 
     public ParticleSystem teleportParticle;
     public GameObject teleportLight;
+    private StageManager _stageManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        GameObject m = GameObject.FindWithTag("UIManager");
+        _stageManager = m.GetComponent<StageManager>();
+
         player = GameObject.Find("Player").transform;
 
         canTeleport = true;
@@ -32,19 +36,28 @@ public class Temple : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canTeleport) {
+        if (canTeleport)
+        {
             teleportLight.SetActive(true);
-            if (startCounting) {
+            if (startCounting)
+            {
                 currentTime += Time.deltaTime;
-                if (currentTime >= teleportTime) {
+                if (currentTime >= teleportTime)
+                {
                     Teleport();
+                    if (_stageManager.stage == Stage.Maze)
+                    {
+                        _stageManager.UpdateStage();
+                    }
                 }
             }
         }
-        else {
+        else
+        {
             teleportLight.SetActive(false);
             currentCD -= Time.deltaTime;
-            if (currentCD < 0f) {
+            if (currentCD < 0f)
+            {
                 canTeleport = true;
                 currentTime = 0f;
             }
@@ -53,15 +66,18 @@ public class Temple : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "Player") {
+        if (other.name == "Player")
+        {
             startCounting = true;
         }
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.name == "Player") {
-            if (canTeleport && startCounting) {
+        if (other.name == "Player")
+        {
+            if (canTeleport && startCounting)
+            {
                 GenerateParticle();
             }
         }
@@ -69,14 +85,16 @@ public class Temple : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.name == "Player") {
+        if (other.name == "Player")
+        {
             startCounting = false;
             currentTime = 0f;
             StopParticle();
         }
     }
 
-    private void Teleport() {
+    private void Teleport()
+    {
         currentCD = teleportCD;
         otherTemple.currentCD = teleportCD;
         canTeleport = false;
@@ -84,11 +102,13 @@ public class Temple : MonoBehaviour
         player.position = otherTemple.transform.position;
     }
 
-    private void GenerateParticle() {
+    private void GenerateParticle()
+    {
         teleportParticle.Play();
     }
 
-    private void StopParticle() {
+    private void StopParticle()
+    {
         teleportParticle.Stop();
     }
 }

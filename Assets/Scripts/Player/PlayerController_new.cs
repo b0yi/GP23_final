@@ -159,6 +159,7 @@ public class PlayerController_new : MonoBehaviour
                     transform.position = rezPlanetO.position;
                     break;
                 case Stage.Maze:
+                case Stage.ToDragonPlanet:
                     transform.position = rezMaze.position;
                     break;
                 case Stage.Dragon:

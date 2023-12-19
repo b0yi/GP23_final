@@ -49,7 +49,7 @@ public class PlanetController : MonoBehaviour
                 mazePlanet.SetActive(false);
             }
 
-            if (_stageManager.stage >= Stage.Dragon)
+            if (_stageManager.stage >= Stage.ToDragonPlanet)
             {
                 dragonPlanet.SetActive(true);
             }
