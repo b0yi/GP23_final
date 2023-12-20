@@ -374,7 +374,16 @@ public class PlayerController_new : MonoBehaviour
                     speedupParticleSystem.Play();
                 }
                 _rb.AddForce(driveAcceleration * _rb.mass * transform.up);
-                fuel -= fuelDecrement;
+                
+                if (fuel >= 20f)
+                {
+                    fuel -= fuelDecrement;
+                }
+                else
+                {
+                    fuel -= fuelDecrement * 2f;
+                }
+
                 if (_uIManager && fuel <= 0 && (!_isLoading))
                 {
                     _uIManager.LoadPlayScene();
