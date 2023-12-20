@@ -9,6 +9,7 @@ public class RockEnemy : EnemyController
     private Animator anim;
     public Animator animCA;
     private AnimatorStateInfo animState;
+    private UIManager _uIManager;
 
     [DisplayOnly] public bool boolForIdleAnim = false;
     [DisplayOnly] public bool boolForWandering = true;
@@ -22,6 +23,8 @@ public class RockEnemy : EnemyController
     float _changeDirectionCooldown = 1.0f;
     float _idletime = 3.0f;
     float attackRange = 8.0f;
+    float _loadscenetime = 3.0f;
+
     //Random rnd = new Random();
     // Start is called before the first frame update
     void Start()
@@ -36,6 +39,9 @@ public class RockEnemy : EnemyController
         walkState = Animator.StringToHash("Base Layer.Rock_walk");
         runState = Animator.StringToHash("Base Layer.Rock_run");
         //jumpState = Animator.StringToHash("Base Layer.Cat_jump");
+
+        _uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+
     }
 
     // Update is called once per frame
@@ -53,7 +59,13 @@ public class RockEnemy : EnemyController
             boolForIdleAnim = true;
 
         }
-
+        if (player.GetComponent<PlayerController_new>().isHurt == true)
+        {
+               _loadscenetime-= Time.deltaTime;
+                print(_loadscenetime);
+                if(_loadscenetime<0)
+                   _uIManager.LoadPlayScene();
+        }
 
 
         anim.SetBool("isPlayerInRange", isPlayerInEnemyRange);
@@ -120,7 +132,7 @@ public class RockEnemy : EnemyController
             }
             else
             {
-                transform.localScale = (direction > 0) ? new Vector3(2.0f, 2, 1) : new Vector3(-2.0f, 2, 1);
+                transform.localScale = (direction > 0) ? new Vector3(0.06666667f, 0.06666667f, 1) : new Vector3(-0.06666667f, 0.06666667f, 1);
                 Vector2 horizontalVelocity = Vector2.Dot(rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
                 if (horizontalVelocity.magnitude < maxWalkSpeed)
                 {
@@ -147,7 +159,7 @@ public class RockEnemy : EnemyController
             }
             else
             {
-                transform.localScale = (direction > 0) ? new Vector3(2.0f, 2, 1) : new Vector3(-2.0f, 2, 1);
+                transform.localScale = (direction > 0) ? new Vector3(0.06666667f, 0.06666667f, 1) : new Vector3(-0.06666667f, 0.06666667f, 1);
                 Vector2 horizontalVelocity = Vector2.Dot(rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
                 if (horizontalVelocity.magnitude < maxWalkSpeed * 2)
                 {
@@ -168,7 +180,7 @@ public class RockEnemy : EnemyController
             //print("In detect range");
             boolForWandering = false;
             isPlayerInEnemyRange = true;
-            animCA.SetBool("playerdetect", true);
+            //animCA.SetBool("playerdetect", true);
             //print(isPlayerInEnemyRange);
             CaculateDirection();
 
@@ -187,7 +199,7 @@ public class RockEnemy : EnemyController
             boolForWandering = true;
             inAttackRange = false;
             isPlayerInEnemyRange = false;
-            animCA.SetBool("playerdetect", false);
+            //animCA.SetBool("playerdetect", false);
         }
         //print(isPlayerInEnemyRange);
     }
@@ -214,24 +226,28 @@ public class RockEnemy : EnemyController
         {
             // kill player
             player.GetComponent<PlayerController_new>().isHurt = true;
+            _uIManager.LoadPlayScene();
+        }
+        // if (_uIManager)
+        //     {
+        //         _uIManager.LoadPlayScene();
+        //     }
+    }
+
+   void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.name == "Player")
+        {
+            animCA.SetBool("playerdetect", true);
         }
     }
 
-    // void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     if (other.name == "Player")
-    //     {
-    //         inAttackRange=true;
-    //     }
 
-    // }
-
-
-    // void OnTriggerExit2D(Collider2D other)
-    // {
-    //     if (other.name == "Player")
-    //     {
-    //         inAttackRange=false;
-    //     }
-    // }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.name == "Player")
+        {
+            animCA.SetBool("playerdetect", false);
+        }
+    }
 }
