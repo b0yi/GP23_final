@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class UIArrow : MonoBehaviour
     public Camera cam;
     public GameObject player;
     public GameObject target;
+    //public GameObject text;
 
     public float paddingTop;
     public float paddingRight;
@@ -44,7 +46,6 @@ public class UIArrow : MonoBehaviour
 
     void Update()
     {
-
         Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(player.transform.position);
         Vector2 targetScreenPosition = Camera.main.WorldToScreenPoint(target.transform.position);
 
@@ -66,9 +67,37 @@ public class UIArrow : MonoBehaviour
             Vector2 arrowPosition = Vector2.zero;
             if (SegmentsInterPoint(playerRectPosition, targetRectPosition, boundary[i], boundary[i + 1], ref arrowPosition))
             {
+
                 _arrow.rectTransform.anchoredPosition = Vector2.Lerp(_arrow.rectTransform.anchoredPosition, arrowPosition, 10f * Time.deltaTime);
                 // _arrow.rectTransform.anchoredPosition = arrowPosition;
                 _arrow.rectTransform.localEulerAngles = new Vector3(0, 0, 90f * i);
+
+
+
+                //if (i == 0)
+                //{       // top
+                //    text.transform.position = _arrow.transform.position;
+                //    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+                //}
+                //else if (i == 1)    // left
+                //{
+                //    text.transform.position = _arrow.transform.position + new Vector3(5f, 0, 0);
+                //    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
+                //}
+                //else if (i == 2)    // bottom
+                //{
+                //    text.transform.position = _arrow.transform.position;
+                //    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+                //}
+                //else if (i == 3)    // right
+                //{
+                //    text.transform.position = _arrow.transform.position + new Vector3(5f, 0, 0);
+                //    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Right;
+                //}
+
+
+
+
                 break;
             }
         }
