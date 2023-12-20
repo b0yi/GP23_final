@@ -397,6 +397,10 @@ public class PlayerController_new : MonoBehaviour
                 {
                     fireParticleSystem.Stop();
                 }
+                if(speedupParticleSystem.isPlaying)
+                {
+                    speedupParticleSystem.Stop();
+                }
             }
             if (horizontal != 0)
             {
