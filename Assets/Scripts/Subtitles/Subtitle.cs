@@ -5,23 +5,26 @@ using UnityEngine;
 
 public class Subtitle : MonoBehaviour
 {
-    public TextMeshProUGUI subtitleArea;
-    protected SubtitleGenerator generator;
+    public SubtitleCanvas canvas;
+    protected CanvasGroup canvasGroup;
+    protected TextMeshProUGUI textArea;
+
     protected PlayerController_new player;
     protected TalkManager talkManager;
 
     public float talkRange = 0f;
     public float subtitleID = 0f;
 
-    protected float charPerSec = 20f;
-    protected float delayTime = 1.2f;
+    [DisplayOnly] public bool isEnterDown = false;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<PlayerController_new>();
         talkManager = GameObject.FindWithTag("UIManager").GetComponent<TalkManager>();
-        generator = subtitleArea.GetComponent<SubtitleGenerator>();
+
+        canvasGroup = canvas.GetComponent<CanvasGroup>();
+        textArea = canvas.transform.Find("SubtitleText").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -33,19 +36,11 @@ public class Subtitle : MonoBehaviour
     public virtual void Talk() {
         if (IsPlayerInRange(talkRange)) {
             if (talkManager.currentSubtitle == subtitleID) {
-                if (!generator.isUsingSubtitle) {
+                if (!canvas.isLockingSubtitle) {
                     StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
                     talkManager.currentSubtitle += 1;
                 }
             }
-        }
-    }
-
-    public void GenerateSubtitle(List<string> subtitles)
-    {
-        if (!generator.isUsingSubtitle)
-        {
-            StartCoroutine(ShowSubtitle(subtitles));
         }
     }
 
@@ -68,27 +63,46 @@ public class Subtitle : MonoBehaviour
     {
         player.Lock();
         player.Freeze();
-        generator.isUsingSubtitle = true;
+        canvas.isLockingSubtitle = true;
+        canvas.isTalking = true;
 
-        float showCharTime = 1f / charPerSec;
+        float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++)
         {
             string[] nameAndWord = subtitles[i].Split(": ");
             string dispText = nameAndWord[0] + ": ";
 
+            isEnterDown = false;
+            StartCoroutine(WaitForSkip());
+
             foreach (char c in nameAndWord[1])
             {
+                if (isEnterDown) {
+                    dispText = subtitles[i];
+                    textArea.text = dispText;
+                    break;
+                }
+
                 dispText += c;
-                subtitleArea.text = dispText;
+                textArea.text = dispText;
                 yield return new WaitForSeconds(showCharTime);
             }
 
-            yield return new WaitForSeconds(delayTime);
-            subtitleArea.text = "";
+            // yield return new WaitForSeconds(talkManager.delayTime);
+            yield return null;
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+            yield return null;
+            textArea.text = "";
         }
 
-        generator.isUsingSubtitle = false;
+        canvas.isTalking = false;
+        canvas.isLockingSubtitle = false;
         player.Unlock();
         player.Unfreeze();
+    }
+
+    public IEnumerator WaitForSkip() {
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+        isEnterDown = true;
     }
 }
