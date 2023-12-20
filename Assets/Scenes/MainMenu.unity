@@ -672,6 +672,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSubtitle: 0
+  charPerSec: 20
+  delayTime: 1.3
+  treeBools: 00000000
 --- !u!1 &431567609
 GameObject:
   m_ObjectHideFlags: 0

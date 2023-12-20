@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class SubtitleGenerator : MonoBehaviour
+public class SubtitleCanvas : MonoBehaviour
 {
-    [DisplayOnly] public bool isUsingSubtitle;
+    [DisplayOnly] public bool isLockingSubtitle;
+    [DisplayOnly] public bool isTalking;
 
     // Start is called before the first frame update
     void Start()
     {
-        isUsingSubtitle = false;
+        isLockingSubtitle = false;
+        isTalking = false;
     }
 
     // Update is called once per frame

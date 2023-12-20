@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MazeSubtitle : Subtitle
@@ -14,7 +15,9 @@ public class MazeSubtitle : Subtitle
     {
         player = GameObject.Find("Player").GetComponent<PlayerController_new>();
         talkManager = GameObject.FindWithTag("UIManager").GetComponent<TalkManager>();
-        generator = subtitleArea.GetComponent<SubtitleGenerator>();
+        
+        canvasGroup = canvas.GetComponent<CanvasGroup>();
+        textArea = canvas.transform.Find("SubtitleText").GetComponent<TextMeshProUGUI>();
 
         beforeFall = false;
         afterFall = false;
@@ -57,7 +60,7 @@ public class MazeSubtitle : Subtitle
 
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
-        generator.isUsingSubtitle = true;
+        canvas.isLockingSubtitle = true;
 
         if (talkManager.currentSubtitle == 3) {
             yield return new WaitForSeconds(bFWaitTime);
@@ -66,20 +69,36 @@ public class MazeSubtitle : Subtitle
             yield return new WaitForSeconds(aFWaitTime);
         }
 
-        float showCharTime = 1f / charPerSec;
+        canvas.isTalking = true;
+
+        float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++) {
             string dispText = "";
 
+            // isEnterDown = false;
+            // StartCoroutine(WaitForSkip());
+
             foreach (char c in subtitles[i]) {
+                // if (isEnterDown) {
+                //     isEnterDown = false;
+                //     dispText = subtitles[i];
+                //     textArea.text = dispText;
+                //     break;
+                // }
+                
                 dispText += c;
-                subtitleArea.text = dispText;
+                textArea.text = dispText;
                 yield return new WaitForSeconds(showCharTime);
             }
 
-            yield return new WaitForSeconds(delayTime);
-            subtitleArea.text = "";
+            yield return new WaitForSeconds(talkManager.delayTime);
+            // yield return null;
+            // yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+            // yield return null;
+            textArea.text = "";
         }
 
-        generator.isUsingSubtitle = false;
+        canvas.isTalking = false;
+        canvas.isLockingSubtitle = false;
     }
 }

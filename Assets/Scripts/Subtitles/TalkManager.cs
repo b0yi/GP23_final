@@ -13,6 +13,9 @@ public enum CatTalkState {
 public class TalkManager : MonoBehaviour
 {
     public int currentSubtitle = 0;
+    public float charPerSec = 20f;
+    public float delayTime = 1.3f;
+
     [DisplayOnly] public List<bool> treeBools = new List<bool>() {
         false, // tree 0
         false, // tree 1
