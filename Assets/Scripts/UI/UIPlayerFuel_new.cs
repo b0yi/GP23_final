@@ -31,10 +31,9 @@ public class UIPlayerFuel_new : MonoBehaviour
         float alignedFillAmount = Mathf.Round(fillAmount / 0.03125f) * 0.03125f;
         _image.fillAmount = alignedFillAmount;
 
-        if (_playerPC.fuel < 10f)
+        if (_playerPC.fuel < 20f)
         {
-            _playerPC.fuelDecrement *= (1f + Time.deltaTime / 2f);
-            _image.color = new Color(255f, 0f, 0f, 1f);
+            _image.color = new Color(255f, 0f, 0f, 1f); 
             animator.SetBool("lowbattery", true);
         }
         else
