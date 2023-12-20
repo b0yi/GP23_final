@@ -141,6 +141,10 @@ public class PlayerController_new : MonoBehaviour
         {
             fireParticleSystem.Stop();
         }
+        if(speedupParticleSystem.isPlaying)
+        {
+            speedupParticleSystem.Stop();
+        }
 
     }
 
@@ -272,6 +276,10 @@ public class PlayerController_new : MonoBehaviour
             {
                 fireParticleSystem.Stop();
             }
+            if (speedupParticleSystem.isPlaying)
+            {
+                speedupParticleSystem.Stop();
+            }
 
 
         }
@@ -317,6 +325,10 @@ public class PlayerController_new : MonoBehaviour
             {
                 fireParticleSystem.Stop();
             }
+            if(speedupParticleSystem.isPlaying)
+            {
+                speedupParticleSystem.Stop();
+            }
 
         }
 
@@ -339,6 +351,10 @@ public class PlayerController_new : MonoBehaviour
             if (!fireParticleSystem.isPlaying)
             {
                 fireParticleSystem.Play();
+            }
+            if (!speedupParticleSystem.isPlaying)
+            {
+                speedupParticleSystem.Play();
             }
 
             if (!up)
@@ -379,10 +395,10 @@ public class PlayerController_new : MonoBehaviour
                 {
                     fuel -= fuelDecrement;
                 }
-                else
+                /*else
                 {
                     fuel -= fuelDecrement * 2f;
-                }
+                }*/
 
                 if (_uIManager && fuel <= 0 && (!_isLoading))
                 {
