@@ -11,12 +11,13 @@ public class TriggerExplosion : MonoBehaviour
     [DisplayOnly] public float delayExplosionTimer;
     [DisplayOnly] bool explode;
     public float delayExplosionTime;
-
+    public GameObject dragon;
 
 
     private void Start()
     {
         explode = false;
+        dragon.SetActive(false);
     }
 
     private void Update()
@@ -30,6 +31,7 @@ public class TriggerExplosion : MonoBehaviour
                 explodable.explode();
                 playerController.Unlock();
                 Destroy(gameObject);
+                dragon.SetActive(true);
             }
 
         }
