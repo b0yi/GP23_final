@@ -17,7 +17,8 @@ public enum PlayerState
     Transform,
     Untransform,
     Launch,
-    InSpace
+    InSpace,
+    Landing,
 }
 
 
@@ -84,8 +85,8 @@ public class PlayerController_new : MonoBehaviour
     private StageManager _stageManager;
     private float _gravity;
     private Rigidbody2D _rb;
-    private bool isLoading; // used when dead
-
+    private bool _isLoading; // used when dead
+    private float _landingClock;
 
 
     public void Lock()
@@ -131,17 +132,15 @@ public class PlayerController_new : MonoBehaviour
 
 
         isHurt = false;
-        isLoading = false;
+        _isLoading = false;
         _animator.SetBool("ishurt", isHurt);
-        /*if (!_uIManager)
-        {
-            walkSpeed *= 3f;
-            driveAcceleration *= 5f;
-            turnAcceleration *= 5f;
-            print("測試模式(速度很快)");
-        }*/
 
         ResetPosition();
+
+        if (fireParticleSystem.isPlaying)
+        {
+            fireParticleSystem.Stop();
+        }
 
     }
 
@@ -178,20 +177,11 @@ public class PlayerController_new : MonoBehaviour
         up = true;
     }
 
-    public void ExplodeToSpace()
-    {
-        //playerState = PlayerState.InSpace;
-        //_animator.ResetTrigger("transform");
-        //_animator.SetTrigger("spaceship_idle");
-        //_rb.drag = linearDragInSpace;
-        //_rb.angularDrag = angularDragInSpace;
-    }
-
     void Update()
     {
         if (!isHurt && !isLocked)
         {
-            horizontal = Input.GetAxis("Horizontal");
+            horizontal = Input.GetAxisRaw("Horizontal");
             up = Input.GetKey(KeyCode.W);
         }
         if (planet)
@@ -217,7 +207,6 @@ public class PlayerController_new : MonoBehaviour
 
         LaunchOrNot();
 
-
     }
 
 
@@ -230,7 +219,6 @@ public class PlayerController_new : MonoBehaviour
             {
                 int param = (horizontal > 0f) ? 1 : -1;
                 transform.localScale = new Vector3(param, 1f, 1f); // 角色左右轉向 
-                // _rb.velocity = param * walkSpeed * transform.right.normalized;
                 _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized
                                 + param * walkSpeed * ((Vector2)transform.right).normalized;
 
@@ -324,6 +312,12 @@ public class PlayerController_new : MonoBehaviour
                 _animator.ResetTrigger("untransform");
                 _animator.SetTrigger("planet");
             }
+
+            if (fireParticleSystem.isPlaying)
+            {
+                fireParticleSystem.Stop();
+            }
+
         }
 
         if (playerState == PlayerState.Launch)
@@ -381,10 +375,10 @@ public class PlayerController_new : MonoBehaviour
                 }
                 _rb.AddForce(driveAcceleration * _rb.mass * transform.up);
                 fuel -= fuelDecrement;
-                if (_uIManager && fuel <= 0 && (!isLoading))
+                if (_uIManager && fuel <= 0 && (!_isLoading))
                 {
                     _uIManager.LoadPlayScene();
-                    isLoading = true;
+                    _isLoading = true;
                 }
             }
             else
@@ -399,6 +393,18 @@ public class PlayerController_new : MonoBehaviour
             {
                 _rb.AddTorque(-horizontal * turnAcceleration * _rb.mass * .5f); // .5 是力臂
 
+            }
+        }
+
+
+        if (playerState == PlayerState.Landing)
+        {
+            _landingClock -= Time.fixedDeltaTime;
+            _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized;
+
+            if (_landingClock <= 0f)
+            {
+                playerState = PlayerState.Launch;
             }
         }
 
@@ -438,9 +444,10 @@ public class PlayerController_new : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "Field")
+        if (other.name == "Field" && playerState == PlayerState.InSpace)
         {
-            playerState = PlayerState.Launch;
+            playerState = PlayerState.Landing;
+            _landingClock = 0.5f;
         }
 
         if (other.CompareTag("Fruit") && fuel < 100f)
@@ -458,6 +465,7 @@ public class PlayerController_new : MonoBehaviour
 
     }
 
+
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.name == "Field")
@@ -469,12 +477,6 @@ public class PlayerController_new : MonoBehaviour
 
     }
 
-    // public bool IsHurtByEnemies() {
-    //     // Add other enemies here
-    //     // bool isHurt = isHurtByCat || isHurtBy... || isHurtBy...
-    //     bool isHurt = isHurtByCat; 
-    //     return isHurt;
-    // }
 
 }
 
