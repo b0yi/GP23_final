@@ -141,7 +141,7 @@ public class PlayerController_new : MonoBehaviour
         {
             fireParticleSystem.Stop();
         }
-        if(speedupParticleSystem.isPlaying)
+        if (speedupParticleSystem.isPlaying)
         {
             speedupParticleSystem.Stop();
         }
@@ -240,6 +240,8 @@ public class PlayerController_new : MonoBehaviour
 
     private void JumpOrNot()
     {
+        _animator.SetBool("ground", isGrounded);
+
         if (playerState == PlayerState.OnPlanet && isGrounded && up)
         {
             // 先歸零垂直方向的速度, 然後加入往上初速度
@@ -325,7 +327,7 @@ public class PlayerController_new : MonoBehaviour
             {
                 fireParticleSystem.Stop();
             }
-            if(speedupParticleSystem.isPlaying)
+            if (speedupParticleSystem.isPlaying)
             {
                 speedupParticleSystem.Stop();
             }
@@ -390,7 +392,7 @@ public class PlayerController_new : MonoBehaviour
                     speedupParticleSystem.Play();
                 }
                 _rb.AddForce(driveAcceleration * _rb.mass * transform.up);
-                
+
                 if (fuel >= 20f)
                 {
                     fuel -= fuelDecrement;
@@ -413,7 +415,7 @@ public class PlayerController_new : MonoBehaviour
                 {
                     fireParticleSystem.Stop();
                 }
-                if(speedupParticleSystem.isPlaying)
+                if (speedupParticleSystem.isPlaying)
                 {
                     speedupParticleSystem.Stop();
                 }
