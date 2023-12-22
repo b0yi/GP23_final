@@ -15,7 +15,7 @@ public class UIArrow : MonoBehaviour
     public Camera cam;
     public GameObject player;
     public GameObject target;
-    //public GameObject text;
+    public GameObject text;
 
     public float paddingTop;
     public float paddingRight;
@@ -39,8 +39,6 @@ public class UIArrow : MonoBehaviour
         boundary.Add(new Vector2(-w / 2 + paddingLeft, -h / 2 + paddingBottom));
         boundary.Add(new Vector2(w / 2 - paddingRight, -h / 2 + paddingBottom));
         boundary.Add(new Vector2(w / 2 - paddingRight, h / 2 - paddingTop)); // 繞一圈
-
-
 
     }
 
@@ -68,32 +66,38 @@ public class UIArrow : MonoBehaviour
             if (SegmentsInterPoint(playerRectPosition, targetRectPosition, boundary[i], boundary[i + 1], ref arrowPosition))
             {
 
-                _arrow.rectTransform.anchoredPosition = Vector2.Lerp(_arrow.rectTransform.anchoredPosition, arrowPosition, 10f * Time.deltaTime);
                 // _arrow.rectTransform.anchoredPosition = arrowPosition;
+                _arrow.rectTransform.anchoredPosition = Vector2.Lerp(_arrow.rectTransform.anchoredPosition, arrowPosition, 10f * Time.deltaTime);
                 _arrow.rectTransform.localEulerAngles = new Vector3(0, 0, 90f * i);
 
+                // text.transform.localEulerAngles = new Vector3(0, 0, -90f * i);
 
 
-                //if (i == 0)
-                //{       // top
-                //    text.transform.position = _arrow.transform.position;
-                //    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
-                //}
-                //else if (i == 1)    // left
-                //{
-                //    text.transform.position = _arrow.transform.position + new Vector3(5f, 0, 0);
-                //    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
-                //}
-                //else if (i == 2)    // bottom
-                //{
-                //    text.transform.position = _arrow.transform.position;
-                //    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
-                //}
-                //else if (i == 3)    // right
-                //{
-                //    text.transform.position = _arrow.transform.position + new Vector3(5f, 0, 0);
-                //    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Right;
-                //}
+                if (i == 0)         // top
+                {       
+                    text.transform.localEulerAngles = new Vector3(0, 0, 0);
+                    text.GetComponent<RectTransform>().pivot = new Vector2(.5f, 1f);
+                    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Top;
+                }
+                else if (i == 1)    // left
+                {
+                    text.transform.localEulerAngles = new Vector3(0, 0, -90);
+                    text.GetComponent<RectTransform>().pivot = new Vector2(0, .5f);
+                    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
+                }
+                else if (i == 2)    // bottom
+                {
+                    text.transform.localEulerAngles = new Vector3(0, 0, -180);
+                    text.GetComponent<RectTransform>().pivot = new Vector2(.5f, 0f);
+                    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Bottom;
+
+                }
+                else if (i == 3)    // right
+                {
+                    text.transform.localEulerAngles = new Vector3(0, 0, -270);
+                    text.GetComponent<RectTransform>().pivot = new Vector2(1, .5f);
+                    text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Right;
+                }
 
 
 
