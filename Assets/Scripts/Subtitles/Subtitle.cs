@@ -65,6 +65,9 @@ public class Subtitle : MonoBehaviour
         player.Freeze();
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
+        textArea.text = "";
+
+        yield return FadeCanvasGroup(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++)
@@ -72,6 +75,7 @@ public class Subtitle : MonoBehaviour
             string[] nameAndWord = subtitles[i].Split(": ");
             string dispText = nameAndWord[0] + ": ";
 
+            textArea.text = "";
             isEnterDown = false;
             StartCoroutine(WaitForSkip());
 
@@ -92,8 +96,9 @@ public class Subtitle : MonoBehaviour
             yield return null;
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
             yield return null;
-            textArea.text = "";
         }
+
+        yield return FadeCanvasGroup(1f, 0, 1f);
 
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;
@@ -104,5 +109,19 @@ public class Subtitle : MonoBehaviour
     public IEnumerator WaitForSkip() {
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
         isEnterDown = true;
+    }
+
+    public IEnumerator FadeCanvasGroup(float startAlpha, float endAlpha, float duration)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        canvasGroup.alpha = endAlpha; // Ensure the final alpha value is set
     }
 }

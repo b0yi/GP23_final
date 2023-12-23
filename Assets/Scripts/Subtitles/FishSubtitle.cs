@@ -41,6 +41,9 @@ public class FishSubtitle : Subtitle
         gameObject.GetComponent<Fish>().Lock();
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
+        textArea.text = "";
+
+        yield return FadeCanvasGroup(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++)
@@ -48,13 +51,13 @@ public class FishSubtitle : Subtitle
             string[] nameAndWord = subtitles[i].Split(": ");
             string dispText = nameAndWord[0] + ": ";
 
+            textArea.text = "";
             isEnterDown = false;
             StartCoroutine(WaitForSkip());
 
             foreach (char c in nameAndWord[1])
             {
                 if (isEnterDown) {
-                    isEnterDown = false;
                     dispText = subtitles[i];
                     textArea.text = dispText;
                     break;
@@ -69,10 +72,11 @@ public class FishSubtitle : Subtitle
             yield return null;
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
             yield return null;
-            textArea.text = "";
         }
 
         preview.PlayMazePlanetPreview();
+
+        yield return FadeCanvasGroup(1f, 0, 1f);
 
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;
