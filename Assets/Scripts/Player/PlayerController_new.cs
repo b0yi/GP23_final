@@ -36,6 +36,7 @@ public class PlayerController_new : MonoBehaviour
 
     [Header("燃料")]
     [DisplayOnly] public float fuel;            // 油量/電量（0 - 100）
+    [DisplayOnly] public float oxygennumber;    // 
     public float fuelDecrement;
     public float fuelIncrement;
 
@@ -91,6 +92,8 @@ public class PlayerController_new : MonoBehaviour
 
     [Header("測試 (之後刪除)")]
     public UITask task;
+
+    public bool inWaterPlanet;
 
     public void Lock()
     {
@@ -215,6 +218,12 @@ public class PlayerController_new : MonoBehaviour
         if (isHurt)
         {
             this.GetComponent<CapsuleCollider2D>().enabled = false;
+        }
+
+        if (_uIManager && oxygennumber <= 0 && (!_isLoading))
+        {
+            _uIManager.LoadPlayScene();
+            _isLoading = true;
         }
 
     }
@@ -521,7 +530,10 @@ public class PlayerController_new : MonoBehaviour
             fuel += fuelIncrement;
             if (fuel > 100f) fuel = 100f;
         }
-
+        if(other.name=="Water Planet")
+        {
+            inWaterPlanet=true;
+        }
 
     }
 
@@ -534,10 +546,16 @@ public class PlayerController_new : MonoBehaviour
             _rb.drag = linearDragInSpace;
             _rb.angularDrag = angularDragInSpace;
         }
-
+        if(other.name=="Water Planet")
+        {
+            inWaterPlanet=false;
+        }
     }
 
-
+    public bool inWater()
+    {
+        return inWaterPlanet;
+    }
 }
 
 internal class DisplayOnlyAttribute : Attribute
