@@ -5,13 +5,13 @@ using UnityEngine;
 public class BlackholeLoadScene : MonoBehaviour
 {
     private UIManager _uIManager;
+    public PlayerController_new player;
     bool loadscene=false;
     float _loadscenetime = 3.0f;
     // Start is called before the first frame update
     void Start()
     {
         _uIManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
-
     }
 
     // Update is called once per frame
@@ -19,6 +19,7 @@ public class BlackholeLoadScene : MonoBehaviour
     {
         if(loadscene)
         {
+            player.Lock();
             _loadscenetime-= Time.deltaTime;
             print(_loadscenetime);
             if(_loadscenetime<0)
