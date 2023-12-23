@@ -32,19 +32,22 @@ public class SteleSubtitle : Subtitle
         player.Freeze();
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
+        textArea.text = "";
+
+        yield return FadeCanvasGroup(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++)
         {
             string dispText = "";
 
+            textArea.text = "";
             isEnterDown = false;
             StartCoroutine(WaitForSkip());
 
             foreach (char c in subtitles[i])
             {
                 if (isEnterDown) {
-                    isEnterDown = false;
                     dispText = subtitles[i];
                     textArea.text = dispText;
                     break;
@@ -59,8 +62,9 @@ public class SteleSubtitle : Subtitle
             yield return null;
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
             yield return null;
-            textArea.text = "";
         }
+
+        yield return FadeCanvasGroup(1f, 0, 1f);
 
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;

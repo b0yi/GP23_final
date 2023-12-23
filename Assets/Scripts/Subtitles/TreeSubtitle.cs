@@ -42,12 +42,16 @@ public class TreeSubtitle : Subtitle
         player.Freeze();
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
+        textArea.text = "";
+
+        yield return FadeCanvasGroup(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++)
         {
             string dispText = "";
 
+            textArea.text = "";
             isEnterDown = false;
             StartCoroutine(WaitForSkip());
 
@@ -68,8 +72,9 @@ public class TreeSubtitle : Subtitle
             yield return null;
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
             yield return null;
-            textArea.text = "";
         }
+
+        yield return FadeCanvasGroup(1f, 0, 1f);
 
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;
