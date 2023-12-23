@@ -149,6 +149,10 @@ public class PlayerController_new : MonoBehaviour
             speedupParticleSystem.Stop();
         }
 
+
+        // Lock Mouse Here.
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void ResetPosition()
