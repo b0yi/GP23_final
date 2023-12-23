@@ -13,11 +13,11 @@ public class Blackholefield : MonoBehaviour
     /// <summary>  </summary>
     public float GRAVITY_PULL    = 40.0f;
     /// <summary>  </summary>
-    private float  SWIRLSTRENGTH   = 2.0f;
+    public float  SWIRLSTRENGTH   = 2.0f;
 
     // ------------------------------------------------
     /// <summary>  </summary>
-    private float               _gravityRadius  = 1.0f;    
+    private float               _gravityRadius  = 150.0f;    
     /// <summary>  </summary>
     private List<Rigidbody2D>   _rigidBodies    = new List<Rigidbody2D>();
     // ------------------------------------------------
@@ -79,8 +79,8 @@ public class Blackholefield : MonoBehaviour
     private void CalculateMovement(Rigidbody2D in_rb)
     {
         float distance = Vector3.Distance(transform.position,in_rb.transform.position); 
-        float gravityIntensity =distance/ _gravityRadius;
-
+        float gravityIntensity = _gravityRadius/(distance*distance) ;
+        print(gravityIntensity);
         in_rb.AddForce((transform.position - in_rb.transform.position)*gravityIntensity * in_rb.mass* GRAVITY_PULL* Time.deltaTime);
         
         in_rb.drag += 0.0001f;
