@@ -13,12 +13,12 @@ public enum Location
 
 public enum PlayerState
 {
-    OnPlanet,
-    Transform,
-    Untransform,
-    Launch,
-    InSpace,
-    Landing,
+    OnPlanet = 0,
+    Transform = 1,
+    Untransform = 2,
+    Launch = 3,
+    InSpace = 4,
+    Landing = 5,
 }
 
 
@@ -133,7 +133,7 @@ public class PlayerController_new : MonoBehaviour
 
         isHurt = false;
         _isLoading = false;
-        _animator.SetBool("ishurt", isHurt);
+        // _animator.SetBool("ishurt", isHurt);
 
         ResetPosition();
 
@@ -192,7 +192,7 @@ public class PlayerController_new : MonoBehaviour
         {
             _gravity = planet.GetComponent<PlanetGravity>().gravity;
         }
-        _animator.SetBool("ishurt", isHurt);
+        // _animator.SetBool("ishurt", isHurt);
 
         if (isHurt)
         {
@@ -210,6 +210,8 @@ public class PlayerController_new : MonoBehaviour
         JumpOrNot();
 
         LaunchOrNot();
+
+        _animator.SetInteger("state", (int)playerState);
 
     }
 
@@ -240,7 +242,6 @@ public class PlayerController_new : MonoBehaviour
 
     private void JumpOrNot()
     {
-        _animator.SetBool("ground", isGrounded);
 
         if (playerState == PlayerState.OnPlanet && isGrounded && up)
         {
@@ -248,6 +249,18 @@ public class PlayerController_new : MonoBehaviour
             _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
             _rb.velocity += Mathf.Sqrt(2f * jumpHeight * _gravity) * (Vector2)transform.up.normalized;
             isGrounded = false;
+        }
+
+
+        float vertical = Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized);
+        if (vertical < 1.6f && vertical > -1.6f) {
+            _animator.SetInteger("vertical", 0);
+        }
+        else if (vertical > 1.6f) {
+            _animator.SetInteger("vertical", 1);
+        }
+        else if (vertical < -1.6f) {
+            _animator.SetInteger("vertical", -1);
         }
     }
 
@@ -267,11 +280,10 @@ public class PlayerController_new : MonoBehaviour
                 _rb.constraints = RigidbodyConstraints2D.None;
             }
 
-            if ((!isGrounded) && (Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.2f) && up)
+            if ((!isGrounded) && (Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.18f) && up)
             {
                 playerState = PlayerState.Transform;
                 transformTimer = transformTime;
-                _animator.ResetTrigger("planet");
                 _animator.SetTrigger("transform");
             }
             if (fireParticleSystem.isPlaying)
@@ -290,6 +302,7 @@ public class PlayerController_new : MonoBehaviour
         {
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
             transformTimer -= Time.fixedDeltaTime;
+            // _animator.ResetTrigger("transform");
 
 
             if (transformTimer <= 0f)
@@ -298,18 +311,17 @@ public class PlayerController_new : MonoBehaviour
                 {
                     playerState = PlayerState.Untransform;
                     transformTimer = untransformTime;
-                    _animator.ResetTrigger("transform");
                     _animator.SetTrigger("untransform");
                 }
 
                 playerState = PlayerState.Launch;
-                _animator.ResetTrigger("transform");
-                _animator.SetTrigger("spaceship_idle");
             }
         }
 
         if (playerState == PlayerState.Untransform)
         {
+            // _animator.ResetTrigger("untransform");
+
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
             transformTimer -= Time.fixedDeltaTime;
 
@@ -319,8 +331,6 @@ public class PlayerController_new : MonoBehaviour
             if (transformTimer <= 0f)
             {
                 playerState = PlayerState.OnPlanet;
-                _animator.ResetTrigger("untransform");
-                _animator.SetTrigger("planet");
             }
 
             if (fireParticleSystem.isPlaying)
@@ -363,7 +373,6 @@ public class PlayerController_new : MonoBehaviour
             {
                 playerState = PlayerState.Untransform;
                 transformTimer = untransformTime;
-                _animator.ResetTrigger("spaceship_idle");
                 _animator.SetTrigger("untransform");
             }
         }
