@@ -88,6 +88,8 @@ public class PlayerController_new : MonoBehaviour
     private bool _isLoading; // used when dead
     private float _landingClock;
 
+    [Header("測試 (之後刪除)")]
+    public UITask task;
 
     public void Lock()
     {
@@ -183,6 +185,17 @@ public class PlayerController_new : MonoBehaviour
 
     void Update()
     {
+        // DELETE: 測試 Task 功能
+        if (Input.GetKeyDown(KeyCode.T)) {
+            if (!task.IsShowed()) {
+                task.ChangeTitle("Test");
+                task.ChangeContent("This is just a simple test for the function of task UI.");
+                task.Show();
+            }
+            else {
+                task.Hide();
+            }
+        }
         if (!isHurt && !isLocked)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
