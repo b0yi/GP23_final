@@ -14,15 +14,35 @@ public class Whirl : MonoBehaviour
     private float               _gravityRadius  = 1.0f;    
     /// <summary>  </summary>
     private List<Rigidbody2D>   _rigidBodies    = new List<Rigidbody2D>();
+
+    public GameObject waterplanet;
+    private float randomGeneratetime=3.0f;
     // ------------------------------------------------
 
 #if UNITY_EDITOR     
+
+
+
+    void Start()
+    {
+        transform.position = Random.insideUnitCircle * 55 + new Vector2(waterplanet.transform.position.x, waterplanet.transform.position.y);
+    }
+
+
     void Update()
     {
         if( Application.isPlaying == false )
         {
             _gravityRadius = GetComponent<CircleCollider2D>().radius;
         }
+        randomGeneratetime-=Time.deltaTime;
+
+        if(randomGeneratetime<0)
+        {
+            transform.position = Random.insideUnitCircle * 55 + new Vector2(waterplanet.transform.position.x, waterplanet.transform.position.y);
+            randomGeneratetime=3f;
+        }
+
     }
 #endif 
 
@@ -34,7 +54,7 @@ public class Whirl : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D in_other)
     {
-        if ( in_other.attachedRigidbody != null && _rigidBodies != null )
+        if ( in_other.attachedRigidbody != null && _rigidBodies != null && in_other.name=="Player")
         {                
             //to get them nice and swirly, use the perpendicular to the direction to the vortex
             Vector3 direction = transform.position - in_other.attachedRigidbody.transform.position;
@@ -46,7 +66,7 @@ public class Whirl : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D in_other)
     {
-        if ( in_other.attachedRigidbody != null && _rigidBodies != null )
+        if ( in_other.attachedRigidbody != null && _rigidBodies != null && in_other.name=="Player")
         {                
             //to get them nice and swirly, use the perpendicular to the direction to the vortex
                   
