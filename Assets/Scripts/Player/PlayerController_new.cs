@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.Playables;
 using System;
+using UnityEngine.Rendering.Universal;
 
 
 public enum Location
@@ -24,10 +25,10 @@ public enum PlayerState
 
 public class PlayerController_new : MonoBehaviour
 {
-    [Header("")]
+    [Header("粒子特效")]
     public ParticleSystem fireParticleSystem;
     public ParticleSystem speedupParticleSystem;
-
+    public Light2D  playerLight;
 
     [Header("鎖定")]
     [DisplayOnly] public bool isLocked;
@@ -434,6 +435,7 @@ public class PlayerController_new : MonoBehaviour
                 _rb.AddTorque(-horizontal * turnAcceleration * _rb.mass * .5f); // .5 是力臂
 
             }
+            playerLight.intensity = Mathf.Lerp(3, 5,1);
         }
 
 
@@ -446,6 +448,7 @@ public class PlayerController_new : MonoBehaviour
             {
                 playerState = PlayerState.Launch;
             }
+            playerLight.intensity = Mathf.Lerp(5, 3, 1);
         }
 
 
