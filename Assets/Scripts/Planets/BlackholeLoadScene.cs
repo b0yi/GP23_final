@@ -7,7 +7,7 @@ public class BlackholeLoadScene : MonoBehaviour
     private UIManager _uIManager;
     public PlayerController_new player;
     bool loadscene=false;
-    float _loadscenetime = 3.0f;
+    float _loadscenetime = 2.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class BlackholeLoadScene : MonoBehaviour
         {
             player.Lock();
             _loadscenetime-= Time.deltaTime;
-            print(_loadscenetime);
+            //print(_loadscenetime);
             if(_loadscenetime<0)
                 _uIManager.LoadPlayScene();
         }
@@ -34,13 +34,13 @@ public class BlackholeLoadScene : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (_uIManager)
-            {
+            //{
                 loadscene=true;
                 // _loadscenetime-= Time.deltaTime;
                 // print(_loadscenetime);
                 // if(_loadscenetime<0)
                 //     _uIManager.LoadPlayScene();
-            }
+            //}
 
         }
 
