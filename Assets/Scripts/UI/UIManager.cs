@@ -1,27 +1,39 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
+    private AsyncOperation async = null;
 
     void Start()
     {
+        // Lock Mouse Here.
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         DontDestroyOnLoad(gameObject);
     }
-    private void LoadScene(string target)
+    private IEnumerator LoadScene(string target)
     {
-        SceneManager.LoadSceneAsync(target);
+        async = SceneManager.LoadSceneAsync(target);
+        while (!async.isDone) {
+            yield return null;
+        }
     }
 
     public void LoadMainMenuScene()
     {
-        LoadScene("MainMenu");
+        IEnumerator coroutine = LoadScene("MainMenu");
+        StartCoroutine(coroutine);
+        // LoadScene("MainMenu");
     }
 
     public void LoadPlayScene()
     {
-        LoadScene("Play");
+        IEnumerator coroutine = LoadScene("Play");
+        StartCoroutine(coroutine);
+        // LoadScene("Play");
     }
 
     public void QuitGame()

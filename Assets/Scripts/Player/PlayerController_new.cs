@@ -153,9 +153,6 @@ public class PlayerController_new : MonoBehaviour
         }
 
 
-        // Lock Mouse Here.
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void ResetPosition()
