@@ -14,26 +14,27 @@ public class UIManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-    private IEnumerator LoadScene(string target)
+    private void LoadScene(string target)
     {
-        async = SceneManager.LoadSceneAsync(target);
-        while (!async.isDone) {
-            yield return null;
-        }
+        // async = SceneManager.LoadSceneAsync(target);
+        SceneManager.LoadScene(target);
+        // while (!async.isDone) {
+        //     yield return null;
+        // }
     }
 
     public void LoadMainMenuScene()
     {
-        IEnumerator coroutine = LoadScene("MainMenu");
-        StartCoroutine(coroutine);
-        // LoadScene("MainMenu");
+        // IEnumerator coroutine = LoadScene("MainMenu");
+        // StartCoroutine(coroutine);
+        LoadScene("MainMenu");
     }
 
     public void LoadPlayScene()
     {
-        IEnumerator coroutine = LoadScene("Play");
-        StartCoroutine(coroutine);
-        // LoadScene("Play");
+        // IEnumerator coroutine = LoadScene("Play");
+        // StartCoroutine(coroutine);
+        LoadScene("Play");
     }
 
     public void QuitGame()

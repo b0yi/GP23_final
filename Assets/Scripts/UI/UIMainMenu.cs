@@ -11,6 +11,7 @@ public class UIMainMenu : MonoBehaviour
     public GameObject quit;
     private bool state;
     public UIMainMenuFade fade;
+    bool _isLoading = false;
 
     void Start()
     {
@@ -37,9 +38,10 @@ public class UIMainMenu : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Return)) {
-            if (state) {
-                fade.Fade();
-                // uIManager.LoadPlayScene();
+            if (state && !_isLoading) {
+                // fade.Fade();
+                _isLoading = true;
+                uIManager.LoadPlayScene();
             }
             else {
                 uIManager.QuitGame();

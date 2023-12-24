@@ -217,11 +217,11 @@ public class PlayerController_new : MonoBehaviour
             this.GetComponent<CapsuleCollider2D>().enabled = false;
         }
 
-        if (_uIManager && oxygennumber <= 0 && (!_isLoading))
-        {
-            _uIManager.LoadPlayScene();
-            _isLoading = true;
-        }
+        // if (_uIManager && oxygennumber <= 0 && (!_isLoading))
+        // {
+        //     _uIManager.LoadPlayScene();
+        //     _isLoading = true;
+        // }
 
     }
 
