@@ -41,11 +41,11 @@ public class Tree : MonoBehaviour
         }
     }
 
-    public void FruitEaten()
-    {
-        // 設置果實不可用，開始計時
-        isFruitAvailable = false;
-        elapsedTime = 0f;
-    }
+    // public void FruitEaten()
+    // {
+    //     // 設置果實不可用，開始計時
+    //     isFruitAvailable = false;
+    //     elapsedTime = 0f;
+    // }
 
 }

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class WaterForce : MonoBehaviour
 {
 
-    [DisplayOnly] public bool isPlayerInWater;
+    // [DisplayOnly] public bool isPlayerInWater;
     public float linearDragInWater;
     public float angularDragInWater;
 
@@ -15,54 +15,54 @@ public class WaterForce : MonoBehaviour
     [DisplayOnly] public float linearDrag;
     [DisplayOnly] public float angularDrag;
 
-    public float idleTime = 2f;
-    [DisplayOnly] public float idleTimer = 0f;
+    // public float idleTime = 2f;
+    // [DisplayOnly] public float idleTimer = 0f;
 
 
     private Rigidbody2D _playerRB;
-    private Transform _playerTF;
+    // private Transform _playerTF;
 
-    public float acceleration;
+    // public float acceleration;
 
     public float radius = 56.21403f;
 
     void Start()
     {
-        isPlayerInWater = false;
+        // isPlayerInWater = false;
         // idleTimer = idleTime;
     }
 
     void Update()
     {
-        if (isPlayerInWater)
-        {
+        // if (isPlayerInWater)
+        // {
             //Vector2 forceDirection = (Vector2)(_playerTF.position - transform.position).normalized;
             //float magnitude = (_playerTF.position - transform.position).magnitude / radius;
             //_playerRB.AddForce(acceleration / magnitude * _playerRB.mass * forceDirection); // F = m a
 
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W)) // TODO: 之後改寫
-            {
-                idleTimer = idleTime;
-            }
-            else
-            {
-                idleTimer -= Time.deltaTime;
-                if (idleTimer <= 0f)
-                {
-                    Vector2 forceDirection = ((Vector2)(_playerTF.position - transform.position)).normalized;
-                    _playerRB.AddForce(acceleration * _playerRB.mass * forceDirection); // F = m a
-                }
-            }
-        }
+            // if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W)) // TODO: 之後改寫
+            // {
+            //     idleTimer = idleTime;
+            // }
+            // else
+            // {
+            //     idleTimer -= Time.deltaTime;
+            //     if (idleTimer <= 0f)
+            //     {
+            //         Vector2 forceDirection = ((Vector2)(_playerTF.position - transform.position)).normalized;
+            //         _playerRB.AddForce(acceleration * _playerRB.mass * forceDirection); // F = m a
+            //     }
+            // }
+        // }
     }
 
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Player"))
         {
-            isPlayerInWater = true;
+            // isPlayerInWater = true;
+            // _playerTF = collider.transform;
             _playerRB = collider.GetComponent<Rigidbody2D>();
-            _playerTF = collider.transform;
             linearDrag = _playerRB.drag;
             angularDrag = _playerRB.angularDrag;
             _playerRB.drag = linearDragInWater;
@@ -74,8 +74,8 @@ public class WaterForce : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
+            // isPlayerInWater = false;
             whale.Unattack();
-            isPlayerInWater = false;
             _playerRB.drag = linearDrag;
             _playerRB.angularDrag = angularDrag;
 
