@@ -519,17 +519,17 @@ public class PlayerController_new : MonoBehaviour
             _landingClock = 0.5f;
         }
 
-        if (other.CompareTag("Fruit") && fuel < 100f)
-        {
-            Tree tree = other.GetComponentInParent<Tree>();
-            if (tree != null)
-            {
-                tree.FruitEaten();
-                Destroy(other.gameObject);
-            }
-            fuel += fuelIncrement;
-            if (fuel > 100f) fuel = 100f;
-        }
+        // if (other.CompareTag("Fruit") && fuel < 100f)
+        // {
+        //     Tree tree = other.GetComponentInParent<Tree>();
+        //     if (tree != null)
+        //     {
+        //         tree.FruitEaten();
+        //         Destroy(other.gameObject);
+        //     }
+        //     fuel += fuelIncrement;
+        //     if (fuel > 100f) fuel = 100f;
+        // }
         if(other.name=="Water Planet")
         {
             inWaterPlanet=true;
