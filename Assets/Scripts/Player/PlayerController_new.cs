@@ -433,10 +433,10 @@ public class PlayerController_new : MonoBehaviour
                 {
                     fuel -= fuelDecrement;
                 }
-                /*else
+                else
                 {
-                    fuel -= fuelDecrement * 2f;
-                }*/
+                    fuel -= fuelDecrement;
+                }
 
                 if (_uIManager && fuel <= 0 && (!_isLoading))
                 {
