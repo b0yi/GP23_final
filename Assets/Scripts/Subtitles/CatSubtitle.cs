@@ -174,8 +174,6 @@ public class CatSubtitle : Subtitle
             yield return null;
         }
 
-        // TODO: Call camera here
-        // ...
         preview.PlayWaterPlanetPreview();
 
         yield return FadeCanvasGroup(1f, 0, 1f);
