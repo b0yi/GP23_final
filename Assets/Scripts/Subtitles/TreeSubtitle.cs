@@ -20,26 +20,31 @@ public class TreeSubtitle : Subtitle
     // Update is called once per frame
     void Update()
     {
-        Talk();
+        
     }
 
     public override void Talk()
     {
-        if (IsPlayerInRange(talkRange)) {
-            if (!talkManager.treeBools[treeID]) {
-                talkManager.treeBools[treeID] = true;
+        if (!talkManager.treeBools[treeID]) {
+            talkManager.treeBools[treeID] = true;
 
-                if (!canvas.isLockingSubtitle) {
-                    StartCoroutine(ShowSubtitle(talkManager.treeSubtitles[treeID]));
-                }
+            if (!canvas.isLockingSubtitle) {
+                StartCoroutine(ShowSubtitle(talkManager.treeSubtitles[treeID]));
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.name == "Player") {
+            Talk();
         }
     }
 
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
         player.Lock();
-        player.Freeze();
+        // player.Freeze();
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
         textArea.text = "";
@@ -79,6 +84,6 @@ public class TreeSubtitle : Subtitle
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;
         player.Unlock();
-        player.Unfreeze();
+        // player.Unfreeze();
     }
 }

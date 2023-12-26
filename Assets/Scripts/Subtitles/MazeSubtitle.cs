@@ -52,7 +52,6 @@ public class MazeSubtitle : Subtitle
     public override void Talk()
     {
         if (talkManager.currentSubtitle == subtitleID) {
-            StopCoroutine(nameof(ShowSubtitle));
             StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
             talkManager.currentSubtitle += 1;
         }
@@ -84,11 +83,11 @@ public class MazeSubtitle : Subtitle
             // StartCoroutine(WaitForSkip());
 
             foreach (char c in subtitles[i]) {
-                // if (isEnterDown) {
-                //     dispText = subtitles[i];
-                //     textArea.text = dispText;
-                //     break;
-                // }
+                if (isEnterDown) {
+                    dispText = subtitles[i];
+                    textArea.text = dispText;
+                    break;
+                }
                 
                 dispText += c;
                 textArea.text = dispText;

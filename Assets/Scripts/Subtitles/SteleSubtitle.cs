@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class SteleSubtitle : Subtitle
 {
+    public PreviewPlanet preview;
+    private StageManager _stageManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        GameObject m = GameObject.FindWithTag("UIManager");
+        _stageManager = m.GetComponent<StageManager>();
+
         player = GameObject.Find("Player").GetComponent<PlayerController_new>();
         talkManager = GameObject.FindWithTag("UIManager").GetComponent<TalkManager>();
         
@@ -18,18 +24,29 @@ public class SteleSubtitle : Subtitle
     // Update is called once per frame
     void Update()
     {
-        Talk();
+        
     }
 
     public override void Talk()
     {
-        base.Talk();
+        if (talkManager.currentSubtitle == subtitleID) {
+            StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
+            talkManager.currentSubtitle += 1;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && _stageManager.stage == Stage.Intro) {
+            Talk();
+        }
     }
 
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
         player.Lock();
-        player.Freeze();
+        // player.Freeze();
+        _stageManager.UpdateStage();
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
         textArea.text = "";
@@ -64,11 +81,13 @@ public class SteleSubtitle : Subtitle
             yield return null;
         }
 
+        preview.PlayCatPlanetPreview();
+
         yield return FadeCanvasGroup(1f, 0, 1f);
 
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;
         player.Unlock();
-        player.Unfreeze();
+        // player.Unfreeze();
     }
 }
