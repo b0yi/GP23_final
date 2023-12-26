@@ -12,6 +12,8 @@ public class BigCat : EnemyController
     {
         stage = "OnPlanet";
         rb = GetComponent<Rigidbody2D>();
+
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame

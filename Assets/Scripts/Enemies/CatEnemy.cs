@@ -15,6 +15,9 @@ public class CatEnemy : EnemyController
     private int runState;
     private int jumpState;
 
+    public GameObject loveParticle;
+    public NiceValueUI niceValueUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -109,9 +112,13 @@ public class CatEnemy : EnemyController
                 Vector2 direct = player.transform.position - planet.transform.position;
                 Vector3 knockback = direction < 0 ? new Vector3(direct.y, -direct.x, 0) : new Vector3(-direct.y, direct.x, 0);
                 player.transform.position = player.transform.position - knockback.normalized * 8f;
+
+                Instantiate(loveParticle, transform, false);
+                niceValueUI.Increase();
             }
         }
     }
+    
 }
 
 
