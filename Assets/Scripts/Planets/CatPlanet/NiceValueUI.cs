@@ -5,18 +5,29 @@ using UnityEngine.UI;
 
 public class NiceValueUI : MonoBehaviour
 {    
-    
     private Image _image;
-    public float delta = 10f;
+    [Tooltip("Float 0 ~ 1")] public float delta = 0.1f;
+    public GameObject bigCat;
 
     void Start()
     {
         _image = GetComponent<Image>();
         Reset();
+        if (bigCat == null) {
+            Debug.LogError("No big cat assigned to nice UI.");
+        }
+    }
+
+    void Update()
+    {
+        if (isFull()) {
+            bigCat.SetActive(true);
+            transform.parent.parent.gameObject.SetActive(false);
+        }
     }
 
     public void Increase() {
-        _image.fillAmount += 10f;
+        _image.fillAmount += delta;
     }
 
     public void Reset() {
@@ -24,7 +35,7 @@ public class NiceValueUI : MonoBehaviour
     }
 
     public bool isFull() {
-        return (_image.fillAmount == 100f);
+        return _image.fillAmount == 1f;
     }
 
 }
