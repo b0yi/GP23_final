@@ -22,7 +22,7 @@ public class NiceValueUI : MonoBehaviour
     {
         if (isFull()) {
             bigCat.SetActive(true);
-            transform.parent.parent.gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
         }
     }
 

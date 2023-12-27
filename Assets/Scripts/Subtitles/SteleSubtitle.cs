@@ -82,7 +82,7 @@ public class SteleSubtitle : Subtitle
         }
 
         preview.PlayCatPlanetPreview();
-
+        yield return new WaitForSeconds(3f);
         yield return FadeCanvasGroup(1f, 0, 1f);
 
         canvas.isTalking = false;
