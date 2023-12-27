@@ -81,8 +81,8 @@ public class Blackholefield : MonoBehaviour
         float distance = Vector3.Distance(transform.position,in_rb.transform.position); 
         float gravityIntensity = _gravityRadius/(distance*distance) ;
         //print(distance);
-        if(gravityIntensity>50)
-            gravityIntensity=50;
+        if(gravityIntensity>20)
+            gravityIntensity=20;
         in_rb.AddForce((transform.position - in_rb.transform.position)*gravityIntensity * in_rb.mass* GRAVITY_PULL* Time.deltaTime);
         
         in_rb.drag += 0.0001f;
