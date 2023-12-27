@@ -55,13 +55,13 @@ public class PlayerController_new : MonoBehaviour
     public GameObject planet;
     public GameObject mazePlanet;
     public GameObject dragonPlanet;
+    public LayerMask groundLayer;
 
 
     [Header("變身時間")]
     [DisplayOnly] public float transformTimer;
     public float transformTime;
     public float untransformTime;
-
 
     [Header("阻力")]
     public float linearDragOnPlanet;
@@ -304,12 +304,40 @@ public class PlayerController_new : MonoBehaviour
                 _rb.constraints = RigidbodyConstraints2D.None;
             }
 
-            if ((!isGrounded) && (Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.18f) && up)
+
+
+
+            // TODO
+            // LayerMask mask = ~groundLayer;
+            // int mask = (1 << 3);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, 10f, groundLayer);
+            if (hit.collider != null)
             {
-                playerState = PlayerState.Transform;
-                transformTimer = transformTime;
-                _animator.SetTrigger("transform");
+                // print(hit.distance);
+                // Debug.DrawRay(transform.position, -transform.up * hit.distance, Color.yellow);
+                // Debug.Log("Did Hit");
+
+                if (hit.distance > 3.5f && up)
+                {
+                    playerState = PlayerState.Transform;
+                    transformTimer = transformTime;
+                    _animator.SetTrigger("transform");
+                }
+
+                
             }
+            // else
+            // {
+            //     Debug.DrawRay(transform.position, -transform.up * 1000, Color.white);
+            //     Debug.Log("Did not Hit");
+            // }
+
+            // if ((!isGrounded) && (Mathf.Abs(Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized)) < 0.18f) && up)
+            // {
+            //     playerState = PlayerState.Transform;
+            //     transformTimer = transformTime;
+            //     _animator.SetTrigger("transform");
+            // }
             if (fireParticleSystem.isPlaying)
             {
                 fireParticleSystem.Stop();
@@ -318,7 +346,6 @@ public class PlayerController_new : MonoBehaviour
             {
                 speedupParticleSystem.Stop();
             }
-
 
         }
 
@@ -482,7 +509,8 @@ public class PlayerController_new : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+
+        if ((1 << other.gameObject.layer & groundLayer) == 1 << other.gameObject.layer)
         {
             isGrounded = true;
             transformTimer = transformTime;
@@ -497,15 +525,22 @@ public class PlayerController_new : MonoBehaviour
         }
 
 
+        // if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        // {
+        // }
 
     }
 
     void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if ((1 << other.gameObject.layer & groundLayer) == 1 << other.gameObject.layer)
         {
             isGrounded = false;
         }
+        // if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        // {
+        //     isGrounded = false;
+        // }
     }
 
     void OnTriggerEnter2D(Collider2D other)
