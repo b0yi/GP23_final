@@ -34,6 +34,7 @@ public class TalkManager : MonoBehaviour
         new List<string>() {
             "Cat-111: My God, a living Venusian!",
             "Cat-111: Messenger-107, this is truly amazing.",
+            "Cat-111: Thank you for playing with my kittens.",
             "M-107 (You): How do I return home?",
             "Cat-111: Are you serious?",
             "Cat-111: It's not easy to leave.",
@@ -41,7 +42,7 @@ public class TalkManager : MonoBehaviour
             "Cat-111: Uh, I don't hate it.",
             "Cat-111: Look at those cute kittens on my planet.",
             "Cat-111: Anyway, I can't help you.",
-            "Cat-111: I can't help, but there's a mysterious ocean star nearby.",
+            "Cat-111: Oh! There's a mysterious ocean star nearby.",
             "Cat-111: Explore it, maybe you'll find your answers."
         },
         // fishFirstTalk - 2
@@ -56,7 +57,7 @@ Blue whales are aggressive now.",
             "M-107 (You): They're disgusting. We're at war with them.",
             "M-107 (You): I must finish my mission to return to Venus for support.",
             "M-107 (You): Catfish, any clues? I can't navigate this gravitational field.",
-            "CatFish: Check the distant Labyrinth, but beware.",
+            "CatFish: Maybe you can visit the Planet Maze, but be careful.",
         },
         // beforeFall - 3
         new List<string>() {
@@ -65,7 +66,7 @@ Blue whales are aggressive now.",
         },
         // afterFall - 4
         new List<string>() {
-            "M-107 (You): Is this the Labyrinth Star?",
+            "M-107 (You): Is this the true Planet Maze?",
             "M-107 (You): I must reach the planet's core."
         },
         // nearDragon - 5
@@ -104,7 +105,11 @@ Blue whales are aggressive now.",
         // tree 3
         new List<string>() {
             "This planet is in its final days.",
-        }
+        },
+        // tree in maze
+        new List<string>() {
+            "M-107 (You): There seem to be some of my countrymen here.",
+        },
     };
 
     // Start is called before the first frame update
