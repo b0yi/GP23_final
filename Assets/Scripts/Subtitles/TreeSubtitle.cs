@@ -44,7 +44,7 @@ public class TreeSubtitle : Subtitle
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
         player.Lock();
-        // player.Freeze();
+        player.Freeze();
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
         textArea.text = "";
@@ -84,6 +84,6 @@ public class TreeSubtitle : Subtitle
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;
         player.Unlock();
-        // player.Unfreeze();
+        player.Unfreeze();
     }
 }

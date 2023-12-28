@@ -22,7 +22,7 @@ public class PlanetController : MonoBehaviour
 
         if (_stageManager != null)
         {
-            if (_stageManager.stage >= Stage.ToCatPlanet)
+            if (_stageManager.stage >= Stage.Stele)
             {
                 catPlanet.SetActive(true);
             }

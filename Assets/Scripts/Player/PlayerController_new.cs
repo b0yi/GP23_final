@@ -162,7 +162,9 @@ public class PlayerController_new : MonoBehaviour
         {
             switch (_stageManager.stage)
             {
-                case Stage.Intro:
+                case Stage.LearningMove:
+                case Stage.OnOriginPlanet:
+                case Stage.LearningLaunch:
                 case Stage.ToCatPlanet:
                 case Stage.ToWaterPlanet:
                 case Stage.ToMazePlanet:
@@ -188,19 +190,59 @@ public class PlayerController_new : MonoBehaviour
         up = true;
     }
 
-    void Update()
-    {
+    void HandleTask() {
         // DELETE: 測試 Task 功能
-        if (Input.GetKeyDown(KeyCode.T)) {
+        // if (Input.GetKeyDown(KeyCode.T)) {
+        //     if (!task.IsShowed()) {
+        //         task.ChangeTitle("Test");
+        //         task.ChangeContent("This is just a simple test for the function of task UI.");
+        //         task.Show();
+        //     }
+        //     else {
+        //         task.Hide();
+        //     }
+        // }
+
+        if (_stageManager.stage == Stage.LearningMove) {
+            task.ChangeTitle("MOVE AROUND");
+            task.ChangeContent("Press A or D to move.");
+
             if (!task.IsShowed()) {
-                task.ChangeTitle("Test");
-                task.ChangeContent("This is just a simple test for the function of task UI.");
                 task.Show();
             }
-            else {
+        }
+
+        if (_stageManager.stage == Stage.OnOriginPlanet || _stageManager.stage == Stage.Stele) {
+            if (task.IsShowed()) {
                 task.Hide();
             }
         }
+
+        if (_stageManager.stage == Stage.LearningLaunch) {
+            task.ChangeTitle("LAUNCH");
+            task.ChangeContent("Hold W to launch.");
+
+            if (!task.IsShowed()) {
+                task.Show();
+            }
+        }
+
+        if (_stageManager.stage == Stage.ToCatPlanet) {
+            if (task.IsShowed()) {
+                task.Hide();
+            }
+        }
+
+
+    }
+
+    void Update()
+    {
+
+        HandleTask();
+
+
+
         if (!isHurt && !isLocked)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
@@ -253,6 +295,11 @@ public class PlayerController_new : MonoBehaviour
                                 + param * walkSpeed * ((Vector2)transform.right).normalized;
 
                 _animator.SetBool("walk", true);
+
+
+                if (_stageManager.stage == Stage.LearningMove) {
+                    _stageManager.UpdateStage();
+                }
             }
             else
             {
@@ -397,6 +444,11 @@ public class PlayerController_new : MonoBehaviour
 
         if (playerState == PlayerState.Launch)
         {
+            if (_stageManager.stage == Stage.LearningLaunch) {
+                _stageManager.UpdateStage();
+            }
+
+
             _rb.drag = 0;
             _rb.angularDrag = 0;
 
