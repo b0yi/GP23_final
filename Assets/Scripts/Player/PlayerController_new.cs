@@ -551,6 +551,16 @@ public class PlayerController_new : MonoBehaviour
             _landingClock = 0.5f;
         }
 
+        if(other.name=="Dragon")
+        {
+            if (_uIManager && (!_isLoading))
+            {
+                _uIManager.LoadPlayScene();
+                _isLoading = true;
+             }
+        }
+        
+
         // if (other.CompareTag("Fruit") && fuel < 100f)
         // {
         //     Tree tree = other.GetComponentInParent<Tree>();
