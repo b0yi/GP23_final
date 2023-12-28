@@ -4,13 +4,16 @@ using UnityEngine;
 
 public enum Stage
 {
-    Intro = 0,      // �S���b�Y, �����I�� O
-    ToCatPlanet,    // �I�쯫�_�F��Ĳ�o (���Y preview), �b�Y ��, �����I O
-    ToWaterPlanet,  // ��ܫ�Ĳ�o (���Y preview), �b�Y ��, �����I O
-    ToMazePlanet,   // ��ܫ�Ĳ�o (���Y preview), �b�Y �g�c, �����I O
-    Maze,           // �g�c�P�y���aĲ�o, �S���b�Y, �����I �g�c����
-    ToDragonPlanet, // 
-    Dragon,         // �g�c�P�y���aĲ�o, �S���b�Y, �����I �s�P
+    LearningMove = 0,   // 一開始還沒按下鍵盤
+    OnOriginPlanet,     // 會移動了
+    Stele,
+    LearningLaunch,     //
+    ToCatPlanet,        // 
+    ToWaterPlanet,      // 
+    ToMazePlanet,       // 
+    Maze,               // 
+    ToDragonPlanet,     // 
+    Dragon,             // 
 }
 
 
@@ -25,7 +28,7 @@ public class StageManager : MonoBehaviour
 
     void Start()
     {
-        stage = Stage.Intro;
+        stage = Stage.LearningMove;
     }
 
     void Update()

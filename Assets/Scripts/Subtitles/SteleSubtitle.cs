@@ -37,7 +37,7 @@ public class SteleSubtitle : Subtitle
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && _stageManager.stage == Stage.Intro) {
+        if (other.CompareTag("Player") && _stageManager.stage == Stage.OnOriginPlanet) {
             Talk();
         }
     }
@@ -45,7 +45,7 @@ public class SteleSubtitle : Subtitle
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
         player.Lock();
-        // player.Freeze();
+        player.Freeze();
         _stageManager.UpdateStage();
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
@@ -82,12 +82,15 @@ public class SteleSubtitle : Subtitle
         }
 
         preview.PlayCatPlanetPreview();
+
         yield return new WaitForSeconds(3f);
         yield return FadeCanvasGroup(1f, 0, 1f);
 
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;
         player.Unlock();
-        // player.Unfreeze();
+        player.Unfreeze();
+        _stageManager.UpdateStage();
+
     }
 }
