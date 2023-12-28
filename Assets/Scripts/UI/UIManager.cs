@@ -37,6 +37,13 @@ public class UIManager : MonoBehaviour
         LoadScene("Play");
     }
 
+    public void LoadEndScene()
+    {
+        // IEnumerator coroutine = LoadScene("Play");
+        // StartCoroutine(coroutine);
+        LoadScene("EndScene");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
