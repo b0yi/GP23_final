@@ -19,7 +19,7 @@ public class RockFrontDetector : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "Mazeplanet")
+        if (other.name == "Maze Planet")
         {
             rockenemy.GetComponent<RockEnemy>().Stop = false;
         }
@@ -29,7 +29,7 @@ public class RockFrontDetector : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.name == "Mazeplanet")
+        if (other.name == "Maze Planet")
         {
             rockenemy.GetComponent<RockEnemy>().Stop = true;
         }
