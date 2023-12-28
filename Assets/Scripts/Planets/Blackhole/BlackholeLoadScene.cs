@@ -7,7 +7,9 @@ public class BlackholeLoadScene : MonoBehaviour
     private UIManager _uIManager;
     public PlayerController_new player;
     bool loadscene=false;
+    bool endscene=false;
     float _loadscenetime = 2.0f;
+    float _loadendscenetime = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,12 @@ public class BlackholeLoadScene : MonoBehaviour
             if(_loadscenetime<0)
                 _uIManager.LoadPlayScene();
         }
-
+        if(endscene)
+        {
+            _loadendscenetime-=Time.deltaTime;
+            if(_loadendscenetime<0)
+                _uIManager.LoadEndScene();
+        }
     }
 
      void OnTriggerEnter2D(Collider2D other)
@@ -43,6 +50,11 @@ public class BlackholeLoadScene : MonoBehaviour
             //}
 
         }
+        if (other.name == "Dragon")
+        {
+            if (_uIManager)
+                endscene=true;
 
+        }
     }
 }
