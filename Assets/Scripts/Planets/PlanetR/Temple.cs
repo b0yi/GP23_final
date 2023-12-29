@@ -18,8 +18,6 @@ public class Temple : MonoBehaviour
     public GameObject teleportLight;
     private StageManager _stageManager;
 
-    public bool onlyOneTime;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -33,14 +31,12 @@ public class Temple : MonoBehaviour
         currentTime = 0f;
         currentCD = teleportCD;
         StopParticle();
-
-        onlyOneTime = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!onlyOneTime) {
+        if (_stageManager.stage == Stage.Maze) {
             if (canTeleport)
             {
                 teleportLight.SetActive(true);
@@ -50,10 +46,7 @@ public class Temple : MonoBehaviour
                     if (currentTime >= teleportTime)
                     {
                         Teleport();
-                        if (_stageManager.stage == Stage.Maze)
-                        {
-                            _stageManager.UpdateStage();
-                        }
+                        _stageManager.UpdateStage();
                     }
                 }
                 else {
@@ -112,9 +105,6 @@ public class Temple : MonoBehaviour
         canTeleport = false;
         otherTemple.canTeleport = false;
         playerTF.position = otherTemple.transform.position;
-
-        onlyOneTime = true;
-        otherTemple.onlyOneTime = true;
     }
 
     private void GenerateParticle()
