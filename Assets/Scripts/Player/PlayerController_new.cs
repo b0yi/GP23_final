@@ -671,6 +671,7 @@ public class PlayerController_new : MonoBehaviour
         {
             if (_uIManager && (!_isLoading))
             {
+                //_uIManager.BackStage();
                 _uIManager.LoadPlayScene();
                 _isLoading = true;
              }
