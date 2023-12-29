@@ -537,20 +537,21 @@ public class PlayerController_new : MonoBehaviour
                 _rb.AddTorque(-horizontal * turnAcceleration * _rb.mass * .5f); // .5 是力臂
 
             }
-            playerLight.intensity = Mathf.Lerp(3, 5,1);
+            playerLight.intensity = Mathf.Lerp(3, 7,1);
         }
 
 
         if (playerState == PlayerState.Landing)
         {
             _landingClock -= Time.fixedDeltaTime;
+
             _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.up).normalized) * ((Vector2)transform.up).normalized;
 
             if (_landingClock <= 0f)
             {
                 playerState = PlayerState.Launch;
             }
-            playerLight.intensity = Mathf.Lerp(5, 3, 1);
+            playerLight.intensity = Mathf.Lerp(7, 3, 1);
         }
 
 
