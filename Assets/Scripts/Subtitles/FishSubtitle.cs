@@ -36,7 +36,6 @@ public class FishSubtitle : Subtitle
     {
         player.Lock();
         player.Freeze();
-        _stageManager.UpdateStage();
 
         gameObject.GetComponent<Fish>().Lock();
         canvas.isLockingSubtitle = true;
@@ -83,5 +82,7 @@ public class FishSubtitle : Subtitle
         player.Unlock();
         player.Unfreeze();
         gameObject.GetComponent<Fish>().Unlock();
+        _stageManager.UpdateStage();
+
     }
 }

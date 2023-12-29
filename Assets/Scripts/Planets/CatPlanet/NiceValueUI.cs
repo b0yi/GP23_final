@@ -8,9 +8,14 @@ public class NiceValueUI : MonoBehaviour
     private Image _image;
     [Tooltip("Float 0 ~ 1")] public float delta = 0.1f;
     public GameObject bigCat;
+    private StageManager _stageManager;
 
     void Start()
     {
+        GameObject m = GameObject.FindWithTag("UIManager");
+        _stageManager = m.GetComponent<StageManager>();
+
+
         _image = GetComponent<Image>();
         Reset();
         if (bigCat == null) {
@@ -23,6 +28,10 @@ public class NiceValueUI : MonoBehaviour
         if (isFull()) {
             bigCat.SetActive(true);
             transform.parent.gameObject.SetActive(false);
+
+            if (_stageManager.stage == Stage.Kitten) {
+                _stageManager.UpdateStage();
+            }
         }
     }
 

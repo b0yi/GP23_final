@@ -163,6 +163,7 @@ public class PlayerController_new : MonoBehaviour
             switch (_stageManager.stage)
             {
                 case Stage.LearningMove:
+                case Stage.LearningJump:
                 case Stage.OnOriginPlanet:
                 case Stage.LearningLaunch:
                 case Stage.ToCatPlanet:
@@ -205,7 +206,16 @@ public class PlayerController_new : MonoBehaviour
 
         if (_stageManager.stage == Stage.LearningMove) {
             task.ChangeTitle("MOVE AROUND");
-            task.ChangeContent("Press A or D to move.");
+            task.ChangeContent("Use the A and D keys to move left and right.");
+
+            if (!task.IsShowed()) {
+                task.Show();
+            }
+        }
+
+        if (_stageManager.stage == Stage.LearningJump) {
+            task.ChangeTitle("JUMP");
+            task.ChangeContent("Quickly tap the 'W' key to jump.");
 
             if (!task.IsShowed()) {
                 task.Show();
@@ -220,7 +230,7 @@ public class PlayerController_new : MonoBehaviour
 
         if (_stageManager.stage == Stage.LearningLaunch) {
             task.ChangeTitle("LAUNCH");
-            task.ChangeContent("Hold W to launch.");
+            task.ChangeContent("Press and hold 'W' to initiate launch.");
 
             if (!task.IsShowed()) {
                 task.Show();
@@ -228,6 +238,36 @@ public class PlayerController_new : MonoBehaviour
         }
 
         if (_stageManager.stage == Stage.ToCatPlanet) {
+            if (task.IsShowed()) {
+                task.Hide();
+            }
+        }
+
+        if (_stageManager.stage == Stage.ToMazePlanet) {
+            task.ChangeTitle("ENTER THE ABYSS");
+            task.ChangeContent("Embark on a journey through the Maze Planet.");
+
+            if (!task.IsShowed()) {
+                task.Show();
+            }
+        }
+
+        if (_stageManager.stage == Stage.Maze) {
+            if (task.IsShowed()) {
+                task.Hide();
+            }
+        }
+
+        if (_stageManager.stage == Stage.Kitten) {
+            task.ChangeTitle("PLAY, KITTY!");
+            task.ChangeContent("Play with kittens to summon Cat-111.");
+
+            if (!task.IsShowed()) {
+                task.Show();
+            }
+        }
+
+        if (_stageManager.stage == Stage.Cat) {
             if (task.IsShowed()) {
                 task.Hide();
             }
@@ -320,6 +360,11 @@ public class PlayerController_new : MonoBehaviour
             _rb.velocity = Vector2.Dot(_rb.velocity, ((Vector2)transform.right).normalized) * ((Vector2)transform.right).normalized;
             _rb.velocity += Mathf.Sqrt(2f * jumpHeight * _gravity) * (Vector2)transform.up.normalized;
             isGrounded = false;
+
+            if (_stageManager.stage == Stage.LearningJump) {
+                _stageManager.UpdateStage();
+            }
+
         }
 
 
@@ -602,6 +647,12 @@ public class PlayerController_new : MonoBehaviour
         {
             playerState = PlayerState.Landing;
             _landingClock = 0.5f;
+
+
+
+            if (_stageManager.stage == Stage.ToCatPlanet) {
+                _stageManager.UpdateStage();
+            }
         }
 
         if(other.name=="Dragon")
