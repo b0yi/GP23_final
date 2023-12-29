@@ -13,6 +13,7 @@ public enum Stage
     Kitten,           // 
     Cat,             // 
     ToWaterPlanet,      // 
+    Water,              // 
     ToMazePlanet,       // 
     Maze,               // 
     ToDragonPlanet,     // 

@@ -40,7 +40,7 @@ public class PlanetController : MonoBehaviour
                 waterPlanet.SetActive(false);
             }
 
-            if (_stageManager.stage >= Stage.ToMazePlanet)
+            if (_stageManager.stage >= Stage.Water)
             {
                 mazePlanet.SetActive(true);
             }

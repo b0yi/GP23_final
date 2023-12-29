@@ -168,6 +168,7 @@ public class PlayerController_new : MonoBehaviour
                 case Stage.LearningLaunch:
                 case Stage.ToCatPlanet:
                 case Stage.ToWaterPlanet:
+                case Stage.Water:
                 case Stage.ToMazePlanet:
                     transform.position = rezPlanetO.position;
                     break;
