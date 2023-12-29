@@ -7,6 +7,7 @@ using System.Collections.Generic;
 //[RequireComponent(typeof(Explodable))]
 public class TriggerExplosion : Subtitle
 {
+    public BGMmanager bGMmanager;
 
     public Explodable explodable;
     [DisplayOnly] public float delayExplosionTimer;
@@ -148,6 +149,7 @@ public class TriggerExplosion : Subtitle
         // player.Lock();
         player.Transform();
         CinemachineShake.finalitem = false;
+        bGMmanager.DragonSummon();
         sun.SetActive(false);
         //_stageManager.UpdateStage();
         if (_stageManager.stage == Stage.ToDragonPlanet) {
