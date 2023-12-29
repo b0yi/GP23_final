@@ -11,6 +11,8 @@ public class BGMmanager : MonoBehaviour
     public AudioClip _AudioClipWater;
     public AudioClip _AudioClipMaze;
 
+    public float fadeOutTime = 3f;
+
     //[DisplayOnly] public bool boolForO = true;
     //[DisplayOnly] public bool boolForCat = false;
 
@@ -43,43 +45,49 @@ public class BGMmanager : MonoBehaviour
 
     public void EnterCatPlanet() {
         if (_AudioSource.clip != _AudioClipCat) {
-            _AudioSource.clip = _AudioClipCat;
-            _AudioSource.Play();
+            StartCoroutine(FadeOutCat());
+            // _AudioSource.clip = _AudioClipCat;
+            // _AudioSource.Play();
         }
     }
 
     public void ExitCatPlanet() {
         if (_AudioSource.clip != _AudioClipO) {
-            _AudioSource.clip = _AudioClipO;
-            _AudioSource.Play();
+            StartCoroutine(FadeOutO());
+            // _AudioSource.clip = _AudioClipO;           
+            // _AudioSource.Play();
         }
     }
 
     public void EnterMazePlanet() {
         if (_AudioSource.clip != _AudioClipMaze) {
-            _AudioSource.clip = _AudioClipMaze;
-            _AudioSource.Play();
+            StartCoroutine(FadeOutMaze());
+            // _AudioSource.clip = _AudioClipMaze;
+            // _AudioSource.Play();
         }
     }
 
     public void ExitMazePlanet() {
         if (_AudioSource.clip != _AudioClipO) {
-            _AudioSource.clip = _AudioClipO;
-            _AudioSource.Play();
+            StartCoroutine(FadeOutO());
+            // _AudioSource.clip = _AudioClipO;           
+            // _AudioSource.Play();
         }
     }
 	
     public void EnterWaterPlanet() {
         if (_AudioSource.clip != _AudioClipWater) {
-            _AudioSource.clip = _AudioClipWater;
-            _AudioSource.Play();
+            StartCoroutine(FadeOutWater());
+            // _AudioSource.clip = _AudioClipWater;
+            // _AudioSource.Play();
         }
     }
 
     public void ExitWaterPlanet() {
         if (_AudioSource.clip != _AudioClipO) {
-            _AudioSource.clip = _AudioClipO;
-            _AudioSource.Play();
+            StartCoroutine(FadeOutO());
+            // _AudioSource.clip = _AudioClipO;           
+            // _AudioSource.Play();
         }
     }
     // void OnTriggerEnter2D(Collider2D other)
@@ -90,6 +98,106 @@ public class BGMmanager : MonoBehaviour
     //         boolForCat=true;
     //     }
     // }
+
+    public IEnumerator FadeOutCat()
+    {
+        float timetofade=2f;
+        float timeelapsed=0f;
+        while(timeelapsed<timetofade)
+        {
+            _AudioSource.volume = Mathf.Lerp(1, 0, timeelapsed/timetofade);
+            //print(_AudioSource.volume);
+            timeelapsed+=Time.deltaTime;
+
+            yield return null;
+        }
+        timeelapsed=0f;
+        while(timeelapsed<timetofade)
+        {
+            _AudioSource.clip = _AudioClipCat;
+            _AudioSource.Play();
+            _AudioSource.volume = Mathf.Lerp(0, 1, timeelapsed/timetofade);
+            //print(_AudioSource.volume);
+            timeelapsed+=Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
+    public IEnumerator FadeOutWater()
+    {
+        float timetofade=2f;
+        float timeelapsed=0f;
+        while(timeelapsed<timetofade)
+        {
+            _AudioSource.volume = Mathf.Lerp(1, 0, timeelapsed/timetofade);
+            //print(_AudioSource.volume);
+            timeelapsed+=Time.deltaTime;
+
+            yield return null;
+        }
+        timeelapsed=0f;
+        while(timeelapsed<timetofade)
+        {
+            _AudioSource.clip = _AudioClipWater;
+            _AudioSource.Play();
+            _AudioSource.volume = Mathf.Lerp(0, 1, timeelapsed/timetofade);
+            //print(_AudioSource.volume);
+            timeelapsed+=Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
+    public IEnumerator FadeOutMaze()
+    {
+        float timetofade=2f;
+        float timeelapsed=0f;
+        while(timeelapsed<timetofade)
+        {
+            _AudioSource.volume = Mathf.Lerp(1, 0, timeelapsed/timetofade);
+            //print(_AudioSource.volume);
+            timeelapsed+=Time.deltaTime;
+
+            yield return null;
+        }
+        timeelapsed=0f;
+        while(timeelapsed<timetofade)
+        {
+            _AudioSource.clip = _AudioClipMaze;
+            _AudioSource.Play();
+            _AudioSource.volume = Mathf.Lerp(0, 1, timeelapsed/timetofade);
+            //print(_AudioSource.volume);
+            timeelapsed+=Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
+    public IEnumerator FadeOutO()
+    {
+        float timetofade=2f;
+        float timeelapsed=0f;
+        while(timeelapsed<timetofade)
+        {
+            _AudioSource.volume = Mathf.Lerp(1, 0, timeelapsed/timetofade);
+            //print(_AudioSource.volume);
+            timeelapsed+=Time.deltaTime;
+
+            yield return null;
+        }
+        timeelapsed=0f;
+        while(timeelapsed<timetofade)
+        {
+            _AudioSource.clip = _AudioClipO;
+            _AudioSource.Play();
+            _AudioSource.volume = Mathf.Lerp(0, 1, timeelapsed/timetofade);
+            //print(_AudioSource.volume);
+            timeelapsed+=Time.deltaTime;
+
+            yield return null;
+        }
+    }
 }
 
 
