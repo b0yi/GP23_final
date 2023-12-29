@@ -92,14 +92,14 @@ a memory concerning...... the day of defeat.</i>",
             "M-107 (You): Please, take me home.",
         },
         // yermengard - 7
-        new List<string>() {
-            "Yermengard: Who disturbed my peace will pay.",
-            "M-107 (You): Run!"
-        },
+        // new List<string>() {
+        //     "Yermengard: Who disturbed my peace will pay.",
+        //     "M-107 (You): Run!"
+        // },
         // maybeDie2Times - 8
-        new List<string>() {
-            "M-107 (You): Or do I use this giant with the black hole?"
-        },
+        // new List<string>() {
+        //     "M-107 (You): Or do I use this giant with the black hole?"
+        // },
     };
 
     public List<List<string>> treeSubtitles = new List<List<string>>() {
