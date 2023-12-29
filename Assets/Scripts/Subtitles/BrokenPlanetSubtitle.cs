@@ -30,8 +30,11 @@ public class BrokenPlanetSubtitle : Subtitle
 
     public override void Talk()
     {
-        if (!canvas.isLockingSubtitle) {
-            StartCoroutine(ShowSubtitle(talkManager.brokenPlanetSubtitle));
+        if (!talkManager.brokenPlanetBool) {
+            talkManager.brokenPlanetBool = true;
+            if (!canvas.isLockingSubtitle) {
+                StartCoroutine(ShowSubtitle(talkManager.brokenPlanetSubtitle));
+            }
         }
     }
 

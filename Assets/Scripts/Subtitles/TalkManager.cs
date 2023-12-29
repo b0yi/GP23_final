@@ -14,6 +14,8 @@ public class TalkManager : MonoBehaviour
         false, // tree 2
         false  // tree 3
     };
+    public bool brokenPlanetBool = false;
+    public bool sunBool = false;
 
     public List<List<string>> subtitles = new List<List<string>>() {
         // stele - 0
@@ -126,6 +128,11 @@ a memory concerning...... the day of defeat.</i>",
     public List<string> brokenPlanetSubtitle = new List<string>() {
         "<i>Lost the extraenergy fluid, the planet collapsed.</i>",
         "<i>It won't be long before all the planets here meet the same fate.</i>",
+    };
+
+    public List<string> sunSubtitle = new List<string>() {
+        "A burning planet.",
+        "Hope Venus will not be.",
     };
 
     // Start is called before the first frame update
