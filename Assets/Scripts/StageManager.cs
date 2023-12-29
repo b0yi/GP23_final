@@ -30,6 +30,11 @@ public class StageManager : MonoBehaviour
         stage += 1;
     }
 
+    public void BackStage()
+    {
+        stage-=1;
+    }
+
     void Start()
     {
         stage = Stage.LearningMove;

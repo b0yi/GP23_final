@@ -13,11 +13,15 @@ public class TriggerExplosion : MonoBehaviour
     public float delayExplosionTime;
     public GameObject dragon;
     public GameObject sun;
-
+    private StageManager _stageManager;
     private void Start()
     {
+        GameObject m = GameObject.FindWithTag("UIManager");
         explode = false;
         dragon.SetActive(false);
+        CinemachineShake.finalitem = true;
+        _stageManager = m.GetComponent<StageManager>();
+
     }
 
     private void Update()
@@ -48,6 +52,10 @@ public class TriggerExplosion : MonoBehaviour
             playerController.Transform();
             CinemachineShake.finalitem = false;
             sun.SetActive(false);
+            //_stageManager.UpdateStage();
+            if (_stageManager.stage == Stage.ToDragonPlanet) {
+                _stageManager.UpdateStage();
+            }
         }
     }
 }
