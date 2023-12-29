@@ -91,7 +91,7 @@ public class BGMmanager : MonoBehaviour
         }
     }
 
-    public void Dragon() {
+    public void DragonSummon() {
         if (_AudioSource.clip != _AudioClipDragon) {
             
             _AudioSource.clip = _AudioClipDragon;
