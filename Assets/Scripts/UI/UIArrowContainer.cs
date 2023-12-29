@@ -11,6 +11,7 @@ public class UIArrowContainer : MonoBehaviour
     public GameObject arrowCatPlanet;
     public GameObject arrowWaterPlanet;
     public GameObject arrowMazePlanet;
+    public GameObject arrowBlackHole;
     void Start()
     {
         _stageManager = GameObject.FindWithTag("UIManager").GetComponent<StageManager>();
@@ -21,8 +22,12 @@ public class UIArrowContainer : MonoBehaviour
         if (pc.playerState == PlayerState.InSpace)
         {
             arrowOriginPlanet.SetActive(true);
+            arrowBlackHole.SetActive(true);
         }
-        else { arrowOriginPlanet.SetActive(false); }
+        else { 
+            arrowOriginPlanet.SetActive(false); 
+            arrowBlackHole.SetActive(false);
+        }
 
 
 
