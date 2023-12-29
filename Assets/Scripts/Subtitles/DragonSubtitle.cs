@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class DragonSubtitle : Subtitle
 {
-    public bool planet;
-    public bool crystal;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +13,6 @@ public class DragonSubtitle : Subtitle
         
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         textArea = canvas.transform.Find("SubtitleText").GetComponent<TextMeshProUGUI>();
-        
-        planet = false;
-        crystal = false;
     }
 
     // Update is called once per frame
@@ -30,15 +24,6 @@ public class DragonSubtitle : Subtitle
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.name == "Player" && talkManager.currentSubtitle == subtitleID) {
-            planet = true;
-            Talk();
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.name == "Dragon Item" && talkManager.currentSubtitle == subtitleID) {
-            crystal = true;
             Talk();
         }
     }
@@ -47,9 +32,7 @@ public class DragonSubtitle : Subtitle
     {
         if (talkManager.currentSubtitle == subtitleID) {
             StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
-            if (!crystal) {
-                talkManager.currentSubtitle += 1;
-            }
+            talkManager.currentSubtitle += 1;
         }
     }
 
@@ -118,14 +101,9 @@ public class DragonSubtitle : Subtitle
                 }
             }
 
-            if (planet) {
-                yield return null;
-                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
-                yield return null;
-            }
-            if (crystal) {
-                yield return new WaitForSeconds(talkManager.delayTime);
-            }
+            yield return null;
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+            yield return null;
         }
 
         yield return FadeCanvasGroup(1f, 0, 1f);
