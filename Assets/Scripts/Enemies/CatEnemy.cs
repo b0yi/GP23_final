@@ -18,6 +18,11 @@ public class CatEnemy : EnemyController
     public GameObject loveParticle;
     public NiceValueUI niceValueUI;
 
+    public AudioSource audioSource;
+    public AudioClip SE1;
+    public AudioClip SE2;
+    public AudioClip SE3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -115,6 +120,17 @@ public class CatEnemy : EnemyController
 
                 Instantiate(loveParticle, transform, false);
                 niceValueUI.Increase();
+
+                float rand = Random.value;
+                if (rand <= 1f/3f) {
+                    audioSource.PlayOneShot(SE1);
+                }
+                else if (rand <= 2f/3f) {
+                    audioSource.PlayOneShot(SE2);
+                }
+                else {
+                    audioSource.PlayOneShot(SE3);
+                }
             }
         }
     }
