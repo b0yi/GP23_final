@@ -28,7 +28,7 @@ public class TalkManager : MonoBehaviour
         new List<string>() {
             "No one in sight.",
             "Go to Litter Box Star",
-            "Hold 'W' to launch." 
+            // "Hold 'W' to launch." 
         },
         // catFirstTalk - 1
         new List<string>() {
