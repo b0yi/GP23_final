@@ -12,7 +12,7 @@ public class TriggerExplosion : MonoBehaviour
     [DisplayOnly] bool explode;
     public float delayExplosionTime;
     public GameObject dragon;
-
+    public GameObject sun;
 
     private void Start()
     {
@@ -47,6 +47,7 @@ public class TriggerExplosion : MonoBehaviour
             playerController.Lock();
             playerController.Transform();
             CinemachineShake.finalitem = false;
+            sun.SetActive(false);
         }
     }
 }
