@@ -5,7 +5,8 @@ using UnityEngine;
 public class Temple : MonoBehaviour
 {
     public Temple otherTemple;
-    private Transform player;
+    private Transform playerTF;
+    private PlayerController_new playerCTL;
 
     [DisplayOnly] public bool canTeleport;
     [DisplayOnly] public bool startCounting;
@@ -24,7 +25,8 @@ public class Temple : MonoBehaviour
         GameObject m = GameObject.FindWithTag("UIManager");
         _stageManager = m.GetComponent<StageManager>();
 
-        player = GameObject.Find("Player").transform;
+        playerTF = GameObject.Find("Player").transform;
+        playerCTL = GameObject.Find("Player").GetComponent<PlayerController_new>();
 
         canTeleport = true;
         startCounting = false;
@@ -41,6 +43,7 @@ public class Temple : MonoBehaviour
             teleportLight.SetActive(true);
             if (startCounting)
             {
+                playerCTL.Lock();
                 currentTime += Time.deltaTime;
                 if (currentTime >= teleportTime)
                 {
@@ -99,7 +102,8 @@ public class Temple : MonoBehaviour
         otherTemple.currentCD = teleportCD;
         canTeleport = false;
         otherTemple.canTeleport = false;
-        player.position = otherTemple.transform.position;
+        playerTF.position = otherTemple.transform.position;
+        playerCTL.Unlock();
     }
 
     private void GenerateParticle()
