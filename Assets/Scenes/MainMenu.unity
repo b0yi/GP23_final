@@ -20295,7 +20295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da531720b74312409fe475a1ddb2ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preview: {fileID: 0}
 --- !u!58 &233331115
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -142404,8 +142403,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287269514
-  m_fontColor: {r: 0.5417918, g: 0.5417918, b: 0.5417918, a: 1}
+    rgba: 4293454056
+  m_fontColor: {r: 0.908734, g: 0.908734, b: 0.908734, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

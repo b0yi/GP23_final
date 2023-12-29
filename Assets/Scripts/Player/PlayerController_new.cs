@@ -187,7 +187,6 @@ public class PlayerController_new : MonoBehaviour
     {
         playerState = PlayerState.Transform;
         transformTimer = transformTime;
-        _animator.ResetTrigger("planet");
         _animator.SetTrigger("transform");
         up = true;
     }
@@ -389,8 +388,13 @@ public class PlayerController_new : MonoBehaviour
 
     private void LaunchOrNot()
     {
+        // _animator.ResetTrigger("transform");
+        // _animator.ResetTrigger("untransform");
+
         if (playerState == PlayerState.OnPlanet)
         {
+            _animator.ResetTrigger("untransform");
+
             _rb.drag = linearDragOnPlanet;
             _rb.angularDrag = angularDragOnPlanet;
 
@@ -452,7 +456,6 @@ public class PlayerController_new : MonoBehaviour
         {
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
             transformTimer -= Time.fixedDeltaTime;
-            // _animator.ResetTrigger("transform");
 
 
             if (transformTimer <= 0f)
@@ -470,7 +473,7 @@ public class PlayerController_new : MonoBehaviour
 
         if (playerState == PlayerState.Untransform)
         {
-            // _animator.ResetTrigger("untransform");
+            _animator.ResetTrigger("transform");
 
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
             transformTimer -= Time.fixedDeltaTime;
@@ -496,6 +499,8 @@ public class PlayerController_new : MonoBehaviour
 
         if (playerState == PlayerState.Launch)
         {
+            _animator.ResetTrigger("transform");
+
             if (_stageManager && _stageManager.stage == Stage.LearningLaunch) {
                 _stageManager.UpdateStage();
             }
