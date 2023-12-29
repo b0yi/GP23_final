@@ -11,14 +11,14 @@ public class CinemachineShake : MonoBehaviour
     CinemachineBasicMultiChannelPerlin noisePerlin;
     private float shakeTimer=0.0f;
     private float elapsedTime=0;
-    private float shakeTimerTotal=10;
+    private float shakeTimerTotal=10f;
     //private float startingIntensity;
     public static bool finalitem=true;
     bool isShaking=false;
     bool hasShaken=false;
     // Start is called before the first frame update
 
-    void Awake()
+    void Start()
     {
         vcam = GetComponent<CinemachineVirtualCamera>();
         noisePerlin= vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
@@ -71,13 +71,13 @@ public class CinemachineShake : MonoBehaviour
     /// </summary>
     /// <param name="other">The Collision2D data associated with this collision.</param>
    
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if(other.gameObject.name=="DragonItem")
-        {
-            finalitem=false;
-            print(other.gameObject.name);
-        }
+    // void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     if(other.gameObject.name=="DragonItem")
+    //     {
+    //         finalitem=false;
+    //         print(other.gameObject.name);
+    //     }
 
-    }
+    // }
 }
