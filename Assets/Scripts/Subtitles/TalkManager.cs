@@ -2,14 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CatTalkState {
-    FirstTalk,
-    // KeepTalk,
-    // WaterTalk,
-    // FishTalk,
-    NoTalk
-}
-
 public class TalkManager : MonoBehaviour
 {
     public int currentSubtitle = 0;
@@ -24,59 +16,78 @@ public class TalkManager : MonoBehaviour
     };
 
     public List<List<string>> subtitles = new List<List<string>>() {
-        // steleInfo - 0
+        // stele - 0
         new List<string>() {
-            "No one in sight.",
-            "Go to Litter Box Star",
-            // "Hold 'W' to launch." 
+            "<i>This is a bleak and desolate planet.</i>",
+            "<i>However, this equiment indicates that there one others of your kind in nearby orbits.</i>",
+            "<i>......Two Venusians.</i>",
+            "<i>For a civilization that once dominated the solar system, you find this highly ironic.</i>",
         },
-        // catFirstTalk - 1
+        // cat - 1
         new List<string>() {
-            "Cat-111: My God, a living Venusian!",
-            "Cat-111: Messenger-107, this is truly amazing.",
-            "Cat-111: Thank you for playing with my kittens.",
-            "M-107 (You): How do I return home?",
+            "Cat-111: Jesus Christ...... a true, living Venusian!",
+            "Cat-111: Young Messenger, you have truly astonished me.",
+            "Cat-111: Anyway, thank you for playing with my kitten",
+            "<i>This cat is a bona fide Venusian. That is weird.</i>",
+            @"<i>With meeting a countryman, some memory stir......
+a memory concerning...... the day of defeat.</i>",
+            "Cat-111: The defeat of Venus......",
+            "Cat-111: It was a century ago; your mourning is belated.",
+            "<i>It doesn't sound so hard to accept.</i>",
+            "<i>Your only thought is to go home...... after a century of separation.</i>",
             "Cat-111: Are you serious?",
             "Cat-111: It's not easy to leave.",
-            "M-107 (You): Do you think I like being here?",
-            "Cat-111: Uh, I don't hate it.",
+            "Cat-111: The event horizon of the black hole,it is a big problem.",
+            "Cat-111: I mean, I don't hate this place.",
             "Cat-111: Look at those cute kittens on my planet.",
-            "Cat-111: Anyway, I can't help you.",
-            "Cat-111: Oh! There's a mysterious ocean star nearby.",
-            "Cat-111: Explore it, maybe you'll find your answers."
+            "Cat-111: Anyway, I can't help you, even if I wanted to.",
+            "Cat-111: By the way, there's a mysterious star in orbit around here.",
+            "Cat-111: A planet composed entirely of liquid water, and it’s so far away from the sun...... Where does the energy come from?",
+            "<i>The Physics? Or a higher rule behind?</i>",
         },
-        // fishFirstTalk - 2
+        // fish - 2
         new List<string>() {
-            "CatFish: Who's approaching?",
-            "M-107 (You): I'm from Venus, stranded with a mission to retrieve 'extrenergy fluid.'",
-            @"M-107 (You): I urgently need to escape the gravitational pull of a black hole to back home.
-Can you assist me?",
-            @"CatFish: The gravitational pull changed Oceanus.
-Blue whales are aggressive now.",
-            "CatFish: Earthlings caused it, ignoring universal balance.",
-            "M-107 (You): They're disgusting. We're at war with them.",
-            "M-107 (You): I must finish my mission to return to Venus for support.",
-            "M-107 (You): Catfish, any clues? I can't navigate this gravitational field.",
-            "CatFish: Maybe you can visit the Planet Maze, but be careful.",
+            "CatFish: A deep, resonating sound.",
+            "<i>You have never seen such a creature before.</i>",
+            "<i>That’s the reason why this planet doesn't freeze.</i>",
+            "<i>The power of this entity sustains an entire planet.</i>",
+            "CatFish: The gaze from the abyss.",
+            "<i>Your brain...... your sanity is under invasion.</i>",
+            "<i>Fortunately,it seems to lack hostility.</i>",
+            "<i>Feeling discomfort from a voice resonating in the mind.</i>",
+            "CatFish: Human being......",
+            "CatFish: The blackhole...... the cage woven by gravity. We are all imprisoned within it.",
+            "<i>Even a powerful creature like this is unable to escape.</i>",
+            "<i>You've lost confidence.</i>",
+            "CatFish: ...... A being of far greater power...... hiding within the maze.",
+            "CatFish: It is your way home.",
         },
-        // beforeFall - 3
+        // mazeBeforeFall - 3
         new List<string>() {
-            "M-107 (You): Is that catfish lying to me? There's nothing on this planet.",
-            "M-107 (You): And it's super hard to get around."
+            "<i>Who created this structure?</i>",
+            "<i>You feel the extra energy fluid underground.</i>"
         },
-        // afterFall - 4
+        // mazeAfterFall - 4
         new List<string>() {
-            "M-107 (You): Is this the true Planet Maze?",
-            "M-107 (You): I must reach the planet's core."
+            "<i>This seems to be man-made...... or other-made?</i>",
         },
-        // nearDragon - 5
+        // dragon - 5
         new List<string>() {
-            "M-107 (You): Why am I here? Isn't this the Labyrinth?",
-            "M-107 (You): Regardless, I'll explore."
+            "<i>This place. It’s not a planet.</i>",
+            "<i>You can not believe it.</i>",
+            "<i>After millennium......</i>",
+            "<i>A great monster, the Venusian warrior, lies dormant here.</i>",
+            "<i>Probably the only remain.</i>",
         },
         // touchCrystal - 6
         new List<string>() {
-            "M-107 (You): ...... !?!?",
+            "<i>You don't know if this great monster will heed your words.</i>",
+            "<i>But you believe he will.</i>",
+            "<i>He is the glory of the past Venusian empire.</i>",
+            "<i>And now, a Venusian is calling for help.</i>",
+            "<i>You say:</i>",
+            "M-107 (You): Wake up, old soldier.",
+            "M-107 (You): Please, take me home.",
         },
         // yermengard - 7
         new List<string>() {
@@ -92,23 +103,23 @@ Blue whales are aggressive now.",
     public List<List<string>> treeSubtitles = new List<List<string>>() {
         // tree 0
         new List<string>() {
-            "This is the Energy Extraction tree planted by the Venusians to obtain energy called ‘extrenergy fluid’.",
+            "<i>This is the Energy Extraction tree planted by the Venusians to obtain energy called ‘extrenergy fluid’.</i>",
         },
         // tree 1
         new List<string>() {
-            "The life force, extrenergy fluid, is fading.",
+            "<i>The life force, extrenergy fluid, is fading.</i>",
         },
         // tree 2
         new List<string>() {
-            "For centuries, trees extracted extrenergy fluid, but the planet is dying.",
+            "<i>Trees have extracted extrenergy fluid for millenniums...... this planet is dying.</i>",
         },
         // tree 3
         new List<string>() {
-            "This planet is in its final days.",
+            "<i>This planet is in its final days. Your awakening is a miracle.</i>",
         },
         // tree in maze
         new List<string>() {
-            "M-107 (You): There seem to be some of my countrymen here.",
+            "<i>There were your fellow beings here.</i>",
         },
     };
 
