@@ -19,10 +19,10 @@ public class UIWhite : MonoBehaviour
     void Update()
     {
         // >DELETE
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Trigger();
-        }
+        // if (Input.GetKeyDown(KeyCode.M))
+        // {
+        //     Trigger();
+        // }
         // <DELETE
         if (enable)
         {
