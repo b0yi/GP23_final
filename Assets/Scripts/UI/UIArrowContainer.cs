@@ -19,7 +19,7 @@ public class UIArrowContainer : MonoBehaviour
 
     void Update()
     {
-        if (pc.playerState == PlayerState.InSpace)
+        if (pc.playerState == PlayerState.InSpace && (!pc.inWater()))
         {
             arrowOriginPlanet.SetActive(true);
             arrowBlackHole.SetActive(true);
@@ -33,7 +33,7 @@ public class UIArrowContainer : MonoBehaviour
 
         if (_stageManager != null)
         {
-            if (pc.playerState == PlayerState.InSpace && _stageManager.stage == Stage.ToCatPlanet)
+            if (pc.playerState == PlayerState.InSpace && (!pc.inWater()) && _stageManager.stage == Stage.ToCatPlanet)
             {
                 arrowCatPlanet.SetActive(true);
             }
@@ -43,7 +43,7 @@ public class UIArrowContainer : MonoBehaviour
             }
 
 
-            if (pc.playerState == PlayerState.InSpace && _stageManager.stage == Stage.ToWaterPlanet)
+            if (pc.playerState == PlayerState.InSpace && (!pc.inWater()) && _stageManager.stage == Stage.ToWaterPlanet)
             {
                 arrowWaterPlanet.SetActive(true);
             }
@@ -53,7 +53,7 @@ public class UIArrowContainer : MonoBehaviour
             }
 
 
-            if (pc.playerState == PlayerState.InSpace && _stageManager.stage == Stage.ToMazePlanet)
+            if (pc.playerState == PlayerState.InSpace && (!pc.inWater()) && _stageManager.stage == Stage.ToMazePlanet)
             {
                 arrowMazePlanet.SetActive(true);
             }
