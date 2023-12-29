@@ -10,9 +10,9 @@ public class BGMMazePlanet : MonoBehaviour
             bGMmanager.EnterMazePlanet();
         }
     }
-    void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Player")) {
-            bGMmanager.ExitMazePlanet();
-        }
-    }
+    // void OnTriggerExit2D(Collider2D other) {
+    //     if (other.CompareTag("Player")) {
+    //         bGMmanager.ExitMazePlanet();
+    //     }
+    // }
 }
