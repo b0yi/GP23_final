@@ -7,9 +7,12 @@ public class RotateToTarget : MonoBehaviour
     public float moveSpeed;
     
     public float rotationSpeed;
+
+    public float acceleratetime=3.0f;
+    private float elapsedtime=0.0f;
     private Vector2 direction;
     public GameObject target;
-
+    private float currentspeed;
 
     private void Update()
     {
@@ -20,8 +23,14 @@ public class RotateToTarget : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
 
         //Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        elapsedtime+=Time.deltaTime;
+        float percentage=elapsedtime/acceleratetime;
         Vector2 cursorPos = target.transform.position;
-        transform.position = Vector2.MoveTowards(transform.position, cursorPos, moveSpeed * Time.deltaTime);
+        currentspeed=Mathf.Lerp(1.0f,moveSpeed,percentage);
+        //print(currentspeed);
+        if(percentage>1)
+            percentage=1;
+        transform.position = Vector2.MoveTowards(transform.position, cursorPos, currentspeed * Time.deltaTime);
 
     }
 }               
