@@ -6,7 +6,6 @@ public class Temple : MonoBehaviour
 {
     public Temple otherTemple;
     private Transform playerTF;
-    private PlayerController_new playerCTL;
 
     [DisplayOnly] public bool canTeleport;
     [DisplayOnly] public bool startCounting;
@@ -19,6 +18,8 @@ public class Temple : MonoBehaviour
     public GameObject teleportLight;
     private StageManager _stageManager;
 
+    public bool onlyOneTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,44 +27,53 @@ public class Temple : MonoBehaviour
         _stageManager = m.GetComponent<StageManager>();
 
         playerTF = GameObject.Find("Player").transform;
-        playerCTL = GameObject.Find("Player").GetComponent<PlayerController_new>();
 
         canTeleport = true;
         startCounting = false;
         currentTime = 0f;
         currentCD = teleportCD;
         StopParticle();
+
+        onlyOneTime = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canTeleport)
-        {
-            teleportLight.SetActive(true);
-            if (startCounting)
+        if (!onlyOneTime) {
+            if (canTeleport)
             {
-                playerCTL.Lock();
-                currentTime += Time.deltaTime;
-                if (currentTime >= teleportTime)
+                teleportLight.SetActive(true);
+                if (startCounting)
                 {
-                    Teleport();
-                    if (_stageManager.stage == Stage.Maze)
+                    currentTime += Time.deltaTime;
+                    if (currentTime >= teleportTime)
                     {
-                        _stageManager.UpdateStage();
+                        Teleport();
+                        if (_stageManager.stage == Stage.Maze)
+                        {
+                            _stageManager.UpdateStage();
+                        }
                     }
+                }
+                else {
+                    StopParticle();
+                }
+            }
+            else
+            {
+                teleportLight.SetActive(false);
+                currentCD -= Time.deltaTime;
+                if (currentCD <= 0f)
+                {
+                    canTeleport = true;
+                    currentTime = 0f;
                 }
             }
         }
-        else
-        {
+        else {
             teleportLight.SetActive(false);
-            currentCD -= Time.deltaTime;
-            if (currentCD < 0f)
-            {
-                canTeleport = true;
-                currentTime = 0f;
-            }
+            StopParticle();
         }
     }
 
@@ -92,7 +102,6 @@ public class Temple : MonoBehaviour
         {
             startCounting = false;
             currentTime = 0f;
-            StopParticle();
         }
     }
 
@@ -103,7 +112,9 @@ public class Temple : MonoBehaviour
         canTeleport = false;
         otherTemple.canTeleport = false;
         playerTF.position = otherTemple.transform.position;
-        playerCTL.Unlock();
+
+        onlyOneTime = true;
+        otherTemple.onlyOneTime = true;
     }
 
     private void GenerateParticle()
