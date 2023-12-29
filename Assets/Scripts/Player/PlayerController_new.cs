@@ -343,7 +343,7 @@ public class PlayerController_new : MonoBehaviour
                 _animator.SetBool("walk", true);
 
 
-                if (_stageManager.stage == Stage.LearningMove) {
+                if (_stageManager && _stageManager.stage == Stage.LearningMove) {
                     _stageManager.UpdateStage();
                 }
             }
@@ -367,7 +367,7 @@ public class PlayerController_new : MonoBehaviour
             _rb.velocity += Mathf.Sqrt(2f * jumpHeight * _gravity) * (Vector2)transform.up.normalized;
             isGrounded = false;
 
-            if (_stageManager.stage == Stage.LearningJump) {
+            if (_stageManager && _stageManager.stage == Stage.LearningJump) {
                 _stageManager.UpdateStage();
             }
 
@@ -495,7 +495,7 @@ public class PlayerController_new : MonoBehaviour
 
         if (playerState == PlayerState.Launch)
         {
-            if (_stageManager.stage == Stage.LearningLaunch) {
+            if (_stageManager && _stageManager.stage == Stage.LearningLaunch) {
                 _stageManager.UpdateStage();
             }
 
@@ -618,11 +618,11 @@ public class PlayerController_new : MonoBehaviour
         {
             isGrounded = true;
             transformTimer = transformTime;
-            if (planet == mazePlanet && _stageManager.stage == Stage.ToMazePlanet)
+            if (planet == mazePlanet && _stageManager && _stageManager.stage == Stage.ToMazePlanet)
             {
                 _stageManager.UpdateStage();
             }
-            if (planet == dragonPlanet && _stageManager.stage == Stage.Maze)
+            if (planet == dragonPlanet && _stageManager && _stageManager.stage == Stage.Maze)
             {
                 _stageManager.UpdateStage();
             }
@@ -656,7 +656,7 @@ public class PlayerController_new : MonoBehaviour
 
 
 
-            if (_stageManager.stage == Stage.ToCatPlanet) {
+            if (_stageManager && _stageManager.stage == Stage.ToCatPlanet) {
                 _stageManager.UpdateStage();
             }
         }
