@@ -306,7 +306,7 @@ public class PlayerController_new : MonoBehaviour
         //     _uIManager.LoadPlayScene();
         //     _isLoading = true;
         // }
-        _animator.SetBool("ground", isGrounded);
+        // _animator.SetBool("ground", isGrounded);
 
     }
 
@@ -321,6 +321,9 @@ public class PlayerController_new : MonoBehaviour
         LaunchOrNot();
 
         _animator.SetInteger("state", (int)playerState);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, 10f, groundLayer);
+        _animator.SetFloat("height", hit.distance);
 
     }
 
