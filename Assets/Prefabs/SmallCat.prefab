@@ -374,7 +374,12 @@ MonoBehaviour:
   chasePlayer: 0
   isPlayerInEnemyRange: 0
   boolForJumpAnim: 0
+  loveParticle: {fileID: 5311472209628803062, guid: 4cb11ee5f3dfb244e97e7aad902af487, type: 3}
   niceValueUI: {fileID: 0}
+  audioSource: {fileID: 0}
+  SE1: {fileID: 8300000, guid: 646f699168d818e46871dd81947e3818, type: 3}
+  SE2: {fileID: 8300000, guid: 5a79df338b9e4e043a3d340baa70b570, type: 3}
+  SE3: {fileID: 8300000, guid: 0cca4f20fb9507645a98c082281cf617, type: 3}
 --- !u!95 &2287091644459634232
 Animator:
   serializedVersion: 5
