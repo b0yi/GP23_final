@@ -128,6 +128,7 @@ public class CatSubtitle : Subtitle
             if (isEnterDown) {
                 dispText = subtitles[subtitles.Count - 1];
                 textArea.text = dispText;
+                break;
             }
             
             if (c == '<') {
