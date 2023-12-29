@@ -7,8 +7,7 @@ public class MazeSubtitle : Subtitle
 {
     [DisplayOnly] public bool beforeFall;
     [DisplayOnly] public bool afterFall;
-    public float bFWaitTime = 3f;
-    public float aFWaitTime = 1.5f;
+    public float waitTime = 3f;
 
     // Start is called before the first frame update
     void Start()
@@ -61,26 +60,24 @@ public class MazeSubtitle : Subtitle
     {
         canvas.isLockingSubtitle = true;
 
-        if (talkManager.currentSubtitle == 3) {
-            yield return new WaitForSeconds(bFWaitTime);
-        }
-        else {
-            yield return new WaitForSeconds(aFWaitTime);
-        }
+        yield return new WaitForSeconds(waitTime);
 
         canvas.isTalking = true;
         textArea.text = "";
+
+        string dispText = "";
+        string richText = "";
+        bool recording = false;
 
         yield return FadeCanvasGroup(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++) 
         {
-            string dispText = "";
-
+            dispText = "";
             textArea.text = "";
             isEnterDown = false;
-            // StartCoroutine(WaitForSkip());
+            StartCoroutine(WaitForSkip());
 
             foreach (char c in subtitles[i]) {
                 if (isEnterDown) {
@@ -89,9 +86,26 @@ public class MazeSubtitle : Subtitle
                     break;
                 }
                 
-                dispText += c;
-                textArea.text = dispText;
-                yield return new WaitForSeconds(showCharTime);
+                if (c == '<') {
+                    recording = true;
+                    richText += c;
+                    continue;
+                }
+                else if (c == '>') {
+                    recording = false;
+                    richText += c;
+                    continue;
+                }
+
+                if (recording) {
+                    richText += c;
+                }
+                else {
+                    dispText = dispText + richText + c;
+                    richText = "";
+                    textArea.text = dispText;
+                    if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                }
             }
 
             yield return new WaitForSeconds(talkManager.delayTime);

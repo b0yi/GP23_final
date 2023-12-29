@@ -44,18 +44,21 @@ public class TreeSubtitle : Subtitle
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
         player.Lock();
-        player.Freeze();
+        // player.Freeze();
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
         textArea.text = "";
+        
+        string dispText = "";
+        string richText = "";
+        bool recording = false;
 
         yield return FadeCanvasGroup(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++)
         {
-            string dispText = "";
-
+            dispText = "";
             textArea.text = "";
             isEnterDown = false;
             StartCoroutine(WaitForSkip());
@@ -68,9 +71,26 @@ public class TreeSubtitle : Subtitle
                     break;
                 }
 
-                dispText += c;
-                textArea.text = dispText;
-                yield return new WaitForSeconds(showCharTime);
+                if (c == '<') {
+                    recording = true;
+                    richText += c;
+                    continue;
+                }
+                else if (c == '>') {
+                    recording = false;
+                    richText += c;
+                    continue;
+                }
+
+                if (recording) {
+                    richText += c;
+                }
+                else {
+                    dispText = dispText + richText + c;
+                    richText = "";
+                    textArea.text = dispText;
+                    if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                }
             }
 
             // yield return new WaitForSeconds(talkManager.delayTime);
@@ -84,6 +104,6 @@ public class TreeSubtitle : Subtitle
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;
         player.Unlock();
-        player.Unfreeze();
+        // player.Unfreeze();
     }
 }
