@@ -34,6 +34,9 @@ public class FishSubtitle : Subtitle
 
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
+        if (_stageManager && _stageManager.stage == Stage.ToWaterPlanet) {
+            _stageManager.UpdateStage();
+        }
         player.Lock();
         player.Freeze();
 
@@ -82,7 +85,9 @@ public class FishSubtitle : Subtitle
         player.Unlock();
         player.Unfreeze();
         gameObject.GetComponent<Fish>().Unlock();
-        _stageManager.UpdateStage();
+        if (_stageManager && _stageManager.stage == Stage.Water) {
+            _stageManager.UpdateStage();
+        }
 
     }
 }
