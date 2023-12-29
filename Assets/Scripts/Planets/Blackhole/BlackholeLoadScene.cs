@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BlackholeLoadScene : MonoBehaviour
 {
+    public UIWhite white;
     private UIManager _uIManager;
     public PlayerController_new player;
     bool loadscene=false;
@@ -30,8 +31,12 @@ public class BlackholeLoadScene : MonoBehaviour
         if(endscene)
         {
             _loadendscenetime-=Time.deltaTime;
+            white.Trigger();
             if(_loadendscenetime<0)
+            {
                 _uIManager.LoadEndScene();
+            }
+                
         }
     }
 
