@@ -142403,13 +142403,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-<<<<<<< HEAD
     rgba: 4293454056
   m_fontColor: {r: 0.908734, g: 0.908734, b: 0.908734, a: 1}
-=======
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
->>>>>>> refs/remotes/origin/main
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

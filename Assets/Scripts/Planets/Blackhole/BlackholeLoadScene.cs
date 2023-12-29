@@ -8,8 +8,8 @@ public class BlackholeLoadScene : MonoBehaviour
     public PlayerController_new player;
     bool loadscene=false;
     bool endscene=false;
-    float _loadscenetime = 2.0f;
-    float _loadendscenetime = 1.0f;
+    public float _loadscenetime = 2.0f;
+    public float _loadendscenetime = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
