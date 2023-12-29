@@ -123,6 +123,11 @@ a memory concerning...... the day of defeat.</i>",
         },
     };
 
+    public List<string> brokenPlanetSubtitle = new List<string>() {
+        "<i>Lost the extraenergy fluid, the planet collapsed.</i>",
+        "<i>It won't be long before all the planets here meet the same fate.</i>",
+    };
+
     // Start is called before the first frame update
     void Start()
     {
