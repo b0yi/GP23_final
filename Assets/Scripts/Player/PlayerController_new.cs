@@ -278,8 +278,10 @@ public class PlayerController_new : MonoBehaviour
 
     void Update()
     {
-
-        HandleTask();
+        if (_stageManager != null)
+        {
+            HandleTask();
+        }
 
 
 
