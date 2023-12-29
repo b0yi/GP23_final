@@ -306,6 +306,7 @@ public class PlayerController_new : MonoBehaviour
         //     _uIManager.LoadPlayScene();
         //     _isLoading = true;
         // }
+        _animator.SetBool("ground", isGrounded);
 
     }
 
