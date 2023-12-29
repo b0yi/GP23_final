@@ -70,8 +70,8 @@ public class PlayerController_end : MonoBehaviour
 
     void Update()
     {
-                   horizontal = Input.GetAxisRaw("Horizontal");
-            up = Input.GetKey(KeyCode.W);
+        horizontal = Input.GetAxisRaw("Horizontal");
+        up = Input.GetKey(KeyCode.W);
 
         if (planet)
         {
