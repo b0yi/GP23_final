@@ -67,29 +67,60 @@ public class Subtitle : MonoBehaviour
         canvas.isTalking = true;
         textArea.text = "";
 
+        string dispText = "";
+        string richText = "";
+        bool recording = false;
+
         yield return FadeCanvasGroup(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++)
         {
-            string[] nameAndWord = subtitles[i].Split(": ");
-            string dispText = nameAndWord[0] + ": ";
+            string[] nameAndWord;
+            string word = "";
+
+            if (subtitles[i][3] == '-') {
+                nameAndWord = subtitles[i].Split(": ");
+                dispText = nameAndWord[0] + ": ";
+                word = nameAndWord[1];
+            }
+            else {
+                dispText = "";
+                word = subtitles[i];
+            }
 
             textArea.text = "";
             isEnterDown = false;
             StartCoroutine(WaitForSkip());
 
-            foreach (char c in nameAndWord[1])
+            foreach (char c in word)
             {
                 if (isEnterDown) {
                     dispText = subtitles[i];
                     textArea.text = dispText;
                     break;
                 }
+                
+                if (c == '<') {
+                    recording = true;
+                    richText += c;
+                    continue;
+                }
+                else if (c == '>') {
+                    recording = false;
+                    richText += c;
+                    continue;
+                }
 
-                dispText += c;
-                textArea.text = dispText;
-                yield return new WaitForSeconds(showCharTime);
+                if (recording) {
+                    richText += c;
+                }
+                else {
+                    dispText = dispText + richText + c;
+                    richText = "";
+                    textArea.text = dispText;
+                    if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                }
             }
 
             // yield return new WaitForSeconds(talkManager.delayTime);
