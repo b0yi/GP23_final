@@ -16,6 +16,7 @@ public class RockEnemy : EnemyController
     [DisplayOnly] public bool inAttackRange = false;
     [DisplayOnly] public bool Stop = false;
     [DisplayOnly] public bool WallDetected = false;
+    [DisplayOnly] public bool playerDetected = false;
 
     private int idleState;
     private int walkState;
@@ -174,7 +175,7 @@ public class RockEnemy : EnemyController
         if (player.GetComponent<PlayerController_new>().isHurt == true)
             isPlayerInEnemyRange = false;
 
-        if (IsPlayerInRange(detectRange) && player.GetComponent<PlayerController_new>().isHurt == false)
+        if (playerDetected && player.GetComponent<PlayerController_new>().isHurt == false)
         //if (IsPlayerInRange(detectRange))
         {
             //print("In detect range");
@@ -239,6 +240,7 @@ public class RockEnemy : EnemyController
         if (other.name == "Player")
         {
             animCA.SetBool("playerdetect", true);
+            playerDetected=true;
         }
     }
 
@@ -248,6 +250,7 @@ public class RockEnemy : EnemyController
         if (other.name == "Player")
         {
             animCA.SetBool("playerdetect", false);
+            playerDetected=false;
         }
     }
 }
