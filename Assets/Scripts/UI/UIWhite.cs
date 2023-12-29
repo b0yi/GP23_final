@@ -19,16 +19,16 @@ public class UIWhite : MonoBehaviour
     void Update()
     {
         // >DELETE
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Trigger();
-        }
+        // if (Input.GetKeyDown(KeyCode.M))
+        // {
+        //     Trigger();
+        // }
         // <DELETE
         if (enable)
         {
-            alpha += Time.deltaTime;
+            alpha += Time.deltaTime*0.5f;
         }
-        image.color = new Color(1, 1, 1, alpha);
+        image.color = new Color(0, 0, 0, alpha);
     }
 
     public void Trigger()
