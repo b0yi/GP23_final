@@ -70,79 +70,82 @@ public class TriggerExplosion : Subtitle
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
         player.Lock();
-        // player.Freeze();
+        if (!talkManager.dragonCrystalBool) {
+            talkManager.dragonCrystalBool = true;
+            // player.Freeze();
 
-        canvas.isLockingSubtitle = true;
-        canvas.isTalking = true;
-        textArea.text = "";
-
-        string dispText = "";
-        string richText = "";
-        bool recording = false;
-
-        yield return FadeCanvasGroup(0, 1f, 1f);
-
-        float showCharTime = 1f / talkManager.charPerSec;
-        for (int i = 0; i < subtitles.Count; i++)
-        {
-            string[] nameAndWord;
-            string word = "";
-
-            if (subtitles[i][2] == '-') {
-                nameAndWord = subtitles[i].Split(": ");
-                dispText = nameAndWord[0] + ": ";
-                word = nameAndWord[1];
-            }
-            else {
-                dispText = "";
-                word = subtitles[i];
-            }
-
+            canvas.isLockingSubtitle = true;
+            canvas.isTalking = true;
             textArea.text = "";
-            isEnterDown = false;
-            StartCoroutine(WaitForSkip());
 
-            foreach (char c in word)
+            string dispText = "";
+            string richText = "";
+            bool recording = false;
+
+            yield return FadeCanvasGroup(0, 1f, 1f);
+
+            float showCharTime = 1f / talkManager.charPerSec;
+            for (int i = 0; i < subtitles.Count; i++)
             {
-                if (isEnterDown) {
-                    dispText = subtitles[i];
-                    textArea.text = dispText;
-                    break;
-                }
-                
-                if (c == '<') {
-                    recording = true;
-                    richText += c;
-                    continue;
-                }
-                else if (c == '>') {
-                    recording = false;
-                    richText += c;
-                    continue;
-                }
+                string[] nameAndWord;
+                string word = "";
 
-                if (recording) {
-                    richText += c;
+                if (subtitles[i][2] == '-') {
+                    nameAndWord = subtitles[i].Split(": ");
+                    dispText = nameAndWord[0] + ": ";
+                    word = nameAndWord[1];
                 }
                 else {
-                    dispText = dispText + richText + c;
-                    richText = "";
-                    textArea.text = dispText;
-                    if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                    dispText = "";
+                    word = subtitles[i];
                 }
+
+                textArea.text = "";
+                isEnterDown = false;
+                StartCoroutine(WaitForSkip());
+
+                foreach (char c in word)
+                {
+                    if (isEnterDown) {
+                        dispText = subtitles[i];
+                        textArea.text = dispText;
+                        break;
+                    }
+                    
+                    if (c == '<') {
+                        recording = true;
+                        richText += c;
+                        continue;
+                    }
+                    else if (c == '>') {
+                        recording = false;
+                        richText += c;
+                        continue;
+                    }
+
+                    if (recording) {
+                        richText += c;
+                    }
+                    else {
+                        dispText = dispText + richText + c;
+                        richText = "";
+                        textArea.text = dispText;
+                        if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                    }
+                }
+                
+                yield return null;
+                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+                yield return null;
             }
-            
-            yield return null;
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
-            yield return null;
+
+            yield return FadeCanvasGroup(1f, 0, 1f);
+
+            canvas.isTalking = false;
+            canvas.isLockingSubtitle = false;
+            // player.Unlock();
+            // player.Unfreeze();
         }
-
-        yield return FadeCanvasGroup(1f, 0, 1f);
-
-        canvas.isTalking = false;
-        canvas.isLockingSubtitle = false;
-        // player.Unlock();
-        // player.Unfreeze();
 
         explode = true;
         delayExplosionTimer = delayExplosionTime;
