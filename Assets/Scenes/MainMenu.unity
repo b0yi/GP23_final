@@ -20259,7 +20259,6 @@ GameObject:
   - component: {fileID: 233331113}
   - component: {fileID: 233331116}
   - component: {fileID: 233331115}
-  - component: {fileID: 233331114}
   m_Layer: 3
   m_Name: Stele
   m_TagString: Untagged
@@ -20283,18 +20282,6 @@ Transform:
   - {fileID: 818522627}
   m_Father: {fileID: 743655182}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
---- !u!114 &233331114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 233331112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7da531720b74312409fe475a1ddb2ece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &233331115
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -46045,9 +46032,14 @@ MonoBehaviour:
   charPerSec: 20
   delayTime: 1.3
   treeBools: 00000000
+  brokenPlanetBool: 0
+  sunBool: 0
   brokenPlanetSubtitle:
   - <i>Lost the extraenergy fluid, the planet collapsed.</i>
   - <i>It won't be long before all the planets here meet the same fate.</i>
+  sunSubtitle:
+  - A burning planet.
+  - Hope Venus will not be.
 --- !u!1 &431567609
 GameObject:
   m_ObjectHideFlags: 0
