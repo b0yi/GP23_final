@@ -16,6 +16,7 @@ public class TalkManager : MonoBehaviour
     };
     public bool brokenPlanetBool = false;
     public bool sunBool = false;
+    public bool dragonCrystalBool = false;
 
     public List<List<string>> subtitles = new List<List<string>>() {
         // stele - 0
