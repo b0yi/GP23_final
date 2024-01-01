@@ -43,7 +43,6 @@ public class UITask : MonoBehaviour
 
     void Update()
     {
-        print(duration);
         if (t >= 1f) {
             // complete
             if (toPosition == cornerPosition) {
@@ -68,7 +67,6 @@ public class UITask : MonoBehaviour
         if (show)
             return false;
 
-        print("Show()");
         show = true;
         container.localScale = new Vector3(0f, 0f, 1f);
         // 立即置中
@@ -83,7 +81,6 @@ public class UITask : MonoBehaviour
     }
 
     private void MoveCorner() {
-        print("MoveCorner()");
         fromPosition = centerPosition;
         toPosition = cornerPosition;
         duration = moveCornerTime;
@@ -94,7 +91,6 @@ public class UITask : MonoBehaviour
         if (!show)
             return false;
         
-        print("Hide()");
         show = false;
         fromPosition = cornerPosition;
         toPosition = hidePosition;

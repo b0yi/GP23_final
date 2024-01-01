@@ -9,8 +9,10 @@ public class WaterForce : MonoBehaviour
     // [DisplayOnly] public bool isPlayerInWater;
     public float linearDragInWater;
     public float angularDragInWater;
+    
+    public GameObject whaleItemUI;
 
-    public Whale whale;
+    public Whale[] whales;
 
     [DisplayOnly] public float linearDrag;
     [DisplayOnly] public float angularDrag;
@@ -30,6 +32,7 @@ public class WaterForce : MonoBehaviour
     {
         // isPlayerInWater = false;
         // idleTimer = idleTime;
+        whaleItemUI.SetActive(false);
     }
 
     void Update()
@@ -60,6 +63,7 @@ public class WaterForce : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
+            whaleItemUI.SetActive(true);
             // isPlayerInWater = true;
             // _playerTF = collider.transform;
             _playerRB = collider.GetComponent<Rigidbody2D>();
@@ -74,8 +78,11 @@ public class WaterForce : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
+            whaleItemUI.SetActive(false);
             // isPlayerInWater = false;
-            whale.Unattack();
+            for (int i = 0; i < whales.Length; ++i) {
+                whales[i].Unattack();
+            }
             _playerRB.drag = linearDrag;
             _playerRB.angularDrag = angularDrag;
 

@@ -141,7 +141,11 @@ public class PlayerController_new : MonoBehaviour
 
         _uIManager = m.GetComponent<UIManager>();
         _stageManager = m.GetComponent<StageManager>();
-
+        if (_stageManager.stage > Stage.LearningLaunch) {
+            canMove = true;
+            canJump = true;
+            canLaunch = true;
+        }
 
         isHurt = false;
         _isLoading = false;
