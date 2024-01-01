@@ -31,6 +31,9 @@ public class PlayerController_new : MonoBehaviour
     public Light2D  playerLight;
 
     [Header("鎖定")]
+    public bool canMove = false;
+    public bool canJump = false;
+    public bool canLaunch = false;
     [DisplayOnly] public bool isLocked;
     [DisplayOnly] public bool isFreezed;
 
@@ -90,8 +93,11 @@ public class PlayerController_new : MonoBehaviour
     private bool _isLoading; // used when dead
     private float _landingClock;
 
-    [Header("測試 (之後刪除)")]
+    [Header("Task")]
     public UITask task;
+    public float learningMoveDelay = 5f;
+    public float learningJumpDelay = 5f;
+    public float LearningLaunchDelay = 5f;
 
     public bool inWaterPlanet;
 
@@ -128,7 +134,7 @@ public class PlayerController_new : MonoBehaviour
         transformTimer = transformTime;
         _animator = GetComponent<Animator>();
         isGrounded = false;
-        playerState = PlayerState.Untransform;
+        playerState = PlayerState.OnPlanet;
 
         // UIManager
         GameObject m = GameObject.FindWithTag("UIManager");
@@ -152,7 +158,19 @@ public class PlayerController_new : MonoBehaviour
             speedupParticleSystem.Stop();
         }
 
+        task.AfterShow += afterShowTask;
+    }
 
+    void afterShowTask() {
+        if (_stageManager.stage == Stage.LearningMove) {
+            canMove = true;
+        }
+        if (_stageManager.stage == Stage.LearningJump) {
+            canJump = true;
+        }
+        if (_stageManager.stage == Stage.LearningLaunch) {
+            canLaunch = true;
+        }
     }
 
     void ResetPosition()
@@ -205,72 +223,70 @@ public class PlayerController_new : MonoBehaviour
         // }
 
         if (_stageManager.stage == Stage.LearningMove) {
-            task.ChangeTitle("MOVE AROUND");
-            task.ChangeContent("Use the A and D keys to move left and right.");
+            
+            if (learningMoveDelay <= 0f) {
+                task.ChangeTitle("MOVE AROUND");
+                task.ChangeContent("Use the A and D keys to move left and right.");
 
-            if (!task.IsShowed()) {
                 task.Show();
+            }
+            else {
+                learningMoveDelay -= Time.deltaTime;
             }
         }
 
         if (_stageManager.stage == Stage.LearningJump) {
-            task.ChangeTitle("JUMP");
-            task.ChangeContent("Quickly tap the 'W' key to jump.");
 
-            if (!task.IsShowed()) {
+            if (learningJumpDelay <= 0f) {
+                task.ChangeTitle("JUMP");
+                task.ChangeContent("Quickly tap the 'W' key to jump.");
+
                 task.Show();
+            }
+            else {
+                learningJumpDelay -= Time.deltaTime;
             }
         }
 
         if (_stageManager.stage == Stage.OnOriginPlanet || _stageManager.stage == Stage.Stele) {
-            if (task.IsShowed()) {
-                task.Hide();
-            }
+            task.Hide();
         }
 
         if (_stageManager.stage == Stage.LearningLaunch) {
-            task.ChangeTitle("LAUNCH");
-            task.ChangeContent("Press and hold 'W' to initiate launch.");
-
-            if (!task.IsShowed()) {
+            if (LearningLaunchDelay <= 0f) {
+                task.ChangeTitle("LAUNCH");
+                task.ChangeContent("Press and hold 'W' to initiate launch.");
                 task.Show();
+            }
+            else {
+                LearningLaunchDelay -= Time.deltaTime;
             }
         }
 
         if (_stageManager.stage == Stage.ToCatPlanet) {
-            if (task.IsShowed()) {
-                task.Hide();
-            }
+            task.Hide();
         }
 
         if (_stageManager.stage == Stage.ToMazePlanet) {
             task.ChangeTitle("ENTER THE ABYSS");
             task.ChangeContent("Embark on a journey through the Maze Planet.");
 
-            if (!task.IsShowed()) {
-                task.Show();
-            }
+            task.Show();
         }
 
         if (_stageManager.stage == Stage.Maze) {
-            if (task.IsShowed()) {
-                task.Hide();
-            }
+            task.Hide();
         }
 
         if (_stageManager.stage == Stage.Kitten) {
             task.ChangeTitle("PLAY, KITTY!");
             task.ChangeContent("Play with kittens to summon Cat-111.");
 
-            if (!task.IsShowed()) {
-                task.Show();
-            }
+            task.Show();
         }
 
         if (_stageManager.stage == Stage.Cat) {
-            if (task.IsShowed()) {
-                task.Hide();
-            }
+            task.Hide();
         }
 
 
@@ -314,11 +330,11 @@ public class PlayerController_new : MonoBehaviour
     void FixedUpdate()
     {
 
-        WalkOrNot();
+        if (canMove) WalkOrNot();
 
-        JumpOrNot();
+        if (canJump) JumpOrNot();
 
-        LaunchOrNot();
+        if (canLaunch) LaunchOrNot();
 
         _animator.SetInteger("state", (int)playerState);
 
@@ -344,6 +360,7 @@ public class PlayerController_new : MonoBehaviour
 
 
                 if (_stageManager && _stageManager.stage == Stage.LearningMove) {
+                    task.Hide();
                     _stageManager.UpdateStage();
                 }
             }
@@ -368,6 +385,7 @@ public class PlayerController_new : MonoBehaviour
             isGrounded = false;
 
             if (_stageManager && _stageManager.stage == Stage.LearningJump) {
+                task.Hide();
                 _stageManager.UpdateStage();
             }
 
