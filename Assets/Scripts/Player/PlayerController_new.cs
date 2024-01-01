@@ -90,8 +90,11 @@ public class PlayerController_new : MonoBehaviour
     private bool _isLoading; // used when dead
     private float _landingClock;
 
-    [Header("測試 (之後刪除)")]
+    [Header("Task")]
     public UITask task;
+    public float learningMoveDelay = 2f;
+    public float learningJumpDelay = 2f;
+    public float LearningLaunchDelay = 3f;
 
     public bool inWaterPlanet;
 
@@ -205,20 +208,32 @@ public class PlayerController_new : MonoBehaviour
         // }
 
         if (_stageManager.stage == Stage.LearningMove) {
-            task.ChangeTitle("MOVE AROUND");
-            task.ChangeContent("Use the A and D keys to move left and right.");
+            
+            if (learningMoveDelay <= 0f) {
+                task.ChangeTitle("MOVE AROUND");
+                task.ChangeContent("Use the A and D keys to move left and right.");
 
-            if (!task.IsShowed()) {
-                task.Show();
+                if (!task.IsShowed()) {
+                    task.Show();
+                }
+            }
+            else {
+                learningMoveDelay -= Time.deltaTime;
             }
         }
 
         if (_stageManager.stage == Stage.LearningJump) {
-            task.ChangeTitle("JUMP");
-            task.ChangeContent("Quickly tap the 'W' key to jump.");
 
-            if (!task.IsShowed()) {
-                task.Show();
+            if (learningJumpDelay <= 0f) {
+                task.ChangeTitle("JUMP");
+                task.ChangeContent("Quickly tap the 'W' key to jump.");
+
+                if (!task.IsShowed()) {
+                    task.Show();
+                }
+            }
+            else {
+                learningJumpDelay -= Time.deltaTime;
             }
         }
 
@@ -229,11 +244,15 @@ public class PlayerController_new : MonoBehaviour
         }
 
         if (_stageManager.stage == Stage.LearningLaunch) {
+            if (LearningLaunchDelay <= 0f) {
             task.ChangeTitle("LAUNCH");
             task.ChangeContent("Press and hold 'W' to initiate launch.");
-
-            if (!task.IsShowed()) {
-                task.Show();
+                if (!task.IsShowed()) {
+                    task.Show();
+                }
+            }
+            else {
+                LearningLaunchDelay -= Time.deltaTime;
             }
         }
 
@@ -344,6 +363,7 @@ public class PlayerController_new : MonoBehaviour
 
 
                 if (_stageManager && _stageManager.stage == Stage.LearningMove) {
+                    task.Hide();
                     _stageManager.UpdateStage();
                 }
             }
@@ -368,6 +388,7 @@ public class PlayerController_new : MonoBehaviour
             isGrounded = false;
 
             if (_stageManager && _stageManager.stage == Stage.LearningJump) {
+                task.Hide();
                 _stageManager.UpdateStage();
             }
 
