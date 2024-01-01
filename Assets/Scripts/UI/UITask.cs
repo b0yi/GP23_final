@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UITask : MonoBehaviour
 {
-    public RectTransform container; // 160x60 (x=0, hide; x=-160, hide)
+    public RectTransform container;
     public TextMeshProUGUI title;
     public TextMeshProUGUI content;
 
@@ -17,11 +18,16 @@ public class UITask : MonoBehaviour
 
     public Vector2 centerPosition = new Vector2(0f, 0f);
     public Vector2 cornerPosition = new Vector2(300f, 170f);
-    public Vector2 hidePosition = new Vector2(480f, 170f);
+    public Vector2 hidePosition = new Vector2(500f, 170f);
 
-    private Vector2 position;
-    private float duration;
+    public Vector2 fromPosition;
+    public Vector2 toPosition;
+
+    public float duration;
+    public float t, s;
     public bool show;
+
+    public event Action AfterShow;
 
     void Start()
     {
@@ -30,42 +36,77 @@ public class UITask : MonoBehaviour
         
         // 立即藏起來
         container.anchoredPosition = hidePosition;
-        position = hidePosition;
+        fromPosition = hidePosition;
+        toPosition = hidePosition;
+        t = 1f;
     }
 
     void Update()
     {
-        float t = Time.deltaTime / duration;
-        container.anchoredPosition =  Vector2.Lerp(container.anchoredPosition, position, t);
+        print(duration);
+        if (t >= 1f) {
+            // complete
+            if (toPosition == cornerPosition) {
+                if (AfterShow != null) {
+                    AfterShow();
+                }
+            }
+        }
 
-        float s = Time.deltaTime / showTime;
-        container.localScale = new Vector3(Mathf.Lerp(container.localScale.x, 1f, showTime), Mathf.Lerp(container.localScale.x, 1f, showTime), 1f);
+        t += Time.deltaTime / duration;
+        container.anchoredPosition =  Vector2.Lerp(fromPosition, toPosition, t);
+        
+
+        if (s >= 1f) {
+            // complete
+        }
+        s += Time.deltaTime / showTime;
+        container.localScale = new Vector3(Mathf.Lerp(0f, 1f, s), Mathf.Lerp(0f, 1f, s), 1f);
     }
 
-    public void Show() {
+    public bool Show() {
+        if (show)
+            return false;
+
+        print("Show()");
         show = true;
         container.localScale = new Vector3(0f, 0f, 1f);
         // 立即置中
         container.anchoredPosition = centerPosition;
-        position = centerPosition;
+        fromPosition = centerPosition;
+        toPosition = centerPosition;
+        t = 1f;
+        s = 0f;
         Invoke("MoveCorner", centerTime);
+
+        return true;
     }
 
     private void MoveCorner() {
-        print("corner");
-        position = cornerPosition;
+        print("MoveCorner()");
+        fromPosition = centerPosition;
+        toPosition = cornerPosition;
         duration = moveCornerTime;
+        t = 0f;
     }
 
-    public void Hide() {
+    public bool Hide() {
+        if (!show)
+            return false;
+        
+        print("Hide()");
         show = false;
-        position = hidePosition;
+        fromPosition = cornerPosition;
+        toPosition = hidePosition;
         duration = hideTime;
+        t = 0f;
+
+        return true;
     }
 
-    public bool IsShowed() {
-        return show;
-    }
+    // public bool IsShowed() {
+    //     return show;
+    // }
 
     public void ChangeTitle(string newTitle) {
         title.text = newTitle;
