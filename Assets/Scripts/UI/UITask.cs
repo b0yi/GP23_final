@@ -16,7 +16,7 @@ public class UITask : MonoBehaviour
     public float moveCornerTime;
     public float hideTime;
 
-    public Vector2 centerPosition = new Vector2(0f, 0f);
+    public Vector2 centerPosition = new Vector2(0f, 30f);
     public Vector2 cornerPosition = new Vector2(300f, 170f);
     public Vector2 hidePosition = new Vector2(500f, 170f);
 
