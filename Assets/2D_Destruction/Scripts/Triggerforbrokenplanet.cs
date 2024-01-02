@@ -5,6 +5,7 @@ using UnityEngine;
 public class Triggerforbrokenplanet : MonoBehaviour
 {
     public Explodable explodable;
+    public Treebroken tree;
     //public PlayerController_new playerController;
     [DisplayOnly] public float delayExplosionTimer;
     [DisplayOnly] bool explode;
@@ -33,15 +34,18 @@ public class Triggerforbrokenplanet : MonoBehaviour
             }
 
         }
+        //print(tree.FruitisEaten());
+        if(tree.FruitisEaten())
+            explode=true;
     }
 
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && !explode)
-        {
-            explode = true;
-            delayExplosionTimer = delayExplosionTime;
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.CompareTag("Player") && !explode)
+    //     {
+    //         explode = true;
+    //         delayExplosionTimer = delayExplosionTime;
+    //     }
+    // }
 }
