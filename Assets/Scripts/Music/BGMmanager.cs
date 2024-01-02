@@ -11,8 +11,12 @@ public class BGMmanager : MonoBehaviour
     public AudioClip _AudioClipWater;
     public AudioClip _AudioClipMaze;
     public AudioClip _AudioClipDragon;
-    public float fadeOutTime = 3f;
-
+    public float fadeOutTime = 0.8f;
+    public float VolumeO = 0.5f;
+    public float VolumeWater = 1f;
+    public float VolumeCat = 0.5f;
+    public float VolumeMaze = 0.5f;
+    public float Volumedragon = 0.5f;
     //[DisplayOnly] public bool boolForO = true;
     //[DisplayOnly] public bool boolForCat = false;
 
@@ -20,7 +24,7 @@ public class BGMmanager : MonoBehaviour
 	{
 
 		_AudioSource.clip = _AudioClipO;
-
+        _AudioSource.volume=VolumeO;
 		_AudioSource.Play();
 	
 	}
@@ -113,7 +117,7 @@ public class BGMmanager : MonoBehaviour
         float timeelapsed=0f;
         while(timeelapsed<fadeOutTime)
         {
-            _AudioSource.volume = Mathf.Lerp(1, 0, timeelapsed/fadeOutTime);
+            _AudioSource.volume = Mathf.Lerp(VolumeO, 0, timeelapsed/fadeOutTime);
             //print(_AudioSource.volume);
             timeelapsed+=Time.deltaTime;
 
@@ -124,7 +128,7 @@ public class BGMmanager : MonoBehaviour
         {
             _AudioSource.clip = _AudioClipCat;
             _AudioSource.Play();
-            _AudioSource.volume = Mathf.Lerp(0, 1, timeelapsed/fadeOutTime);
+            _AudioSource.volume = Mathf.Lerp(0, VolumeCat, timeelapsed/fadeOutTime);
             //print(_AudioSource.volume);
             timeelapsed+=Time.deltaTime;
 
@@ -138,7 +142,7 @@ public class BGMmanager : MonoBehaviour
         float timeelapsed=0f;
         while(timeelapsed<fadeOutTime)
         {
-            _AudioSource.volume = Mathf.Lerp(1, 0, timeelapsed/fadeOutTime);
+            _AudioSource.volume = Mathf.Lerp(VolumeO, 0, timeelapsed/fadeOutTime);
             //print(_AudioSource.volume);
             timeelapsed+=Time.deltaTime;
 
@@ -149,7 +153,7 @@ public class BGMmanager : MonoBehaviour
         {
             _AudioSource.clip = _AudioClipWater;
             _AudioSource.Play();
-            _AudioSource.volume = Mathf.Lerp(0, 1, timeelapsed/fadeOutTime);
+            _AudioSource.volume = Mathf.Lerp(0, VolumeWater, timeelapsed/fadeOutTime);
             //print(_AudioSource.volume);
             timeelapsed+=Time.deltaTime;
 
@@ -163,7 +167,7 @@ public class BGMmanager : MonoBehaviour
         float timeelapsed=0f;
         while(timeelapsed<fadeOutTime)
         {
-            _AudioSource.volume = Mathf.Lerp(1, 0, timeelapsed/fadeOutTime);
+            _AudioSource.volume = Mathf.Lerp(VolumeO, 0, timeelapsed/fadeOutTime);
             //print(_AudioSource.volume);
             timeelapsed+=Time.deltaTime;
 
@@ -174,7 +178,7 @@ public class BGMmanager : MonoBehaviour
         {
             _AudioSource.clip = _AudioClipMaze;
             _AudioSource.Play();
-            _AudioSource.volume = Mathf.Lerp(0, 1, timeelapsed/fadeOutTime);
+            _AudioSource.volume = Mathf.Lerp(0, VolumeMaze, timeelapsed/fadeOutTime);
             //print(_AudioSource.volume);
             timeelapsed+=Time.deltaTime;
 
@@ -184,22 +188,22 @@ public class BGMmanager : MonoBehaviour
 
     public IEnumerator FadeOutO()
     {
-        float timetofade=2f;
+        //float timetofade=2f;
         float timeelapsed=0f;
-        while(timeelapsed<timetofade)
+        while(timeelapsed<fadeOutTime)
         {
-            _AudioSource.volume = Mathf.Lerp(1, 0, timeelapsed/timetofade);
+            _AudioSource.volume = Mathf.Lerp(0.5f, 0, timeelapsed/fadeOutTime);
             //print(_AudioSource.volume);
             timeelapsed+=Time.deltaTime;
 
             yield return null;
         }
         timeelapsed=0f;
-        while(timeelapsed<timetofade)
+        while(timeelapsed<fadeOutTime)
         {
             _AudioSource.clip = _AudioClipO;
             _AudioSource.Play();
-            _AudioSource.volume = Mathf.Lerp(0, 1, timeelapsed/timetofade);
+            _AudioSource.volume = Mathf.Lerp(0, VolumeO, timeelapsed/fadeOutTime);
             //print(_AudioSource.volume);
             timeelapsed+=Time.deltaTime;
 
