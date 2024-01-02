@@ -6,6 +6,8 @@ TagManager:
   tags:
   - UIManager
   - Fruit
+  - Obstacle
+  - FruitOnBroken
   layers:
   - Default
   - TransparentFX

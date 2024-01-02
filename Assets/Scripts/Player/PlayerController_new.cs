@@ -75,6 +75,8 @@ public class PlayerController_new : MonoBehaviour
     [Header("太空移動")]
     public float driveAcceleration;
     public float turnAcceleration;
+    public float lowestimpactforce=500f;
+    public Vector2 collisionForce;
 
     [Header("鍵盤輸入")]
     [DisplayOnly] public float horizontal;
@@ -90,6 +92,7 @@ public class PlayerController_new : MonoBehaviour
     private StageManager _stageManager;
     private float _gravity;
     private Rigidbody2D _rb;
+    Vector2 v2Velocity;
     private bool _isLoading; // used when dead
     private float _landingClock;
 
@@ -131,6 +134,7 @@ public class PlayerController_new : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        
         transformTimer = transformTime;
         _animator = GetComponent<Animator>();
         isGrounded = false;
@@ -327,7 +331,8 @@ public class PlayerController_new : MonoBehaviour
         //     _isLoading = true;
         // }
         // _animator.SetBool("ground", isGrounded);
-
+        v2Velocity=_rb.velocity; 
+        //print(v2Velocity.magnitude);
     }
 
 
@@ -655,8 +660,22 @@ public class PlayerController_new : MonoBehaviour
                 _stageManager.UpdateStage();
             }
         }
-
-
+        
+        if(other.gameObject.CompareTag("Obstacle"))
+        {
+            collisionForce=ComputeTotalImpulse(other);
+            print(collisionForce);
+            //Vector2 collisionForce = other.impulse / Time.deltaTime;
+            if(collisionForce.magnitude>lowestimpactforce&&(fuel-(collisionForce.magnitude-lowestimpactforce)*0.1f>0))
+            {
+                fuel-=(collisionForce.magnitude-lowestimpactforce)*0.1f;
+            }
+            else if(collisionForce.magnitude>lowestimpactforce&&(fuel-(collisionForce.magnitude-lowestimpactforce)*0.1f<0))
+            {
+                fuel=0.1f;
+                //print("explode");
+            }
+        }
         // if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         // {
         // }
@@ -711,6 +730,19 @@ public class PlayerController_new : MonoBehaviour
         //     fuel += fuelIncrement;
         //     if (fuel > 100f) fuel = 100f;
         // }
+
+        if (other.CompareTag("FruitOnBroken") && fuel < 100f)
+        {
+            //For broken planet
+            Treebroken tree = other.GetComponentInParent<Treebroken>();
+            if (tree != null)
+            {
+                tree.FruitEaten();
+                Destroy(other.gameObject);
+            }
+            fuel += fuelIncrement;
+            if (fuel > 100f) fuel = 100f;
+        }
         if(other.name=="Water Planet")
         {
             inWaterPlanet=true;
@@ -736,6 +768,21 @@ public class PlayerController_new : MonoBehaviour
     public bool inWater()
     {
         return inWaterPlanet;
+    }
+
+    static Vector2 ComputeTotalImpulse(Collision2D collision) 
+    {
+        Vector2 impulse = Vector2.zero;
+
+        int contactCount = collision.contactCount;
+        for(int i = 0; i < contactCount; i++) 
+        {
+            var contact = collision.GetContact(i);
+            impulse += contact.normal * contact.normalImpulse;
+            impulse.x += contact.tangentImpulse * contact.normal.y;
+            impulse.y -= contact.tangentImpulse * contact.normal.x;
+        }
+        return impulse;
     }
 }
 
