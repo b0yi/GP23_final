@@ -49,7 +49,7 @@ public class SunSubtitle : Subtitle
         string richText = "";
         bool recording = false;
 
-        yield return FadeCanvasGroup(0, 1f, 1f);
+        yield return FadeSubtitleCanvas(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++) 
@@ -68,23 +68,26 @@ public class SunSubtitle : Subtitle
                 
                 if (c == '<') {
                     recording = true;
-                    richText += c;
-                    continue;
                 }
                 else if (c == '>') {
                     recording = false;
-                    richText += c;
-                    continue;
                 }
 
                 if (recording) {
                     richText += c;
+                    continue;
                 }
                 else {
-                    dispText = dispText + richText + c;
-                    richText = "";
-                    textArea.text = dispText;
-                    if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                    if (c == '>') {
+                        dispText += richText + c;
+                        richText = "";
+                        textArea.text = dispText;
+                    }
+                    else {
+                        dispText += c;
+                        textArea.text = dispText;
+                        if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                    }
                 }
             }
 
@@ -94,7 +97,7 @@ public class SunSubtitle : Subtitle
             // yield return null;
         }
 
-        yield return FadeCanvasGroup(1f, 0, 1f);
+        yield return FadeSubtitleCanvas(1f, 0, 1f);
 
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;

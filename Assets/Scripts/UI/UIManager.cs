@@ -58,6 +58,8 @@ public class UIManager : MonoBehaviour
 
     }
 
-
+    public void PlayerDead() {
+        
+    }
 
 }
