@@ -13,6 +13,7 @@ public class SunSubtitle : Subtitle
         
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         textArea = canvas.transform.Find("SubtitleText").GetComponent<TextMeshProUGUI>();
+        enterSkipHint = canvas.transform.Find("Images").gameObject;
     }
 
     // Update is called once per frame
@@ -49,6 +50,7 @@ public class SunSubtitle : Subtitle
         string richText = "";
         bool recording = false;
 
+        enterSkipHint.SetActive(false);
         yield return FadeSubtitleCanvas(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
@@ -58,6 +60,7 @@ public class SunSubtitle : Subtitle
             textArea.text = "";
             isEnterDown = false;
             StartCoroutine(WaitForSkip());
+            enterSkipHint.SetActive(false);
 
             foreach (char c in subtitles[i]) {
                 if (isEnterDown) {
