@@ -25,7 +25,7 @@ public class BigCatHint : MonoBehaviour
     {
         if (other.name == "Player") {
             if (!niceValueUI.isFull()) {
-                StartCoroutine(FadeCanvasGroup(0, 1f, 0.5f));
+                StartCoroutine(FadeSubtitleCanvas(0, 1f, 0.5f));
             }
             else {
                 isFinished = true;
@@ -38,7 +38,7 @@ public class BigCatHint : MonoBehaviour
         if (other.name == "Player") {
             if (niceValueUI.isFull() && !isFinished) {
                 isFinished = true;
-                StartCoroutine(FadeCanvasGroup(1f, 0, 0.5f));
+                StartCoroutine(FadeSubtitleCanvas(1f, 0, 0.5f));
             }
         }
     }
@@ -47,12 +47,12 @@ public class BigCatHint : MonoBehaviour
     {
         if (other.name == "Player") {
             if (!niceValueUI.isFull()) {
-                StartCoroutine(FadeCanvasGroup(1f, 0, 0.5f));
+                StartCoroutine(FadeSubtitleCanvas(1f, 0, 0.5f));
             }
         }
     }
 
-    public IEnumerator FadeCanvasGroup(float startAlpha, float endAlpha, float duration)
+    public IEnumerator FadeSubtitleCanvas(float startAlpha, float endAlpha, float duration)
     {
         float elapsedTime = 0f;
 

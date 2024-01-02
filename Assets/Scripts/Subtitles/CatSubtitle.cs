@@ -56,10 +56,10 @@ public class CatSubtitle : Subtitle
         string richText = "";
         bool recording = false;
 
-        yield return FadeCanvasGroup(0, 1f, 1f);
+        yield return FadeSubtitleCanvas(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
-        for (int i = 0; i < subtitles.Count - 1; i++)
+        for (int i = 0; i < 10; i++)
         {
             string[] nameAndWord;
             string word = "";
@@ -88,23 +88,26 @@ public class CatSubtitle : Subtitle
                 
                 if (c == '<') {
                     recording = true;
-                    richText += c;
-                    continue;
                 }
                 else if (c == '>') {
                     recording = false;
-                    richText += c;
-                    continue;
                 }
 
                 if (recording) {
                     richText += c;
+                    continue;
                 }
                 else {
-                    dispText = dispText + richText + c;
-                    richText = "";
-                    textArea.text = dispText;
-                    if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                    if (c == '>') {
+                        dispText += richText + c;
+                        richText = "";
+                        textArea.text = dispText;
+                    }
+                    else {
+                        dispText += c;
+                        textArea.text = dispText;
+                        if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                    }
                 }
             }
 
@@ -115,49 +118,67 @@ public class CatSubtitle : Subtitle
         }
 
         preview.PlayWaterPlanetPreview();
-        StartCoroutine(FadeCanvasGroup(1f, 0, 1f));
         yield return new WaitForSeconds(3f);
 
-        dispText = "";
-        textArea.text = "";
-        yield return FadeCanvasGroup(0, 1f, 1f);
+        for (int i = 10; i < subtitles.Count; i++)
+        {
+            string[] nameAndWord;
+            string word = "";
 
-        isEnterDown = false;
-        StartCoroutine(WaitForSkip());
-        foreach (char c in subtitles[subtitles.Count - 1]) {
-            if (isEnterDown) {
-                dispText = subtitles[subtitles.Count - 1];
-                textArea.text = dispText;
-                break;
-            }
-            
-            if (c == '<') {
-                recording = true;
-                richText += c;
-                continue;
-            }
-            else if (c == '>') {
-                recording = false;
-                richText += c;
-                continue;
-            }
-
-            if (recording) {
-                richText += c;
+            if (subtitles[i][7] == ':') {
+                nameAndWord = subtitles[i].Split(": ");
+                dispText = nameAndWord[0] + ": ";
+                word = nameAndWord[1];
             }
             else {
-                dispText = dispText + richText + c;
-                richText = "";
-                textArea.text = dispText;
-                if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                dispText = "";
+                word = subtitles[i];
             }
+
+            textArea.text = "";
+            isEnterDown = false;
+            StartCoroutine(WaitForSkip());
+
+            foreach (char c in word)
+            {
+                if (isEnterDown) {
+                    dispText = subtitles[i];
+                    textArea.text = dispText;
+                    break;
+                }
+                
+                if (c == '<') {
+                    recording = true;
+                }
+                else if (c == '>') {
+                    recording = false;
+                }
+
+                if (recording) {
+                    richText += c;
+                    continue;
+                }
+                else {
+                    if (c == '>') {
+                        dispText += richText + c;
+                        richText = "";
+                        textArea.text = dispText;
+                    }
+                    else {
+                        dispText += c;
+                        textArea.text = dispText;
+                        if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                    }
+                }
+            }
+
+            // yield return new WaitForSeconds(talkManager.delayTime);
+            yield return null;
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+            yield return null;
         }
 
-        yield return null;
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
-        yield return null;
-
-        yield return FadeCanvasGroup(1f, 0, 1f);
+        yield return FadeSubtitleCanvas(1f, 0, 1f);
 
         canvas.isTalking = false;
         canvas.isLockingSubtitle = false;
