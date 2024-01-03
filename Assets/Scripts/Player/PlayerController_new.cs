@@ -87,6 +87,7 @@ public class PlayerController_new : MonoBehaviour
     public Transform rezMaze;
     public Transform rezDragon;
 
+    public Animator collideanimator;
     private Animator _animator;
     private UIManager _uIManager;
     private StageManager _stageManager;
@@ -332,6 +333,7 @@ public class PlayerController_new : MonoBehaviour
         // }
         // _animator.SetBool("ground", isGrounded);
         v2Velocity=_rb.velocity; 
+        //collideanimator.ResetTrigger("Collided");
         //print(v2Velocity.magnitude);
     }
 
@@ -663,18 +665,24 @@ public class PlayerController_new : MonoBehaviour
         
         if(other.gameObject.CompareTag("Obstacle"))
         {
+            //animation["Collide"].wrapMode = WrapMode.Once;
+            //animation.Play("Collide");
+            
             collisionForce=ComputeTotalImpulse(other);
             print(collisionForce);
             //Vector2 collisionForce = other.impulse / Time.deltaTime;
             if(collisionForce.magnitude>lowestimpactforce&&(fuel-(collisionForce.magnitude-lowestimpactforce)*0.1f>0))
             {
                 fuel-=(collisionForce.magnitude-lowestimpactforce)*0.1f;
+                collideanimator.SetTrigger("Collided");
             }
             else if(collisionForce.magnitude>lowestimpactforce&&(fuel-(collisionForce.magnitude-lowestimpactforce)*0.1f<0))
             {
                 fuel=0.1f;
+                collideanimator.SetTrigger("Collided");
                 //print("explode");
             }
+            //collideanimator.ResetTrigger("Collided");
         }
         // if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         // {
