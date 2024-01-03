@@ -51,15 +51,11 @@ public class CatEnemy : EnemyController
         }
 
         DetectPlayer();
-
+        
         anim.SetBool("isPlayerInRange", isPlayerInEnemyRange);
         anim.SetBool("jump", boolForJumpAnim);
         if (boolForJumpAnim) {
             boolForJumpAnim = !boolForJumpAnim;
-        }
-
-        if (animState.fullPathHash != jumpState) {
-            isPushed = false;
         }
     }
 
@@ -91,7 +87,7 @@ public class CatEnemy : EnemyController
 
     protected override void DetectPlayer() {
         bool inDetectRange = IsPlayerInRange(detectRange);
-        if (inDetectRange || chasePlayer) {
+        if (!isPushed && (inDetectRange || chasePlayer)) {
             isPlayerInEnemyRange = true;
             if (inDetectRange) {
                 chasePlayer = false;
@@ -125,29 +121,27 @@ public class CatEnemy : EnemyController
                 if (!isPushed) {
                     isPushed = true;
                     // Knock back player
-                    // Vector2 direct = player.transform.position - planet.transform.position;
-                    // Vector3 knockback = direction < 0 ? new Vector3(direct.y, -direct.x, 0) : new Vector3(-direct.y, direct.x, 0);
-                    // player.transform.position = player.transform.position - knockback.normalized * 8f;
-                    // 計算垂直的向量，同時考慮enemy的direction
-                    Vector2 force = (transform.right * direction * 2 + transform.up).normalized * pushforce;
-                    player.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
+                    Vector2 direct = player.transform.position - planet.transform.position;
+                    Vector3 knockback = direction < 0 ? new Vector3(direct.y, -direct.x, 0) : new Vector3(-direct.y, direct.x, 0);
+                    player.transform.position = player.transform.position - knockback.normalized * 8f;
                     
                     GameObject catLove = Instantiate(loveParticle, transform, false);
                     catLove.transform.parent = transform;
                     GameObject playerLove = Instantiate(loveParticle, other.transform, false);
                     playerLove.transform.localPosition = new Vector3(0f, 1.5f, 0f);
                     niceValueUI.Increase();
+                    gameObject.layer = 21; // CatTouched
 
-                    float rand = Random.value;
-                    if (rand <= 1f/3f) {
-                        audioSource.PlayOneShot(SE1);
-                    }
-                    else if (rand <= 2f/3f) {
-                        audioSource.PlayOneShot(SE2);
-                    }
-                    else {
-                        audioSource.PlayOneShot(SE3);
-                    }
+                    // float rand = Random.value;
+                    // if (rand <= 1f/3f) {
+                    //     audioSource.PlayOneShot(SE1);
+                    // }
+                    // else if (rand <= 2f/3f) {
+                    //     audioSource.PlayOneShot(SE2);
+                    // }
+                    // else {
+                    //     audioSource.PlayOneShot(SE3);
+                    // }
                 }
             }
         }
