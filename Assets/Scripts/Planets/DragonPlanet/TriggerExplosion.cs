@@ -30,6 +30,7 @@ public class TriggerExplosion : Subtitle
         talkManager = GameObject.FindWithTag("UIManager").GetComponent<TalkManager>();
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         textArea = canvas.transform.Find("SubtitleText").GetComponent<TextMeshProUGUI>();
+        enterSkipHint = canvas.transform.Find("Images").gameObject;
     }
 
     private void Update()
@@ -80,70 +81,36 @@ public class TriggerExplosion : Subtitle
         string richText = "";
         bool recording = false;
 
+        enterSkipHint.SetActive(false);
         yield return FadeSubtitleCanvas(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
-            
+        
+        int start = subtitles.Count - 2;
         if (!talkManager.dragonCrystalBool) {
             talkManager.dragonCrystalBool = true;
-
-            for (int i = 0; i < subtitles.Count - 2; i++)
-            {
-                string word = subtitles[i];
-                dispText = "";
-
-                textArea.text = "";
-                isEnterDown = false;
-                StartCoroutine(WaitForSkip());
-
-                foreach (char c in word)
-                {
-                    if (isEnterDown) {
-                        dispText = subtitles[i];
-                        textArea.text = dispText;
-                        break;
-                    }
-                    
-                    if (c == '<') {
-                        recording = true;
-                    }
-                    else if (c == '>') {
-                        recording = false;
-                    }
-
-                    if (recording) {
-                        richText += c;
-                        continue;
-                    }
-                    else {
-                        if (c == '>') {
-                            dispText += richText + c;
-                            richText = "";
-                            textArea.text = dispText;
-                        }
-                        else {
-                            dispText += c;
-                            textArea.text = dispText;
-                            if (c != ' ') yield return new WaitForSeconds(showCharTime);
-                        }
-                    }
-                }
-                
-                yield return null;
-                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
-                yield return null;
-            }
+            start = 0;
         }
 
-        for (int i = subtitles.Count - 2; i < subtitles.Count; i++)
+        for (int i = start; i < subtitles.Count; i++)
         {
-            string[] nameAndWord = subtitles[i].Split(": ");
-            string word = nameAndWord[1];
-            dispText = nameAndWord[0] + ": ";
+            string[] nameAndWord;
+            string word = "";
+
+            if (subtitles[i][1] == '-') {
+                nameAndWord = subtitles[i].Split(": ");
+                dispText = nameAndWord[0] + ": ";
+                word = nameAndWord[1];
+            }
+            else {
+                dispText = "";
+                word = subtitles[i];
+            }
 
             textArea.text = "";
             isEnterDown = false;
             StartCoroutine(WaitForSkip());
+            enterSkipHint.SetActive(false);
 
             foreach (char c in word)
             {
@@ -153,11 +120,33 @@ public class TriggerExplosion : Subtitle
                     break;
                 }
                 
-                dispText += c;
-                textArea.text = dispText;
-                if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                if (c == '<') {
+                    recording = true;
+                }
+                else if (c == '>') {
+                    recording = false;
+                }
+
+                if (recording) {
+                    richText += c;
+                    continue;
+                }
+                else {
+                    if (c == '>') {
+                        dispText += richText + c;
+                        richText = "";
+                        textArea.text = dispText;
+                    }
+                    else {
+                        dispText += c;
+                        textArea.text = dispText;
+                        if (c != ' ') yield return new WaitForSeconds(showCharTime);
+                    }
+                }
             }
             
+            enterSkipHint.SetActive(true);
+            // yield return new WaitForSeconds(talkManager.delayTime);
             yield return null;
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
             yield return null;

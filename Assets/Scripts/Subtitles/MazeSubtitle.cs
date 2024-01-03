@@ -17,6 +17,7 @@ public class MazeSubtitle : Subtitle
         
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         textArea = canvas.transform.Find("SubtitleText").GetComponent<TextMeshProUGUI>();
+        enterSkipHint = canvas.transform.Find("Images").gameObject;
 
         beforeFall = false;
         afterFall = false;
@@ -69,6 +70,7 @@ public class MazeSubtitle : Subtitle
         string richText = "";
         bool recording = false;
 
+        enterSkipHint.SetActive(false);
         yield return FadeSubtitleCanvas(0, 1f, 1f);
 
         float showCharTime = 1f / talkManager.charPerSec;
@@ -78,6 +80,7 @@ public class MazeSubtitle : Subtitle
             textArea.text = "";
             isEnterDown = false;
             StartCoroutine(WaitForSkip());
+            enterSkipHint.SetActive(false);
 
             foreach (char c in subtitles[i]) {
                 if (isEnterDown) {
