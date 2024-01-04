@@ -19,6 +19,7 @@ public class CatEnemy : EnemyController
     [DisplayOnly] public bool isPushed;
 
     public GameObject loveParticle;
+    public GameObject loveParticleLoop;
     public NiceValueUI niceValueUI;
 
     public AudioSource audioSource;
@@ -126,11 +127,11 @@ public class CatEnemy : EnemyController
                     player.transform.position = player.transform.position - knockback.normalized * 8f;
                     
                     GameObject catLove = Instantiate(loveParticle, transform, false);
-                    catLove.transform.parent = transform;
                     GameObject playerLove = Instantiate(loveParticle, other.transform, false);
                     playerLove.transform.localPosition = new Vector3(0f, 1.5f, 0f);
                     niceValueUI.Increase();
                     gameObject.layer = 21; // CatTouched
+                    GameObject catLoveLoop = Instantiate(loveParticleLoop, transform, false);
 
                     // float rand = Random.value;
                     // if (rand <= 1f/3f) {

@@ -24,7 +24,7 @@ public class BrokenPlanetSubtitle : Subtitle
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "BrokenCollider") {
+        if (other.CompareTag("FruitOnBroken")) {
             Talk();
         }
     }
