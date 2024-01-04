@@ -147,7 +147,7 @@ public class PlayerController_new : MonoBehaviour
 
         _uIManager = m.GetComponent<UIManager>();
         _stageManager = m.GetComponent<StageManager>();
-        if (_stageManager.stage > Stage.LearningLaunch) {
+        if (_stageManager == null ||  _stageManager.stage > Stage.LearningLaunch) {
             canMove = true;
             canJump = true;
             canLaunch = true;
@@ -218,6 +218,17 @@ public class PlayerController_new : MonoBehaviour
         transformTimer = transformTime;
         _animator.SetTrigger("transform");
         up = true;
+    }
+    public void ImmediateLaunch() {
+        _rb.velocity = Vector3.zero; 
+        playerState = PlayerState.InSpace;
+        _animator.SetTrigger("transform");
+	Lock();
+	Invoke("ImmediateLaunchDelay", 1);
+    }
+    void ImmediateLaunchDelay() {
+	Unlock();
+        _animator.ResetTrigger("transform");
     }
 
     void HandleTask() {
@@ -735,17 +746,17 @@ public class PlayerController_new : MonoBehaviour
         }
         
 
-        // if (other.CompareTag("Fruit") && fuel < 100f)
-        // {
+        if (other.CompareTag("Fruit") && fuel < 100f)
+        {
         //     Tree tree = other.GetComponentInParent<Tree>();
         //     if (tree != null)
         //     {
         //         tree.FruitEaten();
         //         Destroy(other.gameObject);
         //     }
-        //     fuel += fuelIncrement;
-        //     if (fuel > 100f) fuel = 100f;
-        // }
+             fuel += fuelIncrement;
+             if (fuel > 100f) fuel = 100f;
+        }
 
         if (other.CompareTag("FruitOnBroken") && fuel < 100f)
         {
