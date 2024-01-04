@@ -29,28 +29,30 @@ public class UICat : MonoBehaviour
     }
 
     private void CaculatePosition() {
+        float wThreshold = w/2f*50f;
+        float hThreshold = h/2f*50f;
         Vector2 inScreenPos = Camera.main.WorldToScreenPoint(originPos);
 
-        if (inScreenPos.x > 0 && inScreenPos.x < Screen.width && inScreenPos.y > 0 && inScreenPos.y < Screen.height) {
+        if (inScreenPos.x > wThreshold && inScreenPos.x < Screen.width - wThreshold && inScreenPos.y > hThreshold && inScreenPos.y < Screen.height - hThreshold) {
             transform.SetPositionAndRotation(originPos, originRot);
         }
         else {
             Vector2 newInScreenPos;
 
-            if (inScreenPos.x <= 0) {
-                newInScreenPos.x = w/2f*50f;
+            if (inScreenPos.x <= wThreshold) {
+                newInScreenPos.x = wThreshold;
             }
-            else if (inScreenPos.x >= Screen.width) {
-                newInScreenPos.x = Screen.width - w/2f*50f;
+            else if (inScreenPos.x >= Screen.width - wThreshold) {
+                newInScreenPos.x = Screen.width - wThreshold;
             }
             else {
                 newInScreenPos.x = inScreenPos.x; 
             }
-            if (inScreenPos.y <= 0) {
-                newInScreenPos.y = h/2f*50f;
+            if (inScreenPos.y <= hThreshold) {
+                newInScreenPos.y = hThreshold;
             }
-            else if (inScreenPos.y >= Screen.height) {
-                newInScreenPos.y = Screen.height - h/2f*50f;
+            else if (inScreenPos.y >= Screen.height - hThreshold) {
+                newInScreenPos.y = Screen.height - hThreshold;
             }
             else {
                 newInScreenPos.y = inScreenPos.y;
