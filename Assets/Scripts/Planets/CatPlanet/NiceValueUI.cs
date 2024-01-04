@@ -27,11 +27,10 @@ public class NiceValueUI : MonoBehaviour
     {
         if (isFull()) {
             bigCat.SetActive(true);
-            transform.parent.gameObject.SetActive(false);
-
             if (_stageManager.stage == Stage.Kitten) {
                 _stageManager.UpdateStage();
             }
+            Destroy(transform.parent.gameObject);
         }
     }
 
