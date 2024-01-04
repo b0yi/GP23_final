@@ -140,6 +140,7 @@ public class PlayerController_new : MonoBehaviour
         _animator = GetComponent<Animator>();
         isGrounded = false;
         playerState = PlayerState.OnPlanet;
+        CollideCinemachineshake.iscollided=false;
 
         // UIManager
         GameObject m = GameObject.FindWithTag("UIManager");
@@ -669,17 +670,21 @@ public class PlayerController_new : MonoBehaviour
             //animation.Play("Collide");
             
             collisionForce=ComputeTotalImpulse(other);
-            print(collisionForce);
+            //print(collisionForce);
             //Vector2 collisionForce = other.impulse / Time.deltaTime;
             if(collisionForce.magnitude>lowestimpactforce&&(fuel-(collisionForce.magnitude-lowestimpactforce)*0.1f>0))
             {
                 fuel-=(collisionForce.magnitude-lowestimpactforce)*0.1f;
                 collideanimator.SetTrigger("Collided");
+                
+                CollideCinemachineshake.iscollided=true;
+                //print(CinemachineShake.iscollided);
             }
             else if(collisionForce.magnitude>lowestimpactforce&&(fuel-(collisionForce.magnitude-lowestimpactforce)*0.1f<0))
             {
                 fuel=0.1f;
                 collideanimator.SetTrigger("Collided");
+                CollideCinemachineshake.iscollided=true;
                 //print("explode");
             }
             //collideanimator.ResetTrigger("Collided");
