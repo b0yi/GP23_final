@@ -10,12 +10,16 @@ public class CinemachineShake : MonoBehaviour
     private CinemachineVirtualCamera vcam;
     CinemachineBasicMultiChannelPerlin noisePerlin;
     private float shakeTimer=0.0f;
-    private float elapsedTime=0;
+    private float collideshaketimer=0.0f;
+    private float elapsedTime=0f;
     private float shakeTimerTotal=10f;
+    //public float collideshaketimertotal=1.0f;
     //private float startingIntensity;
     public static bool finalitem=true;
+    public static bool iscollided=false;
     bool isShaking=false;
     bool hasShaken=false;
+    bool starttiming=false;
     // Start is called before the first frame update
 
     void Start()
@@ -33,15 +37,18 @@ public class CinemachineShake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shakeTimer+=Time.deltaTime;
-        //print(shakeTimer);
+        //shakeTimer+=Time.deltaTime;
+        if(starttiming)
+            shakeTimer+=Time.deltaTime;
         if(finalitem==false&&hasShaken==false)
 		{
 			ShakeCamera();
+            starttiming=true;
 		}
         if(shakeTimer>shakeTimerTotal)
         {
             StopShakeCamera();
+            starttiming=false;
         }
         
     }
@@ -57,12 +64,13 @@ public class CinemachineShake : MonoBehaviour
         hasShaken=true;
     }
 
+
     void StopShakeCamera()
     {
         noisePerlin.m_AmplitudeGain=0;
         noisePerlin.m_FrequencyGain=0;
         isShaking=false;
-
+        iscollided=false;
     }
 
     /// <summary>
