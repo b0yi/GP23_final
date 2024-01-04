@@ -25,8 +25,10 @@ public class BlackholeLoadScene : MonoBehaviour
             player.Lock();
             _loadscenetime-= Time.deltaTime;
             //print(_loadscenetime);
-            if(_loadscenetime<0)
-                _uIManager.LoadPlayScene();
+            if(_loadscenetime<0) {
+                // _uIManager.LoadPlayScene();
+                _uIManager.PlayerDead((int)DeadString.blackhold);
+            }
         }
         if(endscene)
         {

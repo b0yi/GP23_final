@@ -155,6 +155,7 @@ public class PlayerController_new : MonoBehaviour
 
         isHurt = false;
         _isLoading = false;
+        _uIManager.isPlayerDead = false;
         // _animator.SetBool("ishurt", isHurt);
 
         ResetPosition();
@@ -603,7 +604,8 @@ public class PlayerController_new : MonoBehaviour
 
                 if (_uIManager && fuel <= 0 && (!_isLoading))
                 {
-                    _uIManager.LoadPlayScene();
+                    // _uIManager.LoadPlayScene();
+                    _uIManager.PlayerDead((int)DeadString.fuel);
                     _isLoading = true;
                 }
             }
@@ -726,7 +728,8 @@ public class PlayerController_new : MonoBehaviour
             if (_uIManager && (!_isLoading))
             {
                 //_uIManager.BackStage();
-                _uIManager.LoadPlayScene();
+                // _uIManager.LoadPlayScene();
+                _uIManager.PlayerDead((int)DeadString.dragon);
                 _isLoading = true;
              }
         }

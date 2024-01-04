@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - FruitOnBroken
   - ObstacleArea
+  - UIPlayerDeadCanvas
   layers:
   - Default
   - TransparentFX

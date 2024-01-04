@@ -38,7 +38,7 @@ public class UIMainMenuFade : MonoBehaviour
     }
 
     public void Fade() {
-        StartCoroutine(FadeCanvas(canvasGroup, Direction.FadeOut, fadingSpeed));
+        StartCoroutine(FadeCanvas(canvasGroup, Direction.FadeIn, fadingSpeed));
     }
 
     public IEnumerator FadeCanvas(CanvasGroup canvasGroup, Direction direction, float duration)
