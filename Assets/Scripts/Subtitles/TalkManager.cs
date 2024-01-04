@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DeadString {
+    fuel = 0,
+    blackhold,
+    sun,
+    fish,
+    rock,
+    dragon,
+}
+
 public class TalkManager : MonoBehaviour
 {
     public int currentSubtitle = 0;
@@ -14,6 +23,7 @@ public class TalkManager : MonoBehaviour
         false, // tree near fish
         false  // tree near maze
     };
+    public bool bornBool = false;
     public bool brokenPlanetBool = false;
     public bool sunBool = false;
     public bool dragonCrystalBool = false;
@@ -135,6 +145,15 @@ public class TalkManager : MonoBehaviour
     public List<string> sunSubtitle = new List<string>() {
         "<color=#B1FDFF>一顆燃燒的星球。</color>",
         "<color=#B1FDFF>你腦中浮現金星的大氣層被點燃的畫面。</color>",
+    };
+
+    public List<string> deadSubtitle = new List<string>() {
+        "沒有了源流體，該怎麼回家......",
+        "黑洞吞沒了一切，也吞沒了你......無一倖免",
+        "太陽的高溫......金星......不......",
+        "「鯨」為天人！鯨魚把金星人吃個精光！",
+        "以卵擊石......在它面前，你僅僅是個卵......",
+        "耶夢加德......不應該是這樣的......",
     };
 
     // Start is called before the first frame update

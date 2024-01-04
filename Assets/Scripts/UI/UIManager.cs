@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
 {
     private AsyncOperation async = null;
 
+    public bool isPlayerDead = false;
+
     void Start()
     {
         // Lock Mouse Here.
@@ -58,8 +60,13 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void PlayerDead() {
-        
-    }
+    public void PlayerDead(int deadString) {
+        if (!isPlayerDead) {
+            isPlayerDead = true;
+            UIPlayerDead uIDead = GameObject.FindWithTag("UIPlayerDeadCanvas").GetComponent<UIPlayerDead>();
+            if (uIDead == null) Debug.LogError("Can't find UIPlayerDead in scene!!!");
 
+            uIDead.FadePlayerDeadCanvas(deadString);
+        }
+    }
 }

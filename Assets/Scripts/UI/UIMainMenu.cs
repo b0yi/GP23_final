@@ -40,12 +40,22 @@ public class UIMainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return)) {
             if (state && !_isLoading) {
                 // fade.Fade();
-                _isLoading = true;
-                uIManager.LoadPlayScene();
+                // _isLoading = true;
+                // uIManager.LoadPlayScene();
+                StartCoroutine(ToPlayScene());
             }
             else {
                 uIManager.QuitGame();
             }
         }
+    }
+
+    private IEnumerator ToPlayScene() {
+        _isLoading = true;
+
+        float waitTime = fade.fadingSpeed;
+        fade.Fade();
+        yield return new WaitForSeconds(waitTime);
+        uIManager.LoadPlayScene();
     }
 }

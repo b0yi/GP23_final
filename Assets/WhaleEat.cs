@@ -18,7 +18,8 @@ public class WhaleEat : MonoBehaviour
         {
             if (_uIManager)
             {
-                _uIManager.LoadPlayScene();
+                // _uIManager.LoadPlayScene();
+                _uIManager.PlayerDead((int)DeadString.fish);
             }
 
         }
