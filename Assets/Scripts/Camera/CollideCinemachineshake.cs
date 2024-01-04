@@ -53,8 +53,8 @@ public class CollideCinemachineshake : MonoBehaviour
 
     void CollideShakeCamera()
     {
-        noisePerlin.m_AmplitudeGain=20;
-        noisePerlin.m_FrequencyGain=10;
+        noisePerlin.m_AmplitudeGain=10;
+        noisePerlin.m_FrequencyGain=1;
         isShaking=true;
         shakeTimer=0f;
     }
