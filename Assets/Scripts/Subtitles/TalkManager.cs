@@ -44,9 +44,9 @@ public class TalkManager : MonoBehaviour
     public List<List<string>> subtitles = new List<List<string>>() {
         // stele - 0
         new List<string>() {
-            "<color=#B1FDFF>你想起來這個裝置的用途。</color>",
-            "<color=#B1FDFF>雖然大部分的功能已經失去，裝置仍告訴你，這片星空還有一位你的族人。</color>",
-            "<color=#B1FDFF>一個......金星人。</color>",
+            "<color=#E7A472>你想起來這個裝置的用途。</color>",
+            "<color=#E7A472>雖然大部分的功能已經失去，裝置仍告訴你，這片星空還有一位你的族人。</color>",
+            "<color=#E7A472>一個......金星人。</color>",
         },
         // cat - 1
         new List<string>() {
@@ -94,11 +94,12 @@ public class TalkManager : MonoBehaviour
         },
         // outsideMaze - 3
         new List<string>() {
-            "<color=#B1FDFF>是什麼文明創造了這個構造體？</color>",
+            "<color=#B1FDFF>迷宮星？</color>",
+            "這個星球上什麼都沒有啊",
         },
         // enterMaze - 4
         new List<string>() {
-            "<color=#B1FDFF>金星人？ 還是......</color>",
+            "<color=#B1FDFF>這難道就是…..迷宮！？！</color>",
         },
         // portal - 5
         new List<string>() {
@@ -113,18 +114,18 @@ public class TalkManager : MonoBehaviour
         },
         // dragonPlanet - 6
         new List<string>() {
-            "<color=#B1FDFF>這不是你孰悉的傳送技術。你很不可置信。</color>",
-            "<color=#B1FDFF>你感覺到星球底下有股巨大的力量在隱隱攢動。</color>",
-            "<color=#B1FDFF>更令你驚訝的是，這裡......封印著一個偉大的存在。</color>",
-            "<color=#B1FDFF>在太陽的引力內，無人不知它的名諱。它代表著金星的黃金歲月，那一去不復返的強盛帝國。</color>",
+            "<color=#FFCCE4>這不是你孰悉的傳送技術。你很不可置信。</color>",
+            "<color=#FFCCE4>你感覺到星球底下有股巨大的力量在隱隱攢動。</color>",
+            "<color=#FFCCE4>更令你驚訝的是，這裡......封印著一個偉大的存在。</color>",
+            "<color=#FFCCE4>在太陽的引力內，無人不知它的名諱。它代表著金星的黃金歲月，那一去不復返的強盛帝國。</color>",
         },
         // crystal - 7
         new List<string>() {
-            "<color=#B1FDFF>你不知道這頭巨獸是否會聽從你的話語。</color>",
-            "<color=#B1FDFF>但你仍有信心。</color>",
-            "<color=#B1FDFF>因為它曾是金星人的驕傲與榮光。</color>",
-            "<color=#B1FDFF>而現在，一個金星人正在呼喚它。</color>",
-            "<color=#B1FDFF>你說：</color>",
+            "<color=#FFCCE4>你不知道這頭巨獸是否會聽從你的話語。</color>",
+            "<color=#FFCCE4>但你仍有信心。</color>",
+            "<color=#FFCCE4>因為它曾是金星人的驕傲與榮光。</color>",
+            "<color=#FFCCE4>而現在，一個金星人正在呼喚它。</color>",
+            "<color=#FFCCE4>你說：</color>",
             "M-107: 醒來，老兵。",
             "M-107: 求求你，讓我回家。",
         },
@@ -133,24 +134,28 @@ public class TalkManager : MonoBehaviour
     public List<List<string>> treeSubtitles = new List<List<string>>() {
         // tree near born
         new List<string>() {
-            "<color=#B1FDFF>這些裝置正在吸取源流體，從這顆名叫O的星球上。</color>",
+            "<color=#E7A472>這些裝置正在吸取源流體，從這顆名叫O的星球上。</color>",
         },
         // tree near cat
         new List<string>() {
-            "<color=#B1FDFF>金星人派遣信使前往各個星球，只爲了獲取更多源流體。</color>",
+            "<color=#E7A472>金星人派遣信使前往各個星球，只爲了獲取更多源流體。</color>",
         },
         // tree near water
         new List<string>() {
-            "<color=#B1FDFF>這顆星球......正在老去。</color>",
+            "<color=#E7A472>這顆星球......正在老去。</color>",
         },
         // tree near maze
         new List<string>() {
-            "<color=#B1FDFF>源流體所剩無幾，但還勉強能讓你航行。</color>",
+            "<color=#E7A472>源流體所剩無幾，但還勉強能讓你航行。</color>",
         },
         // tree in maze
         // new List<string>() {
         //     "<color=#B1FDFF>There were your fellow beings here.</color>",
         // },
+    };
+
+    public List<string> bornSubtitle = new List<string>() {
+        "你什麼都想不起來，只記得突如其來的震盪使自己陷入昏迷。",
     };
 
     public List<string> brokenBuildingSubtitle = new List<string>() {
@@ -163,15 +168,8 @@ public class TalkManager : MonoBehaviour
     };
 
     public List<string> sunSubtitle = new List<string>() {
-        "<color=#B1FDFF>一顆燃燒的星球。</color>",
-        "<color=#B1FDFF>希望金星最終不會變成這副模樣。</color>",
-    };
-
-    public List<string> portalSubtitle = new List<string>() {
-        "<color=#B1FDFF>傳送門？是誰搭建的？</color>",
-        "<color=#B1FDFF>無法啟動，似乎是故障了。</color>",
-        "<color=#B1FDFF>好奇心的驅使下，你決定嘗試修復它。</color>",
-        "<color=#B1FDFF>四周也許有一些<i>資源</i>可以採集。</color>",
+        "一顆燃燒的星球。",
+        "希望金星最終不會變成這副模樣。",
     };
 
     public List<string> deadSubtitle = new List<string>() {
@@ -184,7 +182,7 @@ public class TalkManager : MonoBehaviour
     };
 
     public List<string> dragonBuildingSubtitle = new List<string>() {
-        "<color=#B1FDFF>人類跟本不遵守宇宙生態法則，他們四處掠奪肆掠，甚至還創造出了可以造成行星坍縮的武器。</color>",
+        "<color=#FFCCE4>人類跟本不遵守宇宙生態法則，他們四處掠奪肆掠，甚至還創造出了可以造成行星坍縮的武器。</color>",
     };
 
     // Start is called before the first frame update
