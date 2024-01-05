@@ -744,12 +744,22 @@ public class PlayerController_new : MonoBehaviour
 
 
 
-            if (_stageManager && _stageManager.stage == Stage.ToCatPlanet) {
+        }
+
+        if (other.name == "CatPlanetField" && playerState == PlayerState.InSpace)
+        {
+            // 先複製上面的這樣寫, 雖然很醜, 之後應該改用 tag 表示 field
+            // 並且是 field 讓玩家套用不同星球的紀錄
+            playerState = PlayerState.Landing;
+            _landingClock = 0.5f;
+
+            if (_stageManager && _stageManager.stage == Stage.ToCatPlanet)
+            {
                 _stageManager.UpdateStage();
             }
         }
 
-        if(other.name=="Dragon")
+        if (other.name=="Dragon")
         {
             if (_uIManager && (!_isLoading))
             {
