@@ -72,19 +72,19 @@ public class ClickingItem : Item
         float distance = (playerPos - transform.position).magnitude;
         if (distance > (itemRange / 2) + 4) {
             canvasGroup.alpha = 0f;
-            HintBG.color = new Color(0, 0, 0, 0.9f);
+            HintBG.color = new Color(0, 0, 0, 0.8f);
         }
         else if (distance <= (itemRange / 2) + 4 && distance > (itemRange / 2)) {
             canvasGroup.alpha = 1f - (distance - (itemRange / 2)) / 4;
-            HintBG.color = new Color(0, 0, 0, 0.9f);
+            HintBG.color = new Color(0, 0, 0, 0.8f);
         }
         else {
             canvasGroup.alpha = 1f;
             if (Input.GetKey(KeyCode.Space)) {
-                HintBG.color = new Color(0, 0.5f, 0, 0.9f);
+                HintBG.color = new Color(0, 0.5f, 0, 0.8f);
             }
             else {
-                HintBG.color = new Color(0, 0.75f, 0, 0.9f);
+                HintBG.color = new Color(0, 0.75f, 0, 0.8f);
             }
         }
     }
