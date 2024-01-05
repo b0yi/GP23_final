@@ -8,15 +8,21 @@ public class UIWhaleItem : MonoBehaviour
     public TextMeshProUGUI textUI;
     public int count;
     public int total;
+    public GameObject catfish;
 
     public void Increase() {
         count += 1;
         textUI.text = count.ToString() + "/" + total.ToString();
         if (count >= total) {
             Invoke("ChangeColor", 0.5f);
+            Invoke("ShowCatfish", 1f);
         }
     }
 
+    private void ShowCatfish()
+    {
+        catfish.SetActive(true);
+    }
     private void ChangeColor() {
         print("test");
         textUI.color = new Color32(255, 255, 255, 255);

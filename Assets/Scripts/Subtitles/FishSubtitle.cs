@@ -35,7 +35,7 @@ public class FishSubtitle : Subtitle
 
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
-        if (_stageManager && _stageManager.stage == Stage.ToWaterPlanet) {
+        if (_stageManager && _stageManager.stage == Stage.CollectWaterItem) {
             _stageManager.UpdateStage();
         }
         player.Lock();
