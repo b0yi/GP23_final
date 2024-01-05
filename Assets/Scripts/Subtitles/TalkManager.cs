@@ -107,7 +107,7 @@ public class TalkManager : MonoBehaviour
             "<color=#B1FDFF>傳送門？是誰搭建的？</color>",
             "<color=#B1FDFF>無法成功啟動，似乎是故障了。</color>",
             "<color=#B1FDFF>好奇心的驅使下，你決定嘗試修復它。</color>",
-            "<color=#B1FDFF>四周也許有一些<i>資源</i>可以採集。</color>",
+            "<color=#B1FDFF>四周也許有一些 <b><i>資源</i></b>可以採集。</color>",
         },
         // dragonPlanet - 6
         new List<string>() {
