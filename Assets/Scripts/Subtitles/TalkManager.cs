@@ -9,6 +9,7 @@ public enum SubtitleStage {
     outsideMaze,
     enterMaze,
     portal,
+    portalFixed,
     dragonPlanet,
     crystal,
 }
@@ -102,12 +103,16 @@ public class TalkManager : MonoBehaviour
         new List<string>() {
             "<color=#B1FDFF>金星人？ 還是......</color>",
         },
-        // protal - 5
+        // portal - 5
         new List<string>() {
             "<color=#B1FDFF>傳送門？是誰搭建的？</color>",
             "<color=#B1FDFF>無法成功啟動，似乎是故障了。</color>",
             "<color=#B1FDFF>好奇心的驅使下，你決定嘗試修復它。</color>",
             "<color=#B1FDFF>四周也許有一些 <b><i>資源</i></b>可以採集。</color>",
+        },
+        // portalFixed - 6
+        new List<string>() {
+            "<color=#B1FDFF>傳送門成功修復好了。</color>",
         },
         // dragonPlanet - 6
         new List<string>() {

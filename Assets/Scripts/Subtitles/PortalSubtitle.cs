@@ -6,6 +6,7 @@ using UnityEngine;
 public class PortalSubtitle : Subtitle
 {
     protected Temple portal;
+    public UIMazeItem uIMazeItem;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,14 @@ public class PortalSubtitle : Subtitle
                     talkManager.nextSubtitle += 1;
                 }
             }
+            else if (talkManager.nextSubtitle == SubtitleStage.portalFixed) {
+                if (uIMazeItem.enableTeleport) {
+                    if (!canvas.isLockingSubtitle) {
+                        StartCoroutine(ShowSubtitle(talkManager.subtitles[(int)SubtitleStage.portalFixed]));
+                        talkManager.nextSubtitle += 1;
+                    }
+                }
+            }
         }
     }
 
@@ -52,6 +61,10 @@ public class PortalSubtitle : Subtitle
 
         enterSkipHint.SetActive(false);
         yield return FadeSubtitleCanvas(0, 1f, 1f);
+        
+        if (talkManager.nextSubtitle == SubtitleStage.dragonPlanet) {
+            portal.canTeleport = true;
+        }
 
         float showCharTime = 1f / talkManager.charPerSec;
         for (int i = 0; i < subtitles.Count; i++)
@@ -108,5 +121,10 @@ public class PortalSubtitle : Subtitle
         canvas.isLockingSubtitle = false;
         player.Unlock();
         // player.Unfreeze();
+
+        if (talkManager.nextSubtitle == SubtitleStage.portalFixed) {
+            uIMazeItem.gameObject.SetActive(true);
+            uIMazeItem.itemCanShowCanvas = true;
+        }
     }
 }
