@@ -805,12 +805,13 @@ public class PlayerController_new : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.name == "Field")
+        if (other.name == "Field" || other.name == "CatPlanetField")
         {
             playerState = PlayerState.InSpace;
             _rb.drag = linearDragInSpace;
             _rb.angularDrag = angularDragInSpace;
         }
+
         if(other.name=="Water Planet")
         {
             inWaterPlanet=false;
