@@ -42,6 +42,6 @@ public class Item : MonoBehaviour
     }
 
     public void OpenItemGetCanvas(string itemName) {
-        itemCanvasHandler.OpenItemGetCanvas(itemName);
+        
     }
 }
