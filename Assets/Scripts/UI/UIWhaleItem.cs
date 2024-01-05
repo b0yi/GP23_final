@@ -22,6 +22,7 @@ public class UIWhaleItem : MonoBehaviour
     private void ShowCatfish()
     {
         catfish.SetActive(true);
+        gameObject.SetActive(false);
     }
     private void ChangeColor() {
         print("test");

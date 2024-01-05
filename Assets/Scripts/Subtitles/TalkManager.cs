@@ -44,9 +44,9 @@ public class TalkManager : MonoBehaviour
     public List<List<string>> subtitles = new List<List<string>>() {
         // stele - 0
         new List<string>() {
-            "<color=#E7A472>你想起來這個裝置的用途。</color>",
-            "<color=#E7A472>雖然大部分的功能已經失去，裝置仍告訴你，這片星空還有一位你的族人。</color>",
-            "<color=#E7A472>一個......金星人。</color>",
+            "你想起來這個裝置的用途。",
+            "雖然大部分的功能已經失去，裝置仍告訴你，這片星空還有一位你的族人。",
+            "一個......金星人。",
         },
         // cat - 1
         new List<string>() {
@@ -134,19 +134,19 @@ public class TalkManager : MonoBehaviour
     public List<List<string>> treeSubtitles = new List<List<string>>() {
         // tree near born
         new List<string>() {
-            "<color=#E7A472>這些裝置正在吸取源流體，從這顆名叫O的星球上。</color>",
+            "這些裝置正在吸取源流體，從這顆名叫O的星球上。",
         },
         // tree near cat
         new List<string>() {
-            "<color=#E7A472>金星人派遣信使前往各個星球，只爲了獲取更多源流體。</color>",
+            "金星人派遣信使前往各個星球，只爲了獲取更多源流體。",
         },
         // tree near water
         new List<string>() {
-            "<color=#E7A472>這顆星球......正在老去。</color>",
+            "這顆星球......正在老去。",
         },
         // tree near maze
         new List<string>() {
-            "<color=#E7A472>源流體所剩無幾，但還勉強能讓你航行。</color>",
+            "源流體所剩無幾，但還勉強能讓你航行。",
         },
         // tree in maze
         // new List<string>() {
