@@ -6,6 +6,11 @@ public class Fruit : MonoBehaviour
 {
 	public Explodable explodable;
 	public PlayerController_new player;
+
+    void Start()
+    {
+        BrokenCinemachineShake.brokenitem = true;
+    }
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.CompareTag("Player")) {
 			player.ImmediateLaunch();
@@ -23,7 +28,7 @@ public class Fruit : MonoBehaviour
     void Explode() {
         Vector3 explodePosition = explodable.transform.position;
 		explodable.explode();
-
+        BrokenCinemachineShake.brokenitem = false;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(explodePosition, radius);
 
         foreach (Collider2D coll in colliders)
