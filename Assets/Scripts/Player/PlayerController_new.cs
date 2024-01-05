@@ -223,11 +223,11 @@ public class PlayerController_new : MonoBehaviour
         _rb.velocity = Vector3.zero; 
         playerState = PlayerState.InSpace;
         _animator.SetTrigger("transform");
-	Lock();
-	Invoke("ImmediateLaunchDelay", 1);
+	    Lock();
+	    Invoke("ImmediateLaunchDelay", 1);
     }
     void ImmediateLaunchDelay() {
-	Unlock();
+	    Unlock();
         _animator.ResetTrigger("transform");
     }
 
