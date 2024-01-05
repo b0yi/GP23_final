@@ -147,6 +147,13 @@ public class TalkManager : MonoBehaviour
         "<color=#B1FDFF>你腦中浮現金星的大氣層被點燃的畫面。</color>",
     };
 
+    public List<string> portalSubtitle = new List<string>() {
+        "<color=#B1FDFF>傳送門？是誰搭建的？</color>",
+        "<color=#B1FDFF>無法啟動，似乎是故障了。</color>",
+        "<color=#B1FDFF>好奇心的驅使下，你決定嘗試修復它。</color>",
+        "<color=#B1FDFF>四周也許有一些<i>資源</i>可以採集。</color>",
+    };
+
     public List<string> deadSubtitle = new List<string>() {
         "沒有了源流體，該怎麼回家......",
         "黑洞吞沒了一切，也吞沒了你......無一倖免",
