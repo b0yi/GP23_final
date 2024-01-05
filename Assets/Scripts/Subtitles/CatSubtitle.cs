@@ -66,7 +66,7 @@ public class CatSubtitle : Subtitle
             string[] nameAndWord;
             string word = "";
 
-            if (subtitles[i][7] == ':') {
+            if (subtitles[i][1] == '-') {
                 nameAndWord = subtitles[i].Split(": ");
                 dispText = nameAndWord[0] + ": ";
                 word = nameAndWord[1];
