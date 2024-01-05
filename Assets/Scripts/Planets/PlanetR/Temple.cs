@@ -17,16 +17,18 @@ public class Temple : MonoBehaviour
     public ParticleSystem teleportParticle;
     public GameObject teleportLight;
     private StageManager _stageManager;
+    private TalkManager talkManager;
 
     // Start is called before the first frame update
     void Start()
     {
         GameObject m = GameObject.FindWithTag("UIManager");
         _stageManager = m.GetComponent<StageManager>();
+        talkManager = m.GetComponent<TalkManager>();
 
         playerTF = GameObject.Find("Player").transform;
 
-        canTeleport = true;
+        canTeleport = false;
         startCounting = false;
         currentTime = 0f;
         currentCD = teleportCD;
@@ -56,12 +58,13 @@ public class Temple : MonoBehaviour
             else
             {
                 teleportLight.SetActive(false);
-                currentCD -= Time.deltaTime;
-                if (currentCD <= 0f)
-                {
-                    canTeleport = true;
-                    currentTime = 0f;
-                }
+                StopParticle();
+                // currentCD -= Time.deltaTime;
+                // if (currentCD <= 0f)
+                // {
+                //     canTeleport = true;
+                //     currentTime = 0f;
+                // }
             }
         }
         else {

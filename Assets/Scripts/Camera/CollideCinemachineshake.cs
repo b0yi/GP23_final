@@ -41,7 +41,7 @@ public class CollideCinemachineshake : MonoBehaviour
             
             //print("shaking");
 		}
-        //print(shakeTimer);
+        // print(shakeTimer);
         // print(iscollided);
         if(shakeTimer>collideshaketimertotal)
         {
