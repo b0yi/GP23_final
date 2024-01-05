@@ -288,6 +288,21 @@ public class PlayerController_new : MonoBehaviour
         if (_stageManager.stage == Stage.ToCatPlanet) {
             task.Hide();
         }
+        if (_stageManager.stage == Stage.ToWaterPlanet)
+        {
+            task.Hide();
+        }
+
+        if (_stageManager.stage == Stage.CollectWaterItem)
+        {
+            task.ChangeTitle("WAKW UP THE CATFISH");
+            task.ChangeContent("Collect the red stone taken by the whales.");
+            task.Show();
+        }
+        if (_stageManager.stage == Stage.Water)
+        {
+            task.Hide();
+        }
 
         if (_stageManager.stage == Stage.ToMazePlanet) {
             task.ChangeTitle("ENTER THE ABYSS");

@@ -9,7 +9,8 @@ public class WaterForce : MonoBehaviour
     // [DisplayOnly] public bool isPlayerInWater;
     public float linearDragInWater;
     public float angularDragInWater;
-    
+    private StageManager _stageManager;
+
     public GameObject whaleItemUI;
 
     public Whale[] whales;
@@ -30,6 +31,9 @@ public class WaterForce : MonoBehaviour
 
     void Start()
     {
+        GameObject m = GameObject.FindWithTag("UIManager");
+        _stageManager = m.GetComponent<StageManager>();
+
         // isPlayerInWater = false;
         // idleTimer = idleTime;
         whaleItemUI.SetActive(false);
@@ -71,6 +75,11 @@ public class WaterForce : MonoBehaviour
             angularDrag = _playerRB.angularDrag;
             _playerRB.drag = linearDragInWater;
             _playerRB.angularDrag = angularDragInWater;
+
+            if (_stageManager && _stageManager.stage == Stage.ToWaterPlanet)
+            {
+                _stageManager.UpdateStage();
+            }
         }
     }
 
