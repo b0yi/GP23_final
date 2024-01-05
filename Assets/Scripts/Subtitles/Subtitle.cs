@@ -14,7 +14,7 @@ public class Subtitle : MonoBehaviour
     protected TalkManager talkManager;
 
     public float talkRange = 0f;
-    public float subtitleID = 0f;
+    public SubtitleStage subtitleID = SubtitleStage.stele;
 
     [DisplayOnly] public bool isEnterDown = false;
 
@@ -37,10 +37,10 @@ public class Subtitle : MonoBehaviour
 
     public virtual void Talk() {
         if (IsPlayerInRange(talkRange)) {
-            if (talkManager.currentSubtitle == subtitleID) {
+            if (talkManager.nextSubtitle == SubtitleStage.stele) {
                 if (!canvas.isLockingSubtitle) {
-                    StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
-                    talkManager.currentSubtitle += 1;
+                    StartCoroutine(ShowSubtitle(talkManager.subtitles[(int)SubtitleStage.stele]));
+                    talkManager.nextSubtitle += 1;
                 }
             }
         }

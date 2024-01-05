@@ -30,7 +30,14 @@ public class FishSubtitle : Subtitle
 
     public override void Talk()
     {
-        base.Talk();
+        if (IsPlayerInRange(talkRange)) {
+            if (talkManager.nextSubtitle == SubtitleStage.fish) {
+                if (!canvas.isLockingSubtitle) {
+                    StartCoroutine(ShowSubtitle(talkManager.subtitles[(int)SubtitleStage.fish]));
+                    talkManager.nextSubtitle += 1;
+                }
+            }
+        }
     }
 
     public override IEnumerator ShowSubtitle(List<string> subtitles)

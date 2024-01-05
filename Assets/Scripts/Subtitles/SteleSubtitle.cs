@@ -30,10 +30,10 @@ public class SteleSubtitle : Subtitle
 
     public override void Talk()
     {
-        if (talkManager.currentSubtitle == subtitleID) {
+        if (talkManager.nextSubtitle == SubtitleStage.stele) {
             if (!canvas.isLockingSubtitle) {
-                StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
-                talkManager.currentSubtitle += 1;
+                StartCoroutine(ShowSubtitle(talkManager.subtitles[(int)SubtitleStage.stele]));
+                talkManager.nextSubtitle += 1;
             }
         }
     }

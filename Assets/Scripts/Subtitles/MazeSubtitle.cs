@@ -31,7 +31,7 @@ public class MazeSubtitle : Subtitle
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.name == "Player" && talkManager.currentSubtitle == subtitleID) {
+        if (other.collider.name == "Player" && talkManager.nextSubtitle == SubtitleStage.outsideMaze) {
             if (!beforeFall) {
                 beforeFall = true;
                 Talk();
@@ -41,7 +41,7 @@ public class MazeSubtitle : Subtitle
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "Player" && talkManager.currentSubtitle == subtitleID) {
+        if (other.name == "Player" && talkManager.nextSubtitle == SubtitleStage.enterMaze) {
             if (!afterFall) {
                 afterFall = true;
                 Talk();
@@ -51,9 +51,9 @@ public class MazeSubtitle : Subtitle
 
     public override void Talk()
     {
-        if (talkManager.currentSubtitle == subtitleID) {
-            StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
-            talkManager.currentSubtitle += 1;
+        if (talkManager.nextSubtitle == subtitleID) {
+            StartCoroutine(ShowSubtitle(talkManager.subtitles[(int)talkManager.nextSubtitle]));
+            talkManager.nextSubtitle += 1;
         }
     }
 
