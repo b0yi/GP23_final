@@ -15,6 +15,7 @@ public class Fruit : MonoBehaviour
 		if (other.CompareTag("Player")) {
 			player.ImmediateLaunch();
 			Invoke("Explode", 1);
+            player.GetComponent<BrokenPlanetSubtitle>().Talk();
 			gameObject.SetActive(false);
 		}
 	}
