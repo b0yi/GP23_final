@@ -59,7 +59,7 @@ public class FishSubtitle : Subtitle
             string[] nameAndWord;
             string word = "";
 
-            if (subtitles[i][7] == ':') {
+            if (subtitles[i][2] == ':') {
                 nameAndWord = subtitles[i].Split(": ");
                 dispText = nameAndWord[0] + ": ";
                 word = nameAndWord[1];
