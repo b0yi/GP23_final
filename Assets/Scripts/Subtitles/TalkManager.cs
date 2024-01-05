@@ -99,7 +99,7 @@ public class TalkManager : MonoBehaviour
         },
         // enterMaze - 4
         new List<string>() {
-            "<color=#B1FDFF>這難道就是…..迷宮！？！</color>",
+            "<color=#B1FDFF>這難道就是......迷宮！？！</color>",
         },
         // portal - 5
         new List<string>() {
