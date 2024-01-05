@@ -16,15 +16,13 @@ public class ClickingItem : Item
     [DisplayOnly] public float currentCount;
     [DisplayOnly] public bool canCollect;
 
-    public CatEnemy protector;
-
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
         hintCanvas = transform.Find("HintCanvas").gameObject;
         hintCanvasGroup = hintCanvas.GetComponent<CanvasGroup>();
-        mouseBackground = hintCanvas.transform.Find("MouseBackground").GetComponent<Image>();
+        mouseBackground = hintCanvas.transform.Find("HintBG").GetComponent<Image>();
         anim = GetComponent<Animator>();
 
         currentCount = 0f;
@@ -42,7 +40,7 @@ public class ClickingItem : Item
 
     private void PlayerDoClick() {
         if (IsPlayerInRange(itemRange)) {
-            isPlayerOnGround = GameObject.Find("Player").GetComponent<PlayerController>().isGrounded;
+            isPlayerOnGround = GameObject.Find("Player").GetComponent<PlayerController_new>().isGrounded;
         }
 
         if (isPlayerInRange && isPlayerOnGround) {
@@ -51,28 +49,32 @@ public class ClickingItem : Item
                 Destroy(gameObject);
             }
 
-            if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
                 // Reduce the counter
                 currentCount += 1;
-                protector.GoChasePlayer();
             }
         }
     }
 
     private void HintTransparent() {
         Vector3 playerPos = player.transform.position;
-        float distance = (playerPos - transform.position).magnitude - (itemRange / 2);
-        if (distance > 5) {
+        float distance = (playerPos - transform.position).magnitude;
+        if (distance > (itemRange / 2) + 2) {
             hintCanvasGroup.alpha = 0f;
-            mouseBackground.color = new Color(0, 0, 0, 0.8f);
+            mouseBackground.color = new Color(0, 0, 0, 0.9f);
         }
-        else if (distance <= 5 && distance > 0) {
-            hintCanvasGroup.alpha = 1f - distance / 5;
-            mouseBackground.color = new Color(0, 0, 0, 0.8f);
+        else if (distance <= (itemRange / 2) + 2 && distance > (itemRange / 2)) {
+            hintCanvasGroup.alpha = 1f - (distance - (itemRange / 2)) / 2;
+            mouseBackground.color = new Color(0, 0, 0, 0.9f);
         }
         else {
             hintCanvasGroup.alpha = 1f;
-            mouseBackground.color = new Color(0, 0.75f, 0, 0.8f);
+            if (Input.GetKey(KeyCode.Space)) {
+                mouseBackground.color = new Color(0, 0.5f, 0, 0.9f);
+            }
+            else {
+                mouseBackground.color = new Color(0, 0.75f, 0, 0.9f);
+            }
         }
     }
 }
