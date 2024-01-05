@@ -74,8 +74,14 @@ public class TriggerExplosion : Subtitle
 
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
+
         player.Lock();
         // player.Freeze();
+        if (_stageManager.stage == Stage.ToDragonPlanet)
+        {
+            _stageManager.UpdateStage();
+            print("dragon test");
+        }
 
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
@@ -176,8 +182,5 @@ public class TriggerExplosion : Subtitle
         planetMaze.SetActive(false);
         planetWater.SetActive(false);
         //_stageManager.UpdateStage();
-        if (_stageManager.stage == Stage.ToDragonPlanet) {
-            _stageManager.UpdateStage();
-        }
     }
 }
