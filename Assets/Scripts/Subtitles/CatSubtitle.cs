@@ -32,12 +32,12 @@ public class CatSubtitle : Subtitle
     {
         if (IsPlayerInRange(talkRange) && player.isGrounded)
         {
-            if (talkManager.currentSubtitle == subtitleID)
+            if (talkManager.nextSubtitle == SubtitleStage.cat)
             {
                 if (!canvas.isLockingSubtitle)
                 {
-                    StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
-                    talkManager.currentSubtitle += 1;
+                    StartCoroutine(ShowSubtitle(talkManager.subtitles[(int)SubtitleStage.cat]));
+                    talkManager.nextSubtitle += 1;
                 }
             }
         }

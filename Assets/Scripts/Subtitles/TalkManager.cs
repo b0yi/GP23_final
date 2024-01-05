@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SubtitleStage {
+    stele = 0,
+    cat,
+    fish,
+    outsideMaze,
+    enterMaze,
+    portal,
+    dragonPlanet,
+    crystal,
+}
+
 public enum DeadString {
     fuel = 0,
     blackhold,
@@ -13,7 +24,7 @@ public enum DeadString {
 
 public class TalkManager : MonoBehaviour
 {
-    public int currentSubtitle = 0;
+    public SubtitleStage nextSubtitle = SubtitleStage.stele;
     public float charPerSec = 20f;
     public float delayTime = 1.3f;
 
@@ -83,22 +94,29 @@ public class TalkManager : MonoBehaviour
             "貓魚: 一個遠比我強大的存在，潛伏在空間的夾縫中。",
             "貓魚: ......在那個迷宮之中。",
         },
-        // mazeBeforeFall - 3
+        // outsideMaze - 3
         new List<string>() {
             "<color=#B1FDFF>是什麼文明創造了這個構造體？</color>",
         },
-        // mazeAfterFall - 4
+        // enterMaze - 4
         new List<string>() {
             "<color=#B1FDFF>金星人？ 還是......</color>",
         },
-        // dragon - 5
+        // protal - 5
+        new List<string>() {
+            "<color=#B1FDFF>傳送門？是誰搭建的？</color>",
+            "<color=#B1FDFF>無法成功啟動，似乎是故障了。</color>",
+            "<color=#B1FDFF>好奇心的驅使下，你決定嘗試修復它。</color>",
+            "<color=#B1FDFF>四周也許有一些 <b><i>資源</i></b>可以採集。</color>",
+        },
+        // dragonPlanet - 6
         new List<string>() {
             "<color=#B1FDFF>這不是你孰悉的傳送技術。你很不可置信。</color>",
             "<color=#B1FDFF>你感覺到星球底下有股巨大的力量在隱隱攢動。</color>",
             "<color=#B1FDFF>更令你驚訝的是，這裡......封印著一個偉大的存在。</color>",
             "<color=#B1FDFF>在太陽的引力內，無人不知它的名諱。它代表著金星的黃金歲月，那一去不復返的強盛帝國。</color>",
         },
-        // touchCrystal - 6
+        // crystal - 7
         new List<string>() {
             "<color=#B1FDFF>你不知道這頭巨獸是否會聽從你的話語。</color>",
             "<color=#B1FDFF>但你仍有信心。</color>",

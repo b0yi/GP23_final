@@ -62,8 +62,8 @@ public class TriggerExplosion : Subtitle
     public override void Talk()
     {
         if (!canvas.isLockingSubtitle) {
-            if (talkManager.currentSubtitle == subtitleID) {
-                StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
+            if (talkManager.nextSubtitle == SubtitleStage.crystal) {
+                StartCoroutine(ShowSubtitle(talkManager.subtitles[(int)SubtitleStage.crystal]));
             }
         }
     }

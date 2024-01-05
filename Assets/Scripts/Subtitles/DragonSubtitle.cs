@@ -24,16 +24,16 @@ public class DragonSubtitle : Subtitle
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.name == "Player" && talkManager.currentSubtitle == subtitleID) {
+        if (other.gameObject.name == "Player") {
             Talk();
         }
     }
 
     public override void Talk()
     {
-        if (talkManager.currentSubtitle == subtitleID) {
-            StartCoroutine(ShowSubtitle(talkManager.subtitles[talkManager.currentSubtitle]));
-            talkManager.currentSubtitle += 1;
+        if (talkManager.nextSubtitle == SubtitleStage.dragonPlanet) {
+            StartCoroutine(ShowSubtitle(talkManager.subtitles[(int)SubtitleStage.dragonPlanet]));
+            talkManager.nextSubtitle += 1;
         }
     }
 
