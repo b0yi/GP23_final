@@ -38,6 +38,7 @@ public class TalkManager : MonoBehaviour
     public bool bornBool = false;
     public bool brokenPlanetBool = false;
     public bool sunBool = false;
+    public bool dragonBuildingBool = false;
     public bool dragonCrystalBool = false;
 
     public List<List<string>> subtitles = new List<List<string>>() {
@@ -64,7 +65,7 @@ public class TalkManager : MonoBehaviour
             "<color=#B1FDFF>你很平靜。經過那麼久，能甦醒已是奇蹟。</color>",
             "<color=#B1FDFF>你唯一好奇的是，金星......你的家，是否熬過了那場戰爭。</color>",
             "貓-111: 我很遺憾，孩子。",
-            "貓-111: 這幾百年我沒有收到任何金星的消息。",
+            "貓-111: 這幾十年我沒有收到任何金星的消息。",
             "貓-111: 恐怕......",
             "<color=#B1FDFF>這並不令人驚訝。</color>",
             "<color=#B1FDFF>但你仍然感到哀傷。</color>",
@@ -78,10 +79,6 @@ public class TalkManager : MonoBehaviour
         },
         // fish - 2
         new List<string>() {
-            "貓魚: 一段深邃迴響的低音。",
-            "<color=#B1FDFF>你從未見過這樣的生物。</color>",
-            "<color=#B1FDFF>能量從它身上滿溢而出，供給了一整顆星球的生態系。</color>",
-            "<color=#B1FDFF>你無法理解它的全貌。它存在的維度超過你的想像。</color>",
             "貓魚: 來自深淵的凝視。",
             "<color=#B1FDFF>你感受到自己的意識被輕易的入侵。</color>",
             "<color=#B1FDFF>這感覺很不舒服。</color>",
@@ -167,7 +164,7 @@ public class TalkManager : MonoBehaviour
 
     public List<string> sunSubtitle = new List<string>() {
         "<color=#B1FDFF>一顆燃燒的星球。</color>",
-        "<color=#B1FDFF>你腦中浮現金星的大氣層被點燃的畫面。</color>",
+        "<color=#B1FDFF>希望金星最終不會變成這副模樣。</color>",
     };
 
     public List<string> portalSubtitle = new List<string>() {
@@ -184,6 +181,10 @@ public class TalkManager : MonoBehaviour
         "「鯨」為天人！鯨魚把金星人吃個精光！",
         "以卵擊石......在它面前，你僅僅是個卵......",
         "耶夢加德......不應該是這樣的......",
+    };
+
+    public List<string> dragonBuildingSubtitle = new List<string>() {
+        "<color=#B1FDFF>人類跟本不遵守宇宙生態法則，他們四處掠奪肆掠，甚至還創造出了可以造成行星坍縮的武器。</color>",
     };
 
     // Start is called before the first frame update

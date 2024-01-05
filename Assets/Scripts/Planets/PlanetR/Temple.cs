@@ -108,6 +108,7 @@ public class Temple : MonoBehaviour
         canTeleport = false;
         otherTemple.canTeleport = false;
         playerTF.position = otherTemple.transform.position;
+        playerTF.GetComponent<PlayerController_new>().Lock();
     }
 
     private void GenerateParticle()

@@ -46,7 +46,7 @@ public class Blackholefield : MonoBehaviour
             Vector3 direction = transform.position - in_other.attachedRigidbody.transform.position;
             var tangent = Vector3.Cross(direction, Vector3.forward).normalized * SWIRLSTRENGTH;
 
-            in_other.attachedRigidbody.velocity = tangent;            
+            in_other.attachedRigidbody.velocity += (Vector2)tangent;            
             _rigidBodies.Add( in_other.attachedRigidbody );
         }
     }
