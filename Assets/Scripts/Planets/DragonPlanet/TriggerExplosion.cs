@@ -15,6 +15,10 @@ public class TriggerExplosion : Subtitle
     public float delayExplosionTime;
     public GameObject dragon;
     public GameObject sun;
+    // public GameObject planetO;
+    // public GameObject planetCat;
+    // public GameObject planetWater;
+    // public GameObject planetMaze;
     private StageManager _stageManager;
 
     private void Start()
@@ -70,8 +74,14 @@ public class TriggerExplosion : Subtitle
 
     public override IEnumerator ShowSubtitle(List<string> subtitles)
     {
+
         player.Lock();
         // player.Freeze();
+        if (_stageManager.stage == Stage.ToDragonPlanet)
+        {
+            _stageManager.UpdateStage();
+            print("dragon test");
+        }
 
         canvas.isLockingSubtitle = true;
         canvas.isTalking = true;
@@ -167,9 +177,10 @@ public class TriggerExplosion : Subtitle
         CinemachineShake.finalitem = false;
         bGMmanager.DragonSummon();
         sun.SetActive(false);
+        // planetO.SetActive(false);
+        // planetCat.SetActive(false);
+        // planetMaze.SetActive(false);
+        // planetWater.SetActive(false);
         //_stageManager.UpdateStage();
-        if (_stageManager.stage == Stage.ToDragonPlanet) {
-            _stageManager.UpdateStage();
-        }
     }
 }

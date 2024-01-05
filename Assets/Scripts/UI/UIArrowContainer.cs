@@ -43,7 +43,7 @@ public class UIArrowContainer : MonoBehaviour
             }
 
 
-            if (pc.playerState == PlayerState.InSpace && (!pc.inWater()) && _stageManager.stage == Stage.ToWaterPlanet)
+            if (pc.playerState == PlayerState.InSpace && (!pc.inWater()) && ((_stageManager.stage == Stage.ToWaterPlanet) || (_stageManager.stage == Stage.CollectWaterItem)))
             {
                 arrowWaterPlanet.SetActive(true);
             }
